@@ -1,0 +1,20 @@
+<h1>Update your profile</h1>
+
+<div class="container">
+  <div class=“row”>
+    <div class="col-md-6 col-md-offset-3">
+      <div class="panel panel-primary">
+        <div class="panel-body">
+          <%= render 'shared/error_messages' %>
+          <%= simple_form_for @user do |f| %>
+            <%= f.input :username, class: 'form-control' %>
+            <%= f.input :email, class: 'form-control' %>
+            <%= f.input :password, class: 'form-control' %>
+            <%= f.input :password_confirmation, class: 'form-control' %>
+            <%= f.button :submit, "Save changes", class: "btn btn-primary" %>
+          <% end %>
+        </div>
+      </div>    
+    </div>
+  </div>
+</div>

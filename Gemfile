@@ -32,6 +32,13 @@ gem 'bootstrap-sass', '3.3.4.1'
 #Simple Form https://github.com/plataformatec/simple_form
 gem 'simple_form'
 
+#Sample to poplulate database with users
+gem 'faker',                '1.4.2'
+
+#Paginate gems
+gem 'will_paginate',           '3.0.7'
+gem 'bootstrap-will_paginate', '0.0.10'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
@@ -47,5 +54,7 @@ group :development, :test do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+
+
 end
 
