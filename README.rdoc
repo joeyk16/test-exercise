@@ -27,4 +27,5 @@ Things you may want to cover:
 Please feel free to use a different markup language if you do not plan to run
 <tt>rake doc:app</tt>.
 
-https://www.railstutorial.org/book/updating_and_deleting_users 9.4.1
+https://www.railstutorial.org/book/account_activation_password_reset
+10.2 Password reset
