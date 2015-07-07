@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  has_many :items
   attr_accessor :remember_token, :activation_token, :reset_token
   before_save   :downcase_email
   before_create :create_activation_digest
@@ -8,7 +9,10 @@ class User < ActiveRecord::Base
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence: true, length: { maximum: 255 }, format: { with: VALID_EMAIL_REGEX }, uniqueness: true
   has_secure_password
+  validates :description, presence: true, length: { maximum: 500 }
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
+  has_attached_file :avatar, styles: { large: "250x250", medium:"100x100", thumb:"30x30#"}
+  validates_attachment_content_type :avatar, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
 
 
   # Returns the hash digest of the given string.

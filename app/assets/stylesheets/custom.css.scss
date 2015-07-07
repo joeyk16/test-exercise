@@ -15,6 +15,11 @@ $navbar-height: 45px;
 	border-radius: 0px;
 }
 
+.navbar-usershow {
+  border-radius: 7px;
+  background: #EDEFF1;
+}
+
 /* =============================================================== */
 /*  FOOTER
 /* =============================================================== */
@@ -113,3 +118,85 @@ $navbar-height: 45px;
   }
 }
 
+/* =============================================================== */
+/*  Itemlist.index
+/* =============================================================== */
+
+.itemlistprice{
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.itemlisttitle{
+    font-size: 15px;
+    color: #34495e;
+    text-align: center;
+    padding: 20px 0px;
+}
+
+#items {
+  margin: 0 auto;
+}
+
+.box {
+  margin: 15px;
+  width: 250px;
+  margin: 15px;
+
+}
+
+.box img {
+  width: 100%;
+}
+
+.itemlistretailer {
+  text-align: center;
+  font-size: 13px;
+}
+
+.itemlistretailer img{
+  width:30px;
+  height:30px;
+}
+
+
+.section-title-style2, .section-title.style2 {
+    position: relative;
+}
+
+.style2 .section-title:after, .section-title-style2:after, .section-title.style2:after, .section-title-style2:after {
+    background: #DDDDDD;
+    content: "";
+    display: block;
+    height: 1px;
+    margin-left: 20%;
+    position: absolute;
+    top: 28px;
+    width: 60%;
+    z-index: 1;
+}
+
+.section-title-style2 span, .section-title.style2 span {
+    background: #FFFFFF;
+    display: inline-block;
+    padding: 10px;
+    position: relative;
+    width: auto;
+    z-index: 2;
+}
+
+
+/* =============================================================== */
+/*  Buttons
+/* =============================================================== */
+
+.btn-contact{
+    background: #2ecc71;
+    color: #ffffff;
+}
+
+.btn-verifiedsafsy{
+    background: #9b59b6;
+    color: #ffffff;
+}

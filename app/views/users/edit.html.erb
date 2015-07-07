@@ -7,8 +7,10 @@
         <div class="panel-body">
           <%= render 'shared/error_messages' %>
           <%= simple_form_for @user do |f| %>
+            <%= f.input :avatar, as: :file %>
             <%= f.input :username, class: 'form-control' %>
             <%= f.input :email, class: 'form-control' %>
+            <%= f.input :description, class: 'form-control' %>
             <%= f.input :password, class: 'form-control' %>
             <%= f.input :password_confirmation, class: 'form-control' %>
             <%= f.button :submit, "Save changes", class: "btn btn-primary" %>

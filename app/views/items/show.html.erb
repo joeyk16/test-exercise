@@ -1,0 +1,10 @@
+<div class="row">
+  <aside class="col-md-4">
+    <section class="iteminfo">
+      <%= image_tag @item.image.url(:large) %>
+      <p> Title: <%= @item.title %> </p>
+      <p> Price: <%= @item.price %> </p>
+      <p> Description: <%= @item.description %> </p>      
+    </section>
+  </aside>
+</div>
