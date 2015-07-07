@@ -42,7 +42,7 @@ gem 'bootstrap-will_paginate', '0.0.10'
 
 gem "paperclip", "~> 4.2"
 gem 'masonry-rails'
-gem 'masonry-rails'
+gem "font-awesome-rails"
 
 # Use Unicorn as the app server
 # gem 'unicorn'

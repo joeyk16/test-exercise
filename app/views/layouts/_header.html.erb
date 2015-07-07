@@ -8,9 +8,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">
-        <img alt="Safsy" src="...">
-      </a>
+      <a class="navbar-brand" href="#"></a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -44,6 +42,18 @@
               <i class="glyphicon glyphicon-tasks"></i>
             <% end %>
             </li>
+
+            <ul class="nav navbar-nav">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Items<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><%= link_to "Edit Items", user_items_path %></li>
+                  <li><a href="#">Mass Upload Items</a></li>
+                  <li><a href="#">Upload Item Images</a></li>
+                </ul>
+              </li>
+            </ul>
+
             <li><%= link_to current_user do %>
               <i class="glyphicon glyphicon-user"></i>
             <% end %>
@@ -62,6 +72,11 @@
             <li><a href="#">Sign Up</a></li>
           <% end %>
         </ul>
+
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </header>
+
+
+
+

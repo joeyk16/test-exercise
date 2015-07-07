@@ -8,7 +8,8 @@ Rails.application.routes.draw do
   get 'sessions/new'
 
   resources :users
-  root 'items#index'
+  get 'user_items'  => 'users#show_user_items'
+  root 'items#home'
   get 'signup'  => 'users#new'
   get 'show'  => 'users#show'
   get 'login' => 'sessions#new'
@@ -18,7 +19,6 @@ Rails.application.routes.draw do
   resources :password_resets,     only: [:new, :create, :edit, :update]
 
   resources :items
-  get 'items' => 'items#index'
   get 'items_new' => 'items#new'
   
   

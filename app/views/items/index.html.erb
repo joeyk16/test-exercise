@@ -1,8 +1,15 @@
-<%= render 'layouts/sliderhome' %>
-
-<h2 class="section-title-style2 text-center"><span>FEATURE ITEMS</span></h2>
-
-<%= render 'items/itemdisplay' %>
+<div id="items" class="transitions-enabled">
+	<% @item.each do |item| %>
+		<div class="box panel panel-default">
+		  <div class="itemlisttitle"><%= item.title %></div>	
+	    <%= link_to image_tag(item.image.url (:medium)), item %>
+		  <div class ="panel-body">
+	    <div class = "itemlistprice">$<%= item.price %></div>
+		  <div class = "itemlistretailer"><%= image_tag item.user.avatar(:thumb) %> Retailer:  <%= link_to item.user.username, item.user %></button></div>
+	    </div>
+		</div>
+	<% end %>
+</div>
 
 
 

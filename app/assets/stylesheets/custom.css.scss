@@ -6,6 +6,64 @@ $font-family-sans-serif: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 $navbar-height: 45px;
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "font-awesome";
+@import url(http://fonts.googleapis.com/css?family=Oswald:300);
+
+/* =============================================================== */
+/*  Font
+/* =============================================================== */
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: normal;
+    margin: 0;
+    padding-bottom: 15px;
+}
+
+h1 {
+    font-size: 35px;
+    line-height: 40px;
+}
+
+h2 {
+    font-size: 24px;
+    line-height: 28px;
+}
+
+h3 {
+    font-size: 20px;
+    line-height: 24px;
+}
+
+h4 {
+    font-size: 17px;
+    line-height: 20px;
+}
+
+h5 {
+    font-size: 14px;
+    line-height: 20px;
+}
+
+h6 {
+    font-size: 12px;
+    line-height: 20px;
+}
+
+.price {
+  font-size: 35px;
+  font-weight: 900;
+  padding-bottom: 0px;
+}
+
+.itemtitle {
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: 0.25px;
+  line-height: 1;
+  margin-bottom: 0;
+  padding-bottom: 15px
+}
 
 /* =============================================================== */
 /*  Navigation Bar
@@ -119,6 +177,31 @@ $navbar-height: 45px;
 }
 
 /* =============================================================== */
+/*  Item.show
+/* =============================================================== */
+
+.sellerinfoitemshow {
+ white-space: nowrap;
+ padding-top: 15px;
+}
+
+.sellerinfoitemshow * {
+ display: inline;
+}
+
+.itemiteminfoimage img{
+  width:30px;
+  height:30px;
+}
+
+.inline * {
+  display: inline;
+  white-space: nowrap;
+  padding-bottom: 3px;
+  padding-top: 10px;
+}
+
+/* =============================================================== */
 /*  Itemlist.index
 /* =============================================================== */
 
@@ -191,12 +274,107 @@ $navbar-height: 45px;
 /*  Buttons
 /* =============================================================== */
 
+.button {
+  padding-right: 10px;
+  display: inline;
+}
+
 .btn-contact{
     background: #2ecc71;
     color: #ffffff;
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+
 }
 
 .btn-verifiedsafsy{
     background: #9b59b6;
     color: #ffffff;
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
 }
+
+.btn-wishlist{
+    background: #bdc3c7;
+    color: #ffffff;
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+}
+
+.btn-addtocart{
+    background: #2980b9;
+    color: #ffffff;
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+}
+
+/* =============================================================== */
+/*  Carousel
+/* =============================================================== */
+
+.carousel {
+  position: relative;
+    width: 100%;
+}
+
+.sliderhome{
+  position: relative;
+  top: -20px;
+}
+
+
+
+.carousel-inner {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.carousel-control.right {
+ padding-right: 35px;
+}
+
+.carousel-control.left {
+ padding-left: 35px;
+}
+
+.carousel-caption {
+  position: absolute;
+  right: 15%;
+  bottom: 20px;
+  left: 15%;
+  z-index: 10;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  color: #ffffff;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.carousel-caption {
+  position: absolute;
+  right: 15%;
+  bottom: 20px;
+  left: 15%;
+  z-index: 10;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  color: #ffffff;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+/* =============================================================== */
+/*  User mass edit http://localhost:3000/user_items
+/* =============================================================== */
+
+.small_fifty_image img {
+  max-width: 50px;
+  max-height: 50px;
+}
+
+.inlineuseritems * {
+  white-space: nowrap;
+  display: inline;
+}
+

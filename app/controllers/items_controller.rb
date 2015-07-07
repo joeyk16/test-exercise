@@ -1,18 +1,32 @@
 class ItemsController < ApplicationController
 
   def index
-    @items = Item.paginate(page: params[:page])
+    @item = @user.items.paginate(page: params[:page])
   end
 
   def new
   	@item = Item.new
   end
 
+  def home
+    @items = Item.paginate(page: params[:page])
+  end
+
   def edit
+    @item = Item.find(params[:id])
+    @user = User.find(params[:id])
   end
 
   def show
     @item = Item.find(params[:id])
+  end
+
+  def update
+    if @item.update(pin_params)
+      redirect_to @item, notice: 'Item was successfully updated.'
+    else
+      render action: 'edit'
+    end
   end
 
   def create
@@ -24,6 +38,12 @@ class ItemsController < ApplicationController
       flash[:danger] = "Your item didn't save"
       render "new"
     end
+  end
+
+  def destroy
+    Item.find(params[:id]).destroy
+    flash[:success] = "Item deleted"
+    redirect_to users_url
   end
 
   private

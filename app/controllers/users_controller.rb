@@ -16,6 +16,11 @@ class UsersController < ApplicationController
     @item = @user.items.paginate(page: params[:page])
   end
 
+  def show_user_items
+    @user = User.find(current_user)
+    @item = @user.items.paginate(page: params[:page])
+  end
+
   def create
     @user = User.new(user_params)
     if @user.save
