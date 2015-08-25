@@ -1,5 +1,8 @@
 class Item < ActiveRecord::Base
+  acts_as_taggable
 	belongs_to :user
+	belongs_to :category
+	validates :category, presence: true
 	validates :title, presence: true, length: { maximum: 30 } 
 	validates :price, presence: true
 	validates :description, presence: true, length: { maximum: 2000 }

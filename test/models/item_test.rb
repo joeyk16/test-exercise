@@ -16,6 +16,10 @@ class ItemTest < ActiveSupport::TestCase
 		assert_not @item.valid?
 	end
 
+	test "image should be valid" do
+		assert @item.valid?
+	end
+
 	test "price should be present" do 
 		@item.price = "    "
 		assert_not @item.valid?
