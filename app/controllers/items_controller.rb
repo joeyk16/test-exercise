@@ -1,4 +1,5 @@
 class ItemsController < ApplicationController
+  before_action :correct_user_edit,   only: [:edit, :update, :destroy]
 
   def index
     @item = @user.items.paginate(page: params[:page])
@@ -22,10 +23,12 @@ class ItemsController < ApplicationController
   end
 
   def update
-    if @item.update(pin_params)
-      redirect_to @item, notice: 'Item was successfully updated.'
+    @item = Item.find(params[:id])
+    if @item.update(item_params)
+       redirect_to @item
+       flash[:success] = 'Item was successfully updated.'
     else
-      render action: 'edit'
+      render "edit"
     end
   end
 
@@ -49,7 +52,16 @@ class ItemsController < ApplicationController
   private
 
     def item_params
-      params.require(:item).permit(:title, :price, :description, :image)
+      params.require(:item).permit(:title, :category_id, :price, :description, :image, :tag_list)
+    end
+
+    #Check to see if user can edit item.
+    def correct_user_edit
+      if @item = current_user.items.find_by(id: params[:id])
+      else
+        flash[:danger] = "You can't edit that item"
+        redirect_to root_url if @item.nil?
+      end
     end
 
 end

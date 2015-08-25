@@ -1,4 +1,4 @@
-<h1>Items#new</h1>
+<h1>Create New item</h1>
 
 <div class="container">
   <div class=“row”>
@@ -7,6 +7,8 @@
         <div class="panel-body">
           <%= simple_form_for @item, html: { multipart: true } do |f| %>
             <%= f.input :image%>
+						<%= f.collection_select :category_id, Category.order(:name), :id, :name, include_blank: true, :prompt => "Select One Category" %>
+						<%= f.input :tag_list %>
             <%= f.input :title%>
             <%= f.input :price %>
             <%= f.input :description %>
@@ -17,4 +19,6 @@
     </div>
   </div>
 </div>
+
+
 

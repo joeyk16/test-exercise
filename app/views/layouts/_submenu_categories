@@ -1,0 +1,6 @@
+<%= categories.each do |category, children| %>
+  <li>
+    <%= link_to_unless_current category.name, category %>
+    <%= render 'submenu_categories', category: category.children if category.children.present? %>
+  </li>
+<% end %>

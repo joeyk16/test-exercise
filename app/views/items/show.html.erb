@@ -1,7 +1,6 @@
 <div class="row">
   <div class "container">
     <aside class="col-md-6">
-
       <div id="myCarousel" class="carousel slide" data-ride="carousel">
         <!-- Indicators -->
         <ol class="carousel-indicators">
@@ -10,19 +9,15 @@
           <li data-target="#myCarousel" data-slide-to="2"></li>
           <li data-target="#myCarousel" data-slide-to="3"></li>
         </ol>
-
         <!-- Wrapper for slides -->
         <div class="carousel-inner" role="listbox">
           <div class="item active">
             <%= image_tag @item.image.url(:large) %> 
           </div>
-
           <div class="item">
             <%= image_tag @item.image.url(:large) %> 
           </div>
-
         </div>
-
         <!-- Left and right controls -->
         <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
           <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -33,14 +28,15 @@
           <span class="sr-only">Next</span>
         </a>
       </div>
-
   </div>
 
   <!-- right column -->
   <div class="col-lg-6 col-md-6 col-sm-5">
       <div class = "itemtitle"><%= @item.title %> </div> 
       <div class = "price">$<%= @item.price %> </div> 
-      <%= link_to "Edit Items", edit_item_path(@item) %>
+      <% if current_user?(@item.user) %>
+        <%= link_to "Edit Items", edit_item_path(@item) %>
+      <% end %>
       <div class="productFilter productFilterLook2">
           <div class="filterBox">
               <select>
@@ -73,18 +69,17 @@
         <div class="rating">
           <p><span><i class="fa fa-star"></i></span> <span><i class="fa fa-star"></i></span> <span><i
                   class="fa fa-star"></i></span> <span><i class="fa fa-star"></i></span> <span></p>
+       	</div>
        </div>
       </div>
-      </div>
+			<p> Tags: <%= raw @item.tag_list.map { |t| link_to t, tag_path(t) }.join(', ') %> </p>
 
       <div class="product-tab w100 clearfix">
-
           <ul class="nav nav-tabs">
               <li class="active"><a href="#details" data-toggle="tab">Details</a></li>
               <li><a href="#size" data-toggle="tab">Size</a></li>
               <li><a href="#shipping" data-toggle="tab">Shipping</a></li>
           </ul>
-
           <!-- Tab panes -->
           <div class="tab-content">
               <div class="tab-pane active" id="details">
@@ -100,7 +95,6 @@
                   Model wears size 31. Model is 6'2 <br>
                   <br>
               </div>
-
               <div class="tab-pane" id="shipping">
                   <table>
                       <colgroup>
@@ -135,10 +129,8 @@
 
           </div>
           <!-- /.tab content -->
-
       </div>
       <!--/.product-tab-->
-
   </div>
   <!--/ right column end -->
 </div>
