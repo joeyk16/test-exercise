@@ -7,6 +7,7 @@ class CategoriesController < ApplicationController
   end
 
   def show
+    @tags = Item.where(category_id: @category.id).tag_counts_on(:tags)
     if params[:tag]
       @items = Item.tagged_with(params[:tag])
     else

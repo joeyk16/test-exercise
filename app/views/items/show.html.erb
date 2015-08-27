@@ -67,11 +67,14 @@
       <div class = "inline">
        <div class="sellerinfoitemshow"><%= image_tag @item.user.avatar.url(:thumb) %><h4><%= @item.user.username %></h4><p> 100% Positive Feedback</p></div> 
         <div class="rating">
-          <p><span><i class="fa fa-star"></i></span> <span><i class="fa fa-star"></i></span> <span><i
-                  class="fa fa-star"></i></span> <span><i class="fa fa-star"></i></span> <span></p>
+          <p>
+            <span><i class="fa fa-star"></i></span> <span><i class="fa fa-star"></i></span> 
+            <span><iclass="fa fa-star"></i></span> <span><i class="fa fa-star"></i></span> 
+          </p>
        	</div>
        </div>
       </div>
+      
 			<p> Tags: <%= raw @item.tag_list.map { |t| link_to t, tag_path(t) }.join(', ') %> </p>
 
       <div class="product-tab w100 clearfix">
