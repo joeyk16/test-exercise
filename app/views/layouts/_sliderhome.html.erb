@@ -17,16 +17,33 @@
 
     <!-- Wrapper for slides -->
     <div class="carousel-inner">
-      <!--for the next slider copy this down to end div and use item instead of item active-->
-      <div class="item active"> 
-        <%= image_tag "slider/imac_website_1980.jpg" %>
+      <div class="item active">
+        <%= image_tag "slider/1.jpg" %>
         <div class="container">
           <div class="carousel-caption">
-            <div class="carousel-title">Safsy</div>
-            <div class="carousel-title">The Safest Way To Shop</div>
-            <p class="lead">All items are guaranteed to arrive, no fakes, Warranty Protection, and Safsy Protection</p>
-            <button type="button" class="btn btn-defalt btn-lg"><%= link_to 'Log In', login_path %></button>
-            <button type="button" class="btn btn-success btn-lg"><%= link_to 'Sign Up', signup_path %></button>
+            <div class="carousel-title">THE NEW WAY TO FIND AND PROMOTE YOUR STYLE</div>
+            <div class="button"><button type="button" class="btn btn-carousel-signup btn-lg "><%= link_to "Sign Up", signup_path %></button></div>
+            <div class="button"><button type="button" class="btn btn-carousel-login btn-lg "><%= link_to "Log In", login_path %></button></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="item">
+        <%= image_tag "slider/2.jpg" %>
+        <div class="container">
+          <div class="carousel-caption">
+            <h1>Bootstrap Carousel Fullscreen</h1>
+            <p class="lead">Just turns the Twitter Bootstrap Carousel in fullscreen mode, and scale to fit the screen resolution</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="item">
+        <%= image_tag "slider/3.jpg" %>
+        <div class="container">
+          <div class="carousel-caption">
+            <h1>Bootstrap Carousel Fullscreen</h1>
+            <p class="lead">Just turns the Twitter Bootstrap Carousel in fullscreen mode, and scale to fit the screen resolution</p>
           </div>
         </div>
       </div>
@@ -40,10 +57,10 @@
       <span class="glyphicon glyphicon-chevron-right"></span>
     </a>
   </div>
-
+</div>
   <script src="./js/jquery-1.10.0.min.js"></script>
   <script src="./js/bootstrap/js/bootstrap.min.js"></script>
 
   <!-- Just include this Js file -->
   <script src="./js/jquery.carousel.fullscreen.js"></script>
-</div>
+

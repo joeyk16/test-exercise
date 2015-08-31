@@ -1,9 +1,9 @@
 @import "bootstrap-sprockets";
 @import url(http://fonts.googleapis.com/css?family=Lato:400,700);
-$navbar-default-bg: #3598db;
-$navbar-default-link-color: #ffffff;
+$navbar-default-bg: #ffffff;
+$navbar-default-link-color: #95a5a6;
 $font-family-sans-serif: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-$navbar-height: 45px;
+$navbar-height: 60px;
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "font-awesome";
@@ -14,40 +14,40 @@ $navbar-height: 45px;
 /* =============================================================== */
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Source Sans Pro', sans-serif;
-    font-weight: normal;
-    margin: 0;
-    padding-bottom: 15px;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: normal;
+  margin: 0;
+  padding-bottom: 15px;
 }
 
 h1 {
-    font-size: 35px;
-    line-height: 40px;
+  font-size: 35px;
+  line-height: 40px;
 }
 
 h2 {
-    font-size: 24px;
-    line-height: 28px;
+  font-size: 24px;
+  line-height: 28px;
 }
 
 h3 {
-    font-size: 20px;
-    line-height: 24px;
+  font-size: 20px;
+  line-height: 24px;
 }
 
 h4 {
-    font-size: 17px;
-    line-height: 20px;
+  font-size: 17px;
+  line-height: 20px;
 }
 
 h5 {
-    font-size: 14px;
-    line-height: 20px;
+  font-size: 14px;
+  line-height: 20px;
 }
 
 h6 {
-    font-size: 12px;
-    line-height: 20px;
+  font-size: 12px;
+  line-height: 20px;
 }
 
 .price {
@@ -66,10 +66,9 @@ h6 {
 }
 
 .carousel-title{
-  font-family: 'Droid Sans', sans-serif;
-  font-size: 80px;
-  font-weight: 700;
-  text-shadow: 0 4px 6px rgba(0, 0, 0, 0.6);
+  font-family: 'Oxygen', sans-serif;
+  font-size: 50px;
+  font-weight: 400;
 }
 /* =============================================================== */
 /*  Navigation Bar
@@ -131,11 +130,6 @@ h6 {
   line-height: normal;
   margin-bottom: 0 !important;
   padding-bottom: 0;
-}
-
-.bg-gray {
-  background-image: -moz-linear-gradient(center bottom, #BBBBBB 0%, #F0F0F0 100%);
-  box-shadow: 0 1px 0 #B4B3B3;
 }
 
 .footer-bottom {
@@ -207,21 +201,26 @@ h6 {
   padding-top: 10px;
 }
 
+.filterBox {
+  display: inline-block;
+  margin-right: 20px;
+}
+
 /* =============================================================== */
 /*  Itemlist.index
 /* =============================================================== */
 
 .itemlistprice{
-    font-size: 30px;
-    font-weight: bold;
-    text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
 }
 
 .itemlisttitle{
-    font-size: 15px;
-    color: #34495e;
-    text-align: center;
-    padding: 20px 0px;
+  font-size: 15px;
+  color: #34495e;
+  text-align: center;
+  padding: 20px 0px;
 }
 
 #items {
@@ -251,28 +250,28 @@ h6 {
 
 
 .section-title-style2, .section-title.style2 {
-    position: relative;
+  position: relative;
 }
 
 .style2 .section-title:after, .section-title-style2:after, .section-title.style2:after, .section-title-style2:after {
-    background: #DDDDDD;
-    content: "";
-    display: block;
-    height: 1px;
-    margin-left: 20%;
-    position: absolute;
-    top: 28px;
-    width: 60%;
-    z-index: 1;
+  background: #DDDDDD;
+  content: "";
+  display: block;
+  height: 1px;
+  margin-left: 20%;
+  position: absolute;
+  top: 28px;
+  width: 60%;
+  z-index: 1;
 }
 
 .section-title-style2 span, .section-title.style2 span {
-    background: #FFFFFF;
-    display: inline-block;
-    padding: 10px;
-    position: relative;
-    width: auto;
-    z-index: 2;
+  background: #FFFFFF;
+  display: inline-block;
+  padding: 10px;
+  position: relative;
+  width: auto;
+  z-index: 2;
 }
 
 
@@ -287,74 +286,59 @@ h6 {
 }
 
 .btn-contact{
-    background: #2ecc71;
-    color: #ffffff;
-    font-family: 'Oswald', sans-serif;
-    text-transform: uppercase;
-
+  background: #2ecc71;
+  color: #ffffff;
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
 }
 
+.btn-carousel-signup{
+  background: #2ecc71;
+  color: #ffffff;
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  padding: 12px 22px;
+  font-size: 22px;
+}
+
+.btn-carousel-login{
+  background: #2980b9;
+  color: #ffffff;
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  padding: 12px 22px;
+  font-size: 22px;
+  color: #ffffff;
+}
+
+.btn-carousel-signup a{
+  color:#ffffff;
+}
+
+.btn-carousel-login a{
+    color:#ffffff;
+}
+
+
 .btn-verifiedsafsy{
-    background: #9b59b6;
-    color: #ffffff;
-    font-family: 'Oswald', sans-serif;
-    text-transform: uppercase;
+  background: #9b59b6;
+  color: #ffffff;
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
 }
 
 .btn-wishlist{
-    background: #bdc3c7;
-    color: #ffffff;
-    font-family: 'Oswald', sans-serif;
-    text-transform: uppercase;
+  background: #bdc3c7;
+  color: #ffffff;
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
 }
 
 .btn-addtocart{
-    background: #2980b9;
-    color: #ffffff;
-    font-family: 'Oswald', sans-serif;
-    text-transform: uppercase;
-}
-
-/* =============================================================== */
-/*  Carousel
-/* =============================================================== */
-
-.carousel {
-  position: relative;
-    width: 100%;
-}
-
-.sliderhome{
-  position: relative;
-  top: -20px;
-}
-
-
-
-.carousel-inner {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-}
-
-.carousel-control.right {
- padding-right: 35px;
-}
-
-.carousel-control.left {
- padding-left: 35px;
-}
-
-.carousel-caption {
-
-  right: 15%;
-  bottom: 40%;
-  left: 15%;
-  z-index: 10;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  background: #2980b9;
   color: #ffffff;
-  text-align: center;
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
 }
 
 /* =============================================================== */
