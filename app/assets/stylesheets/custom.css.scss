@@ -274,6 +274,26 @@ h6 {
   z-index: 2;
 }
 
+/* =============================================================== */
+/*  Buttons
+/* =============================================================== */
+
+span.checkbox {
+  padding: 0.4em;
+}
+
+select#category_parent_id {
+  margin-top: 1em;
+  width: 18em;
+}
+
+select#item_category_id {
+    margin-bottom: 1em;
+}
+
+label.string.optional.control-label {
+    margin-top: 1em;
+}
 
 /* =============================================================== */
 /*  Buttons
@@ -319,6 +339,9 @@ h6 {
     color:#ffffff;
 }
 
+.btn-success a{
+  color:#ffffff;
+}
 
 .btn-verifiedsafsy{
   background: #9b59b6;
@@ -339,6 +362,10 @@ h6 {
   color: #ffffff;
   font-family: 'Oswald', sans-serif;
   text-transform: uppercase;
+}
+
+input.btn.btn-default {
+    margin-top: 1em;
 }
 
 /* =============================================================== */
