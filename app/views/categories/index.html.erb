@@ -8,6 +8,8 @@
   <thead>
     <tr>
       <th>Category</th>
+      <th>Parent Category</th>
+      <th>Sizes</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -15,6 +17,8 @@
     <% @categories.each do |category, ancestry| %>
       <tr>
         <td><%= category.name %></td>
+        <td><%= category.parent %></td>
+        <td><%= category.sizes %></td>
         <td><%= link_to 'Show', category %><%= link_to 'Edit', edit_category_path(category) %><%= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
