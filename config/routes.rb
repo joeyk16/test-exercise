@@ -4,9 +4,7 @@ Rails.application.routes.draw do
   resources :categories
 
   get 'password_resets/new'
-
   get 'password_resets/edit'
-
   get 'sessions/new'
 
   resources :users
@@ -22,7 +20,8 @@ Rails.application.routes.draw do
 
   resources :items
   get 'items_new' => 'items#new'
-  
+
+  resources :sizes
 
   get 'tags/:tag', to: 'categories#show', as: :tag
   

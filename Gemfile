@@ -23,6 +23,7 @@ gem "ancestry"
 gem 'acts-as-taggable-on', '~> 3.4'
 gem 'rspec-rails', '~>3.0'
 gem 'capybara', '~> 2.4.4'
+gem 'factory_girl_rails', '~> 4.0'
 
 group :development do
 
@@ -35,4 +36,8 @@ end
 
 group :test, :production do
     gem 'pg'
+end
+
+group :test do
+  gem 'shoulda-matchers'
 end
