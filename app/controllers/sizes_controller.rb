@@ -9,6 +9,7 @@ class SizesController < ApplicationController
     @size = Size.new(size_params)
     if @size.save
       redirect_to sizes_path
+      flash[:success] = "You have created a new size"
     else
       render 'new'
     end
@@ -16,6 +17,26 @@ class SizesController < ApplicationController
 
   def index
   	@sizes = Size.all
+  end
+
+  def destroy
+    Size.find(params[:id]).destroy
+    flash[:sucess] = "Size deleted"
+    redirect_to sizes_path
+  end
+
+  def edit
+    @size = Size.find(params[:id])
+  end
+
+  def update
+    @size = Size.find(params[:id])
+    if @size.update_attributes(size_params)
+      flash[:success] = "Size updated"
+      redirect_to sizes_path
+    else
+      render 'edit'
+    end
   end
 
 private
@@ -28,4 +49,4 @@ private
     redirect_to(root_url) unless current_user.try(:admin?)
   end
 
-end
+end 
