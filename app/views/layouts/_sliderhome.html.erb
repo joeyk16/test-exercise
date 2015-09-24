@@ -1,7 +1,7 @@
 <!-- Included Bootstrap CSS Files -->
 <link rel="stylesheet" href="./js/bootstrap/css/bootstrap.min.css" />
 
-<!-- Just include this Css file --> 
+<!-- Just include this Css file -->
 <link rel="stylesheet" href="./css/jquery.carousel.fullscreen.css" />
 
 <div class= "sliderhome">
@@ -17,38 +17,20 @@
 
     <!-- Wrapper for slides -->
     <div class="carousel-inner">
+      <div class = "carousel_title_overlay">
+        <div class="carousel-title">THE NEW WAY TO FIND AND PROMOTE YOUR STYLE</div>
+        <div class="button"><button type="button" class="btn btn-carousel-signup btn-lg "><%= link_to "Sign Up", signup_path %></button></div>
+        <div class="button"><button type="button" class="btn btn-carousel-login btn-lg "><%= link_to "Log In", login_path %></button></div>
+      </div>
       <div class="item active">
         <%= image_tag "slider/1.jpg" %>
-        <div class="container">
-          <div class="carousel-caption">
-            <div class="carousel-title">THE NEW WAY TO FIND AND PROMOTE YOUR STYLE</div>
-            <div class="button"><button type="button" class="btn btn-carousel-signup btn-lg "><%= link_to "Sign Up", signup_path %></button></div>
-            <div class="button"><button type="button" class="btn btn-carousel-login btn-lg "><%= link_to "Log In", login_path %></button></div>
-          </div>
-        </div>
       </div>
-
       <div class="item">
         <%= image_tag "slider/2.jpg" %>
-        <div class="container">
-          <div class="carousel-caption">
-            <h1>Bootstrap Carousel Fullscreen</h1>
-            <p class="lead">Just turns the Twitter Bootstrap Carousel in fullscreen mode, and scale to fit the screen resolution</p>
-          </div>
-        </div>
       </div>
-
       <div class="item">
         <%= image_tag "slider/3.jpg" %>
-        <div class="container">
-          <div class="carousel-caption">
-            <h1>Bootstrap Carousel Fullscreen</h1>
-            <p class="lead">Just turns the Twitter Bootstrap Carousel in fullscreen mode, and scale to fit the screen resolution</p>
-          </div>
-        </div>
       </div>
-    </div>
-
     <!-- Controls -->
     <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
       <span class="glyphicon glyphicon-chevron-left"></span>

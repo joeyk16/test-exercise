@@ -1,0 +1,16 @@
+<center><h1>Create A New Size</h1></center>
+
+<div class="container">
+  <div class=“row”>
+    <div class="col-md-6 col-md-offset-3">
+      <div class="panel panel-primary">
+        <div class="panel-body">
+          <%= simple_form_for @size do |f| %>
+            <%= f.input :title %>
+            <%= f.button :submit, "Create Size", class: "btn btn-primary" %>
+          <% end %>
+        </div>
+      </div>    
+    </div>
+  </div>
+</div>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150907090050) do
+ActiveRecord::Schema.define(version: 20150920013947) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
@@ -21,6 +21,16 @@ ActiveRecord::Schema.define(version: 20150907090050) do
   end
 
   add_index "categories", ["ancestry"], name: "index_categories_on_ancestry"
+
+  create_table "category_sizes", force: :cascade do |t|
+    t.integer  "category_id"
+    t.integer  "size_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "category_sizes", ["category_id"], name: "index_category_sizes_on_category_id"
+  add_index "category_sizes", ["size_id"], name: "index_category_sizes_on_size_id"
 
   create_table "items", force: :cascade do |t|
     t.string   "title"
@@ -38,6 +48,12 @@ ActiveRecord::Schema.define(version: 20150907090050) do
 
   add_index "items", ["user_id", "created_at"], name: "index_items_on_user_id_and_created_at"
   add_index "items", ["user_id"], name: "index_items_on_user_id"
+
+  create_table "sizes", force: :cascade do |t|
+    t.text     "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"

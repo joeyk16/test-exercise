@@ -1,6 +1,6 @@
 class CategoriesController < ApplicationController
   before_action :set_category,   only: [:show]
-  before_action :admin_user,     only: [:destroy, :index, :edit]
+  before_action :admin_user,     only: [:destroy, :index, :edit, :show]
 
   def index
     @categories = Category.all
@@ -57,12 +57,12 @@ class CategoriesController < ApplicationController
     end
 
     def category_params
-      params.require(:category).permit(:name, :parent_id)
+      params.require(:category).permit(:name, :parent_id, size_ids: [])
     end
-    
+
     # Confirms an admin user.
     def admin_user
       redirect_to(root_url) unless current_user.try(:admin?)
     end
-    
+
 end

@@ -18,4 +18,5 @@
 //= require masonry/jquery.masonry
 //= require masonry/jquery.infinitescroll.min
 //= require masonry/jquery.imagesloaded.min
+//= require cocoon
 //= require_tree .
