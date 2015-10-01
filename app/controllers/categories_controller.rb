@@ -1,5 +1,5 @@
 class CategoriesController < ApplicationController
-  before_action :set_category,   only: [:show]
+  before_action :set_category,   only: [:show, :edit, :update]
   before_action :admin_user,     only: [:destroy, :index, :edit, :show]
 
   def index
@@ -20,7 +20,6 @@ class CategoriesController < ApplicationController
   end
 
   def edit
-    @category = Category.find(params[:id])
   end
 
   def create
@@ -35,7 +34,6 @@ class CategoriesController < ApplicationController
   end
 
   def update
-    @Cateogry = Category.find(params[:id])
     if @Cateogry.update(category_params)
        redirect_to @Cateogry
        flash[:success] = 'Category was successfully updated.'
@@ -52,17 +50,16 @@ class CategoriesController < ApplicationController
 
   private
 
-    def set_category
-      @category = Category.find(params[:id])
-    end
+  def set_category
+    @category = Category.find(params[:id])
+  end
 
-    def category_params
-      params.require(:category).permit(:name, :parent_id, size_ids: [])
-    end
+  def category_params
+    params.require(:category).permit(:name, :parent_id, size_ids: [])
+  end
 
-    # Confirms an admin user.
-    def admin_user
-      redirect_to(root_url) unless current_user.try(:admin?)
-    end
-
+  # Confirms an admin user.
+  def admin_user
+    redirect_to(root_url) unless current_user.try(:admin?)
+  end
 end

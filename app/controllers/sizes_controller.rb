@@ -1,4 +1,5 @@
 class SizesController < ApplicationController
+  before_action :set_size, only: [:edit, :update]
   before_action :admin_user, only: [:destroy, :index, :edit, :show]
 
 	def new
@@ -26,11 +27,9 @@ class SizesController < ApplicationController
   end
 
   def edit
-    @size = Size.find(params[:id])
   end
 
   def update
-    @size = Size.find(params[:id])
     if @size.update_attributes(size_params)
       flash[:success] = "Size updated"
       redirect_to sizes_path
@@ -40,6 +39,10 @@ class SizesController < ApplicationController
   end
 
   private
+
+  def set_size
+    @size = Size.find(params[:id])
+  end
 
   def size_params
     params.require(:size).permit(:title)

@@ -1,5 +1,8 @@
 require 'rails_helper'
 RSpec.describe Size, type: :model do
+	let!(:size) { create(:size) }
+	let!(:category) { create(:category) }
+
 	describe "validations" do
 		it { is_expected.to validate_uniqueness_of(:title) }
 		it { is_expected.to ensure_length_of(:title).is_at_most(15) }
@@ -7,27 +10,22 @@ RSpec.describe Size, type: :model do
 	end
 
 	describe "associations" do
-		it { is_expected.to belong_to(:category) }
+		it { is_expected.to have_many(:category_sizes) }
+		it { is_expected.to have_many(:categories) }
 	end
 
-	let(:size01) { FactoryGirl.create :size01 }
-	let(:size02) { FactoryGirl.build :size02 }
-	let(:size03) { FactoryGirl.create :size03 }
-	let(:category) { FactoryGirl.create(:category) }
-
-	it "should have a matching title" do
-		expect(size01.title).to eq("XXLarge")
+	describe "have a matching title" do
+		before { size.title = "title01"}
+		it { expect(size.title).to eq("title01") }
 	end
 
-	it "is valid with title" do
-		expect(size01).to be_valid
+	describe "valid with title" do
+		before { size.title = "title01"}
+		it { expect(size).to be_valid }
 	end
 
-	it "is invalid without a title" do
-	  expect(size02).to be_invalid
+	describe "invalid no title" do
+		before { size.title = nil }
+		it { expect(size).to be_invalid }
 	end
-
-  it 'should return the name of size' do
-  	expect(category.size_id).to eql(1) #1 is the id of size01
-  end
 end
