@@ -1,17 +1,23 @@
 class User < ActiveRecord::Base
   has_many :items
+
   attr_accessor :remember_token, :activation_token, :reset_token
   before_save   :downcase_email
   before_create :create_activation_digest
   attr_accessor :remember_token
   before_save { self.email = email.downcase }
-  validates :username, presence: true, length: { maximum: 50, minimum: 5 }, uniqueness: true
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+
+  validates :username, presence: true, length: { maximum: 50, minimum: 5 }, uniqueness: true
   validates :email, presence: true, length: { maximum: 255 }, format: { with: VALID_EMAIL_REGEX }, uniqueness: true
-  has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
+
+  has_secure_password
+
   has_attached_file :avatar, styles: { large: "250x250", medium:"100x100", small:"50x50", thumb:"30x30#"}
   validates_attachment_content_type :avatar, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
+  has_attached_file :header_image, styles: { large: "1170x266" }
+  validates_attachment_content_type :header_image, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
 
 
   # Returns the hash digest of the given string.
@@ -84,4 +90,3 @@ class User < ActiveRecord::Base
   end
 
 end
-	

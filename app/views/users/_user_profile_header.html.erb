@@ -1,33 +1,25 @@
 <div class="container">
-  <div class="col-md-3">
-		<%= image_tag @user.avatar.url(:large) %>
-	</div>
-  <div class="col-md-9">
+  <div class="user_header">
+    <%= image_tag @user.header_image.url %>
+    <div class="col-md-3 user_show_avatar">
+  		<%= image_tag @user.avatar.url(:large) %>
+  	</div>
     <section class="user_info">
       <h1><%= @user.username %> </h1>
-      <button type="button" class="btn btn-contact btn-md"> Contact Seller <span class="glyphicon glyphicon-envelope"></span></button>
-      <button type="button" class="btn btn-verifiedsafsy btn-md"> Verified Safsy Retailer </button>
-      <p><%= @user.description %> </p>
     </section>
   </div>
 </div>
-<nav class="navbar navbar-usershow">
-  <div class="container-fluid">
+<nav class="navbar navbar-usershow container">
+  <div class="container-fluid-user-show">
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
+        <li><a href="#">Outfits</a></li>
         <li><a href="#">Items</a></li>
-        <li><a href="#">On Sale</a></li>
-        <ul class="nav navbar-nav navbar-right">
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Policies<span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">Warranty Policies</a></li>
-              <li><a href="#">Money Back Policies</a></li>
-            </ul>
-          </li>
-        </ul>
       </ul>
+      <div class="user_show_actions">
+        <button type="button" class="btn btn-contact btn-md"> Message <span class="glyphicon glyphicon-envelope"></span></button>
+      </div>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>

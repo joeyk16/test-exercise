@@ -17,7 +17,7 @@ gem 'simple_form'
 gem 'faker',                '1.4.2'
 gem 'will_paginate',           '3.0.7'
 gem 'bootstrap-will_paginate', '0.0.10'
-gem "paperclip", "~> 4.2"
+gem "paperclip", "~> 4.3"
 gem 'masonry-rails'
 gem "font-awesome-rails"
 gem "ancestry"
@@ -28,16 +28,14 @@ gem 'factory_girl_rails', '~> 4.0'
 gem "cocoon"
 
 group :development do
-
   gem 'byebug'
   gem 'web-console', '~> 2.0'
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'sqlite3'
 end
 
 group :test, :production do
-    gem 'pg'
+  gem 'pg'
 end
 
 group :test do

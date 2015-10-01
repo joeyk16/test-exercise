@@ -1,129 +1,131 @@
-<div class = "row container">
-  <div class = "col-md-6">
-    <div class = "items_image">
-      <div id="myCarousel" class="carousel slide" data-ride="carousel">
-        <!-- Indicators -->
-        <ol class="carousel-indicators">
-          <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-          <li data-target="#myCarousel" data-slide-to="1"></li>
-        </ol>
-        <!-- Wrapper for slides -->
-        <div class="carousel-inner" role="listbox">
-          <div class="item active">
-            <%= image_tag @item.image.url(:large) %>
+<div class = "container padding_top">
+  <div class = "row container">
+    <div class = "col-md-6">
+      <div class = "items_image">
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+          <!-- Indicators -->
+          <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+          </ol>
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner" role="listbox">
+            <div class="item active">
+              <%= image_tag @item.image.url(:large) %>
+            </div>
+            <div class="item">
+              <%= image_tag @item.image.url(:large) %>
+            </div>
           </div>
-          <div class="item">
-            <%= image_tag @item.image.url(:large) %>
-          </div>
+          <!-- Left and right controls -->
+          <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
         </div>
-        <!-- Left and right controls -->
-        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-          <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-          <span class="sr-only">Previous</span>
-        </a>
-        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-          <span class="sr-only">Next</span>
-        </a>
       </div>
     </div>
+    <!-- right column -->
+    <div class="col-lg-6 col-md-6 col-sm-5">
+
+        <div class = "itemtitle"><%= @item.title %> </div>
+        <div class = "price">$<%= @item.price %> </div>
+        <% if current_user?(@item.user) %>
+          <%= link_to "Edit Items", edit_item_path(@item) %>
+        <% end %>
+        <div class="productFilter productFilterLook2">
+          <div class="filterBox">
+            <select>
+              <option value="strawberries" selected>Size</option>
+            </select>
+          </div>
+          <div class="filterBox">
+            <select>
+              <option value="strawberries" selected>Quantity</option>
+            </select>
+          </div>
+          <div class="filterBox">
+            <select>
+              <option value="strawberries" selected>Shipping</option>
+            </select>
+          </div>
+        </div>
+        <div class="cart-actions">
+          <div class="button"><button type="button" class="btn btn-addtocart btn-sm">Add To Cart</button></div>
+          <div class="button"><button type="button" class="btn btn-wishlist btn-sm">Add to Wishlist</button> </div>
+          <div class="button"><button type="button" class="btn btn-contact btn-sm">Message User</button> </div>
+        </div>
+        <div class="sellerinfoitemshow">
+          <%= image_tag @item.user.avatar.url(:thumb) %>
+          <h5><%= link_to "#{@item.user.username}", user_path(@user) %></h5>
+          <p> 100% Positive Feedback</p>
+          <div class="rating">
+            <p>
+              <span><i class="fa fa-star"></i></span> <span><i class="fa fa-star"></i></span>
+              <span><iclass="fa fa-star"></i></span> <span><i class="fa fa-star"></i></span>
+            </p>
+          </div>
+        </div>
+    		<p> Tags: <%= raw @item.tag_list.map { |t| link_to t, tag_path(t) }.join(', ') %> </p>
+        <div class="product-tab w100 clearfix">
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#details" data-toggle="tab">Details</a></li>
+            <li><a href="#size" data-toggle="tab">Size</a></li>
+            <li><a href="#shipping" data-toggle="tab">Shipping</a></li>
+          </ul>
+              <!-- Tab panes -->
+          <div class="tab-content">
+            <div class="tab-pane active" id="details">
+              Description: <%= @item.description %>
+            </div>
+            <div class="tab-pane" id="size"> 16" waist<br>
+              34" inseam<br>
+              10.5" front rise<br>
+              8.5" knee<br>
+              7.5" leg opening<br>
+              <br>
+              Measurements taken from size 30<br>
+              Model wears size 31. Model is 6'2 <br>
+              <br>
+            </div>
+            <div class="tab-pane" id="shipping">
+              <table>
+                <colgroup>
+                  <col style="width:33%">
+                  <col style="width:33%">
+                  <col style="width:33%">
+                </colgroup>
+                <tbody>
+                <tr>
+                  <td>Standard</td>
+                  <td>1-5 business days</td>
+                  <td>$7.95</td>
+                </tr>
+                <tr>
+                  <td>Two Day</td>
+                  <td>2 business days</td>
+                  <td>$15</td>
+                </tr>
+                <tr>
+                  <td>Next Day</td>
+                  <td>1 business day</td>
+                  <td>$30</td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                  <td colspan="3">* Free on orders of $50 or more</td>
+                </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div><!-- /.tab content -->
+        </div><!--/.product-tab-->
+
+    </div><!--/ right column end -->
   </div>
-  <!-- right column -->
-  <div class="col-lg-6 col-md-6 col-sm-5">
-    <div class = "white_space" >
-      <div class = "itemtitle"><%= @item.title %> </div>
-      <div class = "price">$<%= @item.price %> </div>
-      <% if current_user?(@item.user) %>
-        <%= link_to "Edit Items", edit_item_path(@item) %>
-      <% end %>
-      <div class="productFilter productFilterLook2">
-        <div class="filterBox">
-          <select>
-            <option value="strawberries" selected>Size</option>
-          </select>
-        </div>
-        <div class="filterBox">
-          <select>
-            <option value="strawberries" selected>Quantity</option>
-          </select>
-        </div>
-        <div class="filterBox">
-          <select>
-            <option value="strawberries" selected>Shipping</option>
-          </select>
-        </div>
-      </div>
-      <div class="cart-actions">
-        <div class="button"><button type="button" class="btn btn-addtocart btn-lg">Add To Cart</button></div>
-        <div class="button"><button type="button" class="btn btn-wishlist btn-lg">Add to Wishlist</button> </div>
-        <div class="button"><button type="button" class="btn btn-contact btn-lg">Message User</button> </div>
-      </div>
-      <div class="sellerinfoitemshow">
-        <%= image_tag @item.user.avatar.url(:thumb) %>
-        <h4><%= @item.user.username %></h4>
-        <p> 100% Positive Feedback</p>
-        <div class="rating">
-          <p>
-            <span><i class="fa fa-star"></i></span> <span><i class="fa fa-star"></i></span>
-            <span><iclass="fa fa-star"></i></span> <span><i class="fa fa-star"></i></span>
-          </p>
-        </div>
-      </div>
-  		<p> Tags: <%= raw @item.tag_list.map { |t| link_to t, tag_path(t) }.join(', ') %> </p>
-      <div class="product-tab w100 clearfix">
-        <ul class="nav nav-tabs">
-          <li class="active"><a href="#details" data-toggle="tab">Details</a></li>
-          <li><a href="#size" data-toggle="tab">Size</a></li>
-          <li><a href="#shipping" data-toggle="tab">Shipping</a></li>
-        </ul>
-            <!-- Tab panes -->
-        <div class="tab-content">
-          <div class="tab-pane active" id="details">
-            Description: <%= @item.description %>
-          </div>
-          <div class="tab-pane" id="size"> 16" waist<br>
-            34" inseam<br>
-            10.5" front rise<br>
-            8.5" knee<br>
-            7.5" leg opening<br>
-            <br>
-            Measurements taken from size 30<br>
-            Model wears size 31. Model is 6'2 <br>
-            <br>
-          </div>
-          <div class="tab-pane" id="shipping">
-            <table>
-              <colgroup>
-                <col style="width:33%">
-                <col style="width:33%">
-                <col style="width:33%">
-              </colgroup>
-              <tbody>
-              <tr>
-                <td>Standard</td>
-                <td>1-5 business days</td>
-                <td>$7.95</td>
-              </tr>
-              <tr>
-                <td>Two Day</td>
-                <td>2 business days</td>
-                <td>$15</td>
-              </tr>
-              <tr>
-                <td>Next Day</td>
-                <td>1 business day</td>
-                <td>$30</td>
-              </tr>
-              </tbody>
-              <tfoot>
-              <tr>
-                <td colspan="3">* Free on orders of $50 or more</td>
-              </tr>
-              </tfoot>
-            </table>
-          </div>
-        </div><!-- /.tab content -->
-      </div><!--/.product-tab-->
-    </div><!--/ white space -->
-  </div><!--/ right column end -->
 </div>
