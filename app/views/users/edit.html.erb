@@ -8,6 +8,7 @@
           <%= render 'shared/error_messages', form_object: @user%>
           <%= simple_form_for @user do |f| %>
             <%= f.input :avatar, as: :file %>
+            <%= f.input :header_image, as: :file %>
             <%= f.input :username, class: 'form-control' %>
             <%= f.input :email, class: 'form-control' %>
             <%= f.input :description, class: 'form-control' %>
@@ -16,7 +17,7 @@
             <%= f.button :submit, "Save changes", class: "btn btn-primary" %>
           <% end %>
         </div>
-      </div>    
+      </div>
     </div>
   </div>
 </div>

@@ -10,7 +10,7 @@ class ItemsController < ApplicationController
   end
 
   def home
-    @items = Item.paginate(page: params[:page])
+    @item = Item.paginate(page: params[:page])
   end
 
   def edit
@@ -20,6 +20,7 @@ class ItemsController < ApplicationController
 
   def show
     @item = Item.find(params[:id])
+    @user = @item.user
   end
 
   def update

@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id]) 
+    @user = User.find(params[:id])
     @item = @user.items.paginate(page: params[:page])
   end
 
@@ -55,7 +55,8 @@ class UsersController < ApplicationController
   private
 
     def user_params
-      params.require(:user).permit(:username, :email, :password, :password_confirmation, :avatar, :description)
+      params.require(:user).permit(:username, :email, :password, :password_confirmation,
+                                   :avatar, :header_image, :description)
     end
 
     # Confirms a logged-in user.
