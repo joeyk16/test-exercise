@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :set_user, only: [:show, :update, :edit]
   before_action :logged_in_user, only: [:edit, :update, :destroy]
   before_action :correct_user,   only: [:edit, :update]
   before_action :admin_user,     only: [:destroy, :index]
@@ -12,13 +13,12 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
-    @item = @user.items.paginate(page: params[:page])
+    @items = @user.items.paginate(page: params[:page])
   end
 
   def show_user_items
     @user = User.find(current_user)
-    @item = @user.items.paginate(page: params[:page])
+    @items = @user.items.paginate(page: params[:page])
   end
 
   def create
@@ -33,11 +33,9 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:id])
   end
 
   def update
-    @user = User.find(params[:id])
     if @user.update_attributes(user_params)
       flash[:success] = "Profile updated"
       redirect_to @user
@@ -54,29 +52,32 @@ class UsersController < ApplicationController
 
   private
 
-    def user_params
-      params.require(:user).permit(:username, :email, :password, :password_confirmation,
-                                   :avatar, :header_image, :description)
-    end
+  def set_user
+    @user = User.find(params[:id])
+  end
 
-    # Confirms a logged-in user.
-    def logged_in_user
-      unless logged_in?
-        store_location
-        flash[:danger] = "Please log in."
-        redirect_to login_url
-      end
-    end
+  def user_params
+    params.require(:user).permit(:username, :email, :password, :password_confirmation,
+                                 :avatar, :header_image, :description)
+  end
 
-    # Confirms the correct user.
-    def correct_user
-      @user = User.find(params[:id])
-      redirect_to(root_url) unless current_user?(@user)
+  # Confirms a logged-in user.
+  def logged_in_user
+    unless logged_in?
+      store_location
+      flash[:danger] = "Please log in."
+      redirect_to login_url
     end
+  end
 
-    # Confirms an admin user.
-    def admin_user
-      redirect_to(root_url) unless current_user.try(:admin?)
-    end
+  # Confirms the correct user.
+  def correct_user
+    @user = User.find(params[:id])
+    redirect_to(root_url) unless current_user?(@user)
+  end
 
+  # Confirms an admin user.
+  def admin_user
+    redirect_to(root_url) unless current_user.try(:admin?)
+  end
 end
