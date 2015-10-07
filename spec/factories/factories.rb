@@ -1,6 +1,10 @@
 FactoryGirl.define do
-  factory :category do
-    name Faker::Lorem.word
+  sequence :email do |n|
+    "user#{n}@factory.com"
+  end
+
+  sequence :username do |n|
+    "username#{n}"
   end
 
   factory :category_size do
@@ -10,6 +14,10 @@ FactoryGirl.define do
 
   factory :size do
     title Faker::Lorem.word
+  end
+
+  factory :category do
+    name Faker::Lorem.word
   end
 
   factory :item do
@@ -22,11 +30,12 @@ FactoryGirl.define do
   end
 
   factory :user do
-    username Faker::Lorem.word
-    email Faker::Internet.email
-    admin "false"
-    password_digest Faker::Internet.password(8)
-    # activated "true"
+    username
+    email
+    admin false
+    password Faker::Internet.password(8)
+    password_confirmation { |user| user.password }
+    activated true
     # activated_at "<%= Time.zone.now %>"
   end
 
