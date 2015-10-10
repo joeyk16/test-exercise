@@ -1,9 +1,10 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:edit, :show, :update]
   before_action :correct_user_edit,   only: [:edit, :update, :destroy]
+  before_action :logged_in_user, only: [:new, :edit, :update, :destroy]
 
   def index
-    @item = @user.items.paginate(page: params[:page])
+    @items = Item.all
   end
 
   def new
@@ -18,10 +19,10 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
   end
 
   def update
+    binding.pry
     if @item.update(item_params)
        redirect_to @item
        flash[:success] = 'Item was successfully updated.'
@@ -31,7 +32,7 @@ class ItemsController < ApplicationController
   end
 
   def create
-    @item = current_user.items.build(item_params)
+    @item = current_user.items.new(item_params)
     if @item.save
       redirect_to @item
       flash[:success] = "You have created a new item"
@@ -54,13 +55,14 @@ class ItemsController < ApplicationController
   end
 
   def item_params
-    params.require(:item).permit(:title, :category_id, :price, :description, :image, :tag_list)
+    params.require(:item).permit(:title, :category_id, :price,
+                                 :description, :image, :tag_list
+                                 )
   end
 
   def correct_user_edit
     if @item = current_user.items.find_by(id: params[:id])
     else
-      flash[:danger] = "You can't edit that item"
       redirect_to root_url if @item.nil?
     end
   end

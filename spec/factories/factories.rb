@@ -7,6 +7,14 @@ FactoryGirl.define do
     "username#{n}"
   end
 
+  sequence :name do |n|
+    "name#{n}"
+  end
+
+  sequence :title do |n|
+    "title#{n}"
+  end
+
   factory :category_size do
     category_id Faker::Number.number(2)
     size_id Faker::Number.number(2)
@@ -17,16 +25,17 @@ FactoryGirl.define do
   end
 
   factory :category do
-    name Faker::Lorem.word
+    name
   end
 
   factory :item do
-    title Faker::Lorem.word
+    title
     price Faker::Number.number(3)
     description Faker::Lorem.sentence
     user_id Faker::Number.number(2)
     image_file_name Faker::Lorem.word
     category_id Faker::Number.number(2)
+    category
   end
 
   factory :user do
@@ -36,15 +45,18 @@ FactoryGirl.define do
     password Faker::Internet.password(8)
     password_confirmation { |user| user.password }
     activated true
+    description Faker::Lorem.sentence
     # activated_at "<%= Time.zone.now %>"
   end
 
   factory :admin do
-    username Faker::Lorem.word
-    email Faker::Internet.email
-    admin "true"
-    password_digest Faker::Internet.password(8)
-    # activated "true"
+    username
+    email
+    admin true
+    password Faker::Internet.password(8)
+    password_confirmation { |user| user.password }
+    activated true
+    description Faker::Lorem.sentence
     # activated_at "<%= Time.zone.now %>"
   end
 end

@@ -30,7 +30,7 @@ class User < ActiveRecord::Base
     SecureRandom.urlsafe_base64
   end
 
-    # Returns true if a password reset has expired.
+  # Returns true if a password reset has expired.
   def password_reset_expired?
     reset_sent_at < 2.hours.ago
   end
