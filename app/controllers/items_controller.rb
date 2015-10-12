@@ -22,7 +22,6 @@ class ItemsController < ApplicationController
   end
 
   def update
-    binding.pry
     if @item.update(item_params)
        redirect_to @item
        flash[:success] = 'Item was successfully updated.'

@@ -78,8 +78,7 @@ RSpec.describe UsersController, type: :controller do
 
   describe "POST #update" do
     it "user updated" do
-      log_in_as(user)
-      patch :update, update_params
+      patch :update, {id: user.id }, { user_id: user.id }, user: user_params
       expect(response).to redirect_to(assigns(:user))
       expect(assigns(:user)).to eq(user)
     end
