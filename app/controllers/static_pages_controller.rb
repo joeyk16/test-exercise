@@ -1,10 +1,10 @@
-class StaticPagesController < ApplicationController
+# class StaticPagesController < ApplicationController
 
-	def home
-	end
+# 	def home
+# 	end
 
-  def index
-    @items = Item.paginate(page: params[:page])
-  end
-	
-end
+#   def index
+#     @items = Item.paginate(page: params[:page])
+#   end
+
+# end

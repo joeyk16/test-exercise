@@ -18,6 +18,14 @@ module SessionsHelper
     end
   end
 
+  # def current_user
+  #   @current_user ||= if (user_id = session[:user_id])
+  #     User.find_by(id: session[:user_id])
+  #   elsif (user_id = cookies.signed[:user_id])
+  #     User.find_by(id: user_id)
+  #   end
+  # end
+
   # Returns true if the user is logged in, false otherwise.
   def logged_in?
     !current_user.nil?
@@ -65,6 +73,4 @@ module SessionsHelper
   def store_location
     session[:forwarding_url] = request.url if request.get?
   end
-
-
 end

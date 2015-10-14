@@ -47,8 +47,4 @@ class SizesController < ApplicationController
   def size_params
     params.require(:size).permit(:title)
   end
-
-  def admin_user
-    redirect_to(root_url) unless current_user.try(:admin?)
-  end
 end
