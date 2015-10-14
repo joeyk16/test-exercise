@@ -1,24 +1,24 @@
 <div id="items" class="transitions-enabled">
-	<% @item.each do |item| %>
-		<div class="box panel panel-default">
-	    <div class="square_item_image">
-	    	<%= link_to image_tag(item.image.url (:medium)), item %>
-	    </div>
-		  <div class ="panel-body">
-	      <div class = "itemlistretailer">
-				  <div class="itemlisttitle">
-				  	<%= item.title %>
-				  	<div class = "itemlistprice">
-				  		$<%= item.price %>
-			  		</div>
-				  </div>
-				  <div class="item_info">
-			      <%= image_tag item.user.avatar(:thumb) %>
-			      <%= link_to item.user.username, item.user %>
-		      </div>
-	      </div>
-	    </div>
-		</div>
-	<% end %>
+  <% @item.each do |item| %>
+    <div class="box panel panel-default">
+      <div class="square_item_image">
+        <%= link_to image_tag(item.image.url (:medium)), item %>
+      </div>
+      <div class ="panel-body">
+        <div class = "itemlistretailer">
+          <div class="itemlisttitle">
+            <%= item.title %>
+            <div class = "itemlistprice">
+              $<%= item.price %>
+            </div>
+          </div>
+          <div class="item_info">
+            <%= image_tag item.user.avatar(:thumb) %>
+            <%= link_to item.user.username, item.user %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
 </div>
 
