@@ -38,4 +38,8 @@ FactoryGirl.define do
     # activated "true"
     # activated_at "<%= Time.zone.now %>"
   end
+
+  factory :outfit do
+    description Faker::Lorem.sentence
+  end
 end

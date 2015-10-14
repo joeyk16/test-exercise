@@ -1,0 +1,12 @@
+<p id="notice"><%= notice %></p>
+
+<div class="container">
+  <%= image_tag @outfit.outfit_image.url(:large) %>
+  <p>
+    <strong>Description:</strong>
+    <%= @outfit.description %>
+    <p>Tags: <%= raw @outfit.tag_list.map { |t| link_to t, tag_path(t) }.join(', ') %></p>
+  </p>
+  <%= link_to 'Edit', edit_user_outfit_path(@outfit, user_id: current_user) %> |
+  <%= link_to 'Back', user_outfits_path(user_id: current_user) %>
+</div>

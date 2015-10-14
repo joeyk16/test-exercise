@@ -1,0 +1,23 @@
+<h1>Outfits</h1>
+
+<div id="items" class="transitions-enabled">
+  <% @outfits.each do |outfit| %>
+    <div class="box panel panel-default">
+      <div class="square_item_image">
+        <%= image_tag outfit.outfit_image.url(:large)%>
+      </div>
+      <div class ="panel-body">
+        <div class = "itemlistretailer">
+          <div class="itemlisttitle">
+            <%= outfit.caption %>
+          </div>
+          <div class="item_info">
+            <%= image_tag outfit.user.avatar(:thumb) %>
+            <%= link_to outfit.user.username, outfit.user %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+

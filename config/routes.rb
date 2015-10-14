@@ -1,13 +1,16 @@
 Rails.application.routes.draw do
 
-
   resources :categories
 
   get 'password_resets/new'
   get 'password_resets/edit'
   get 'sessions/new'
 
-  resources :users
+  resources :users do
+      resources :outfits
+    end
+
+  get 'outfits'  => 'outfits#outfits'
   get 'user_items'  => 'users#show_user_items'
   root 'items#home'
   get 'signup'  => 'users#new'
@@ -24,9 +27,9 @@ Rails.application.routes.draw do
   resources :sizes
 
   get 'tags/:tag', to: 'categories#show', as: :tag
-  
-  
-  
+
+
+
 
 
   # The priority is based upon order of creation: first created -> highest priority.
