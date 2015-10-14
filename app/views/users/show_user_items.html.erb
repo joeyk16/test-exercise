@@ -13,7 +13,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @item.each do |item| %>
+      <% @items.each do |item| %>
         <tr>
   	      <td><div class ="small_fifty_image"><%= image_tag item.image.url(:thumb) %></div></td>
   	      <td><h4><%= link_to item.title, item_url(item.id) %></h4></td>

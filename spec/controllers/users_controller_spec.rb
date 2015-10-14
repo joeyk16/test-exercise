@@ -69,25 +69,34 @@ RSpec.describe UsersController, type: :controller do
 
   describe "GET #edit" do
     it "user edit" do
-      get :edit, {id: user.id }, { user_id: user.id }
+      get :edit, { id: user.id }, { user_id: user.id }
       expect(response).to render_template(:edit)
       expect(response).to have_http_status(:success)
       expect(assigns(:user)).to eq(user)
     end
   end
 
-  describe "POST #update" do
+  describe "PATCH #update" do
     it "user updated" do
-      patch :update, {id: user.id }, { user_id: user.id }, user: user_params
+      patch :update, { id: user.id, user: user_params }, { user_id: user.id }
       expect(response).to redirect_to(assigns(:user))
       expect(assigns(:user)).to eq(user)
     end
   end
 
-  # describe "DELETE #destroy" do
-  #   it "user destroy" do
-  #     delete :destroy, {id: user.id }, { user_id: user.id }, user: user_params
-  #     expect(response).to redirect_to(users_path)
-  #   end
-  # end
+  describe "DELETE #destroy" do
+    before { delete :destroy, { id: user.id }, session }
+
+    context "an admin" do
+      let(:session) { { user_id: admin.id } }
+
+      it { expect(response).to redirect_to(users_path) }
+    end
+
+    context "a user" do
+      let(:session) { { user_id: user.id } }
+
+      it { expect(response).to redirect_to(root_path) }
+    end
+  end
 end

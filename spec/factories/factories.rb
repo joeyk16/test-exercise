@@ -29,12 +29,12 @@ FactoryGirl.define do
   end
 
   factory :item do
-    title
+    sequence(:title) { |n| "title#{n}" }
     price Faker::Number.number(3)
     description Faker::Lorem.sentence
     user_id Faker::Number.number(2)
-    image_file_name Faker::Lorem.word
     category_id Faker::Number.number(2)
+    image File.open("#{Rails.root}/spec/fixtures/image.jpg")
     category
   end
 
