@@ -1,6 +1,18 @@
 FactoryGirl.define do
-  factory :category do
-    name Faker::Lorem.word
+  sequence :email do |n|
+    "user#{n}@factory.com"
+  end
+
+  sequence :username do |n|
+    "username#{n}"
+  end
+
+  sequence :name do |n|
+    "name#{n}"
+  end
+
+  sequence :title do |n|
+    "title#{n}"
   end
 
   factory :category_size do
@@ -12,30 +24,39 @@ FactoryGirl.define do
     title Faker::Lorem.word
   end
 
+  factory :category do
+    name
+  end
+
   factory :item do
-    title Faker::Lorem.word
+    sequence(:title) { |n| "title#{n}" }
     price Faker::Number.number(3)
     description Faker::Lorem.sentence
     user_id Faker::Number.number(2)
-    image_file_name Faker::Lorem.word
     category_id Faker::Number.number(2)
+    image File.open("#{Rails.root}/spec/fixtures/image.jpg")
+    category
   end
 
   factory :user do
-    username Faker::Lorem.word
-    email Faker::Internet.email
-    admin "false"
-    password_digest Faker::Internet.password(8)
-    # activated "true"
+    username
+    email
+    admin false
+    password Faker::Internet.password(8)
+    password_confirmation { |user| user.password }
+    activated true
+    description Faker::Lorem.sentence
     # activated_at "<%= Time.zone.now %>"
   end
 
   factory :admin do
-    username Faker::Lorem.word
-    email Faker::Internet.email
-    admin "true"
-    password_digest Faker::Internet.password(8)
-    # activated "true"
+    username
+    email
+    admin true
+    password Faker::Internet.password(8)
+    password_confirmation { |user| user.password }
+    activated true
+    description Faker::Lorem.sentence
     # activated_at "<%= Time.zone.now %>"
   end
 

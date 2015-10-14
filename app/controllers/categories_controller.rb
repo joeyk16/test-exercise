@@ -57,9 +57,4 @@ class CategoriesController < ApplicationController
   def category_params
     params.require(:category).permit(:name, :parent_id, size_ids: [])
   end
-
-  # Confirms an admin user.
-  def admin_user
-    redirect_to(root_url) unless current_user.try(:admin?)
-  end
 end

@@ -5,7 +5,7 @@ RSpec.describe Size, type: :model do
 
 	describe "validations" do
 		it { is_expected.to validate_uniqueness_of(:title) }
-		it { is_expected.to ensure_length_of(:title).is_at_most(15) }
+		it { is_expected.to validate_length_of(:title).is_at_most(15) }
 		it { is_expected.to validate_presence_of(:title) }
 	end
 
