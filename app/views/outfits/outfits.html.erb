@@ -9,10 +9,7 @@
       <div class ="panel-body">
         <div class = "itemlistretailer">
           <div class="itemlisttitle">
-            <%= outfit.caption %>
-          </div>
-          <div class="item_info">
-            <%= image_tag outfit.user.avatar(:thumb) %>
+            <%= link_to outfit.caption, user_outfit_path(outfit.user_id, outfit) %><br>
             <%= link_to outfit.user.username, outfit.user %>
           </div>
         </div>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151013122613) do
+ActiveRecord::Schema.define(version: 20151015104754) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
@@ -50,7 +50,6 @@ ActiveRecord::Schema.define(version: 20151013122613) do
   add_index "items", ["user_id"], name: "index_items_on_user_id"
 
   create_table "outfits", force: :cascade do |t|
-    t.text     "description"
     t.string   "outfit_image_file_name"
     t.string   "outfit_image_content_type"
     t.integer  "outfit_image_file_size"

@@ -1,141 +1,108 @@
 require 'rails_helper'
 
 RSpec.describe OutfitsController, type: :controller do
+  let!(:user) { create(:user, admin: false) }
+  let!(:outfit) { create(:outfit) }
+  let!(:outfit_with_user) { create(:outfit, user_id: user.id) }
 
-  # This should return the minimal set of attributes required to create a valid
-  # Outfit. As you add validations to Outfit, be sure to
-  # adjust the attributes here as well.
-  # let(:valid_attributes) {
-  #   desciption => "this is a test description"
-  # }
+  let!(:outfits) do
+    [outfit] + 3.times.map { create(:outfit) }
+  end
 
-  # let(:invalid_attributes) {
-  #   desciption => ""
-  # }
+  let!(:outfits_of_user) do
+    [outfit_with_user] + 3.times.map { create(:outfit, user_id: user.id) }
+  end
 
-  # # This should return the minimal set of values that should be in the session
-  # # in order to pass any filters (e.g. authentication) defined in
-  # # OutfitsController. Be sure to keep this updated too.
-  # let(:valid_session) { {} }
+  let(:outfit_params) { outfit_with_user.attributes }
 
-  # describe "GET #index" do
-  #   it "assigns all outfits as @outfits" do
-  #     outfit = Outfit.create! valid_attributes
-  #     get :index, {}, valid_session
-  #     expect(assigns(:outfits)).to eq([outfit])
-  #   end
-  # end
+  let!(:category) { create(:category, name: "Shirt") }
+  let!(:category1) { create(:category, name: "Short") }
 
-  # describe "GET #show" do
-  #   it "assigns the requested outfit as @outfit" do
-  #     outfit = Outfit.create! valid_attributes
-  #     get :show, {:id => outfit.to_param}, valid_session
-  #     expect(assigns(:outfit)).to eq(outfit)
-  #   end
-  # end
+  describe "GET #index" do
+    it "user sees only their outfits" do
+      get :index, { user_id: user.id }, { user_id: user.id }
+      expect(response).to render_template(:index)
+      expect(response).to have_http_status(:success)
+      expect(assigns(:outfits)).to eq(outfits_of_user)
+    end
 
-  # describe "GET #new" do
-  #   it "assigns a new outfit as @outfit" do
-  #     get :new, {}, valid_session
-  #     expect(assigns(:outfit)).to be_a_new(Outfit)
-  #   end
-  # end
+    it "vistor redirects to login path" do
+      get :index, { user_id: user }, { }
+      expect(response).to redirect_to(login_path)
+    end
+  end
 
-  # describe "GET #edit" do
-  #   it "assigns the requested outfit as @outfit" do
-  #     outfit = Outfit.create! valid_attributes
-  #     get :edit, {:id => outfit.to_param}, valid_session
-  #     expect(assigns(:outfit)).to eq(outfit)
-  #   end
-  # end
+  describe "GET #show" do
+    it "show outfit" do
+      get :show, { id: outfit_with_user.id, user_id: user }, { }
+      expect(response).to render_template(:show)
+      expect(response).to have_http_status(:success)
+      expect(assigns(:outfit)).to eq(outfit_with_user)
+    end
+  end
 
-  # describe "POST #create" do
-  #   context "with valid params" do
-  #     it "creates a new Outfit" do
-  #       expect {
-  #         post :create, {:outfit => valid_attributes}, valid_session
-  #       }.to change(Outfit, :count).by(1)
-  #     end
+  describe "GET #new" do
+    it "user renders new template" do
+      get :new, { user_id: user }, { user_id: user.id }
+      expect(response).to render_template(:new)
+      expect(response).to have_http_status(:success)
+    end
 
-  #     it "assigns a newly created outfit as @outfit" do
-  #       post :create, {:outfit => valid_attributes}, valid_session
-  #       expect(assigns(:outfit)).to be_a(Outfit)
-  #       expect(assigns(:outfit)).to be_persisted
-  #     end
+    it "vistor redirects to login path" do
+      get :new, { user_id: user }, { }
+      expect(response).to redirect_to(login_path)
+    end
+  end
 
-  #     it "redirects to the created outfit" do
-  #       post :create, {:outfit => valid_attributes}, valid_session
-  #       expect(response).to redirect_to(Outfit.last)
-  #     end
-  #   end
+  describe "POST #create" do
+    it "user creates outfit" do
+      post :create, { outfit: outfit_params, user_id: user }, { user_id: user.id }
+      expect(assigns(:outfit)).to be_persisted
+    end
 
-  #   context "with invalid params" do
-  #     it "assigns a newly created but unsaved outfit as @outfit" do
-  #       post :create, {:outfit => invalid_attributes}, valid_session
-  #       expect(assigns(:outfit)).to be_a_new(Outfit)
-  #     end
+    it "vistor redirects to login path" do
+      post :create, { user_id: user }, { }
+      expect(response).to redirect_to(login_path)
+    end
+  end
 
-  #     it "re-renders the 'new' template" do
-  #       post :create, {:outfit => invalid_attributes}, valid_session
-  #       expect(response).to render_template("new")
-  #     end
-  #   end
-  # end
+  describe "GET #edit" do
+    it "user edits outfit" do
+      get :edit, { id: outfit_with_user.id, user_id: user.id }, { user_id: user.id }
+      expect(response).to render_template(:edit)
+      expect(response).to have_http_status(:success)
+      expect(assigns(:outfit)).to eq(outfit_with_user)
+    end
 
-  # describe "PUT #update" do
-  #   context "with valid params" do
-  #     let(:new_attributes) {
-  #       skip("Add a hash of attributes valid for your model")
-  #     }
+    it "vistor redirects to login path" do
+      get :edit, { id: outfit_with_user.id, user_id: user.id }, {}
+      expect(response).to redirect_to(login_path)
+    end
+  end
 
-  #     it "updates the requested outfit" do
-  #       outfit = Outfit.create! valid_attributes
-  #       put :update, {:id => outfit.to_param, :outfit => new_attributes}, valid_session
-  #       outfit.reload
-  #       skip("Add assertions for updated state")
-  #     end
+  describe "PATCH #update" do
+    it "user updates outfit" do
+      patch :update, { id: outfit_with_user.id, user_id: user.id, outfit: outfit_params }, { user_id: user.id }
+      expect(response).to redirect_to(user_outfit_path(user, outfit_with_user))
+      expect(assigns(:outfit)).to eq(outfit_with_user)
+    end
 
-  #     it "assigns the requested outfit as @outfit" do
-  #       outfit = Outfit.create! valid_attributes
-  #       put :update, {:id => outfit.to_param, :outfit => valid_attributes}, valid_session
-  #       expect(assigns(:outfit)).to eq(outfit)
-  #     end
+    it "vistor redirects to login path" do
+      patch :update, { id: outfit_with_user.id, user_id: user.id, outfit: outfit_params }, {}
+      expect(response).to redirect_to(login_path)
+    end
+  end
 
-  #     it "redirects to the outfit" do
-  #       outfit = Outfit.create! valid_attributes
-  #       put :update, {:id => outfit.to_param, :outfit => valid_attributes}, valid_session
-  #       expect(response).to redirect_to(outfit)
-  #     end
-  #   end
+  describe "DELETE #destroy" do
+    it "user deletes outfit" do
+      delete :destroy, { id: outfit_with_user.id, user_id: user.id }, { user_id: user.id }
+      expect(response).to redirect_to(user_outfits_path(user))
+      expect(assigns(:outfit)).to eq(outfit_with_user)
+    end
 
-  #   context "with invalid params" do
-  #     it "assigns the outfit as @outfit" do
-  #       outfit = Outfit.create! valid_attributes
-  #       put :update, {:id => outfit.to_param, :outfit => invalid_attributes}, valid_session
-  #       expect(assigns(:outfit)).to eq(outfit)
-  #     end
-
-  #     it "re-renders the 'edit' template" do
-  #       outfit = Outfit.create! valid_attributes
-  #       put :update, {:id => outfit.to_param, :outfit => invalid_attributes}, valid_session
-  #       expect(response).to render_template("edit")
-  #     end
-  #   end
-  # end
-
-  # describe "DELETE #destroy" do
-  #   it "destroys the requested outfit" do
-  #     outfit = Outfit.create! valid_attributes
-  #     expect {
-  #       delete :destroy, {:id => outfit.to_param}, valid_session
-  #     }.to change(Outfit, :count).by(-1)
-  #   end
-
-  #   it "redirects to the outfits list" do
-  #     outfit = Outfit.create! valid_attributes
-  #     delete :destroy, {:id => outfit.to_param}, valid_session
-  #     expect(response).to redirect_to(outfits_url)
-  #   end
-  # end
-
+    it "vistor redirects to login path" do
+      delete :destroy, { id: outfit_with_user.id, user_id: user.id }, { }
+      expect(response).to redirect_to(login_path)
+    end
+  end
 end

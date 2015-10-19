@@ -9,7 +9,7 @@
     <thead>
       <tr>
         <th>Image</th>
-        <th>Description</th>
+        <th>Caption</th>
         <th colspan="3"></th>
       </tr>
     </thead>
@@ -17,7 +17,7 @@
       <% @outfits.each do |outfit| %>
         <tr>
           <td><%= image_tag outfit.outfit_image.url(:thumb) %></td>
-          <td><%= outfit.description %></td>
+          <td><%= outfit.caption %></td>
           <td><%= link_to 'Show', user_outfit_path(current_user, outfit) %></td>
           <td><%= link_to 'Edit', edit_user_outfit_path(current_user, outfit) %></td>
           <td><%= link_to 'Destroy', user_outfit_path(current_user, outfit), method: :delete, data: { confirm: 'Are you sure?' } %></td>

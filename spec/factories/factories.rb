@@ -38,6 +38,13 @@ FactoryGirl.define do
     category
   end
 
+  factory :outfit do
+    caption Faker::Lorem.word
+    user_id Faker::Number.number(2)
+    outfit_image File.open("#{Rails.root}/spec/fixtures/image.jpg")
+    tag_list ["shoes", "short", "shirt"]
+  end
+
   factory :user do
     username
     email
@@ -54,13 +61,9 @@ FactoryGirl.define do
     email
     admin true
     password Faker::Internet.password(8)
-    password_confirmation { |user| user.password }
+    password_confirmation { |admin| admin.password }
     activated true
     description Faker::Lorem.sentence
     # activated_at "<%= Time.zone.now %>"
-  end
-
-  factory :outfit do
-    description Faker::Lorem.sentence
   end
 end
