@@ -700,3 +700,18 @@ element.style {
 .outfit_image_show img {
   width: 100%;
 }
+
+.seller_info_outfit {
+}
+
+.seller_info_outfit img{
+  margin-right: 0.5em;
+  border-radius: 2em;
+  border: 2px solid;
+  border-style: solid;
+  border-color: #B9B9B9;
+}
+
+.seller_info_outfit * {
+ display: inline;
+}

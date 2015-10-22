@@ -4,7 +4,7 @@
   <% @outfits.each do |outfit| %>
     <div class="box panel panel-default">
       <div class="square_item_image">
-        <%= image_tag outfit.outfit_image.url(:large)%>
+        <%= link_to image_tag(outfit.outfit_image.url(:large)), user_outfit_path(outfit.user_id, outfit) %>
       </div>
       <div class ="panel-body">
         <div class = "itemlistretailer">
