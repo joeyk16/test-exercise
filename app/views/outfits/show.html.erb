@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="col-md-6">
+    <div class="outfit_image_show">
+      <%= image_tag @outfit.outfit_image.url%>
+    </div>
+    <p>
+      <%= @outfit.caption %>
+      <p> Tags: <%= raw @outfit.tag_list.map { |t| link_to t, tag_path(t) }.join(', ') %> </p>
+    </p>
+  </div>
+
+  <div class="col-lg-6 col-md-6 col-sm-5">
+    <div class="seller_info_outfit">
+      <%= image_tag @outfit.user.avatar.url(:thumb) %>
+      <h5><%= link_to "#{@outfit.user.username}", user_path(@outfit.user) %></h5>
+    </div>
+  </div>
+</div>

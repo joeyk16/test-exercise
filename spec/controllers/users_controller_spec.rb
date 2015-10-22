@@ -39,6 +39,11 @@ RSpec.describe UsersController, type: :controller do
 
     it "redirects visitor" do
       get :index
+      expect(response).to redirect_to(login_path)
+    end
+
+    it "user renders template and redirects" do
+      get :index, {}, { user_id: user.id }
       expect(response).to redirect_to(root_path)
     end
   end
@@ -73,6 +78,16 @@ RSpec.describe UsersController, type: :controller do
       expect(response).to render_template(:edit)
       expect(response).to have_http_status(:success)
       expect(assigns(:user)).to eq(user)
+    end
+
+    it "user can't edit another user unless admin" do
+      get :edit, { id: admin.id }, { user_id: user.id }
+      expect(response).to redirect_to(root_path)
+    end
+
+    it "redirects visitor" do
+      get :index
+      expect(response).to redirect_to(login_path)
     end
   end
 

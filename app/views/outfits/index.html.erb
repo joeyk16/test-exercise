@@ -1,0 +1,26 @@
+<div class="container">
+  <h1>Listing Outfits</h1>
+
+  <%= link_to 'New Outfit', new_user_outfit_path(current_user) %>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Caption</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @outfits.each do |outfit| %>
+        <tr>
+          <td><%= image_tag outfit.outfit_image.url(:thumb) %></td>
+          <td><%= outfit.caption %></td>
+          <td><%= link_to 'Show', user_outfit_path(current_user, outfit) %></td>
+          <td><%= link_to 'Edit', edit_user_outfit_path(current_user, outfit) %></td>
+          <td><%= link_to 'Destroy', user_outfit_path(current_user, outfit), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

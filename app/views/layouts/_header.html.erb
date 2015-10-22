@@ -29,6 +29,7 @@
             <% end %>
           </ul>
         </li>
+        <li><%= link_to "Outfits", outfits_path %></li>
       </ul>
       <form class="form-inline global-search" role="form">
         <div class="form-group">
@@ -51,6 +52,7 @@
               </ul>
             </li>
           </ul>
+          <li><%= link_to "Your Outfits", user_outfits_path(current_user) %><li>
           <li>
           <%= link_to root_path do %>
             <i class="glyphicon glyphicon-envelope"></i>
