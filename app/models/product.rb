@@ -1,4 +1,4 @@
-class Item < ActiveRecord::Base
+class Product < ActiveRecord::Base
   acts_as_taggable
 
 	belongs_to :user
