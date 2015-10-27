@@ -28,7 +28,7 @@ FactoryGirl.define do
     name
   end
 
-  factory :item do
+  factory :product do
     sequence(:title) { |n| "title#{n}" }
     price Faker::Number.number(3)
     description Faker::Lorem.sentence

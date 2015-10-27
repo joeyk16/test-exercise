@@ -9,7 +9,7 @@ RSpec.describe Category, type: :model do
 
   describe "associations" do
     it { is_expected.to have_many(:category_sizes) }
-    it { is_expected.to have_many(:items) }
+    it { is_expected.to have_many(:products) }
     it { is_expected.to have_many(:sizes) }
   end
 end

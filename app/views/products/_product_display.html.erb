@@ -1,20 +1,20 @@
 <div id="items" class="transitions-enabled">
-	<% @items.each do |item| %>
+	<% @products.each do |product| %>
 		<div class="box panel panel-default">
 	    <div class="square_item_image">
-	    	<%= link_to image_tag(item.image.url (:medium)), item %>
+	    	<%= link_to image_tag(product.image.url (:medium)), product %>
 	    </div>
 		  <div class ="panel-body">
 	      <div class = "itemlistretailer">
 				  <div class="itemlisttitle">
-				  	<%= item.title %>
+				  	<%= product.title %>
 				  	<div class = "itemlistprice">
-				  		$<%= item.price %>
+				  		$<%= product.price %>
 			  		</div>
 				  </div>
 				  <div class="item_info">
-			      <%= image_tag item.user.avatar(:thumb) %>
-			      <%= link_to item.user.username, item.user %>
+			      <%= image_tag product.user.avatar(:thumb) %>
+			      <%= link_to product.user.username, product.user %>
 		      </div>
 	      </div>
 	    </div>

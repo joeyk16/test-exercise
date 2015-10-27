@@ -11,10 +11,10 @@
           <!-- Wrapper for slides -->
           <div class="carousel-inner" role="listbox">
             <div class="item active">
-              <%= image_tag @item.image.url(:large) %>
+              <%= image_tag @product.image.url(:large) %>
             </div>
             <div class="item">
-              <%= image_tag @item.image.url(:large) %>
+              <%= image_tag @product.image.url(:large) %>
             </div>
           </div>
           <!-- Left and right controls -->
@@ -31,10 +31,10 @@
     </div>
     <!-- right column -->
     <div class="col-lg-6 col-md-6 col-sm-5">
-      <div class = "itemtitle"><%= @item.title %> </div>
-      <div class = "price">$<%= @item.price %> </div>
-      <% if current_user?(@item.user) %>
-        <%= link_to "Edit Items", edit_item_path(@item) %>
+      <div class = "itemtitle"><%= @product.title %> </div>
+      <div class = "price">$<%= @product.price %> </div>
+      <% if current_user?(@product.user) %>
+        <%= link_to "Edit Products", edit_product_path(@product) %>
       <% end %>
       <div class="productFilter productFilterLook2">
         <div class="filterBox">
@@ -59,8 +59,8 @@
         <div class="button"><button type="button" class="btn btn-contact btn-sm">Message User</button> </div>
       </div>
       <div class="sellerinfoitemshow">
-        <%= image_tag @item.user.avatar.url(:thumb) %>
-        <h5><%= link_to "#{@item.user.username}", user_path(@item.user) %></h5>
+        <%= image_tag @product.user.avatar.url(:thumb) %>
+        <h5><%= link_to "#{@product.user.username}", user_path(@product.user) %></h5>
         <p> 100% Positive Feedback</p>
         <div class="rating">
           <p>
@@ -69,7 +69,7 @@
           </p>
         </div>
       </div>
-  		<p> Tags: <%= raw @item.tag_list.map { |t| link_to t, tag_path(t) }.join(', ') %> </p>
+  		<p> Tags: <%= raw @product.tag_list.map { |t| link_to t, tag_path(t) }.join(', ') %> </p>
       <div class="product-tab w100 clearfix">
         <ul class="nav nav-tabs">
           <li class="active"><a href="#details" data-toggle="tab">Details</a></li>
@@ -79,7 +79,7 @@
             <!-- Tab panes -->
         <div class="tab-content">
           <div class="tab-pane active" id="details">
-            Description: <%= @item.description %>
+            Description: <%= @product.description %>
           </div>
           <div class="tab-pane" id="size"> 16" waist<br>
             34" inseam<br>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151015104754) do
+ActiveRecord::Schema.define(version: 20151027105042) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
@@ -32,7 +32,20 @@ ActiveRecord::Schema.define(version: 20151015104754) do
   add_index "category_sizes", ["category_id"], name: "index_category_sizes_on_category_id"
   add_index "category_sizes", ["size_id"], name: "index_category_sizes_on_size_id"
 
-  create_table "items", force: :cascade do |t|
+  create_table "outfits", force: :cascade do |t|
+    t.string   "outfit_image_file_name"
+    t.string   "outfit_image_content_type"
+    t.integer  "outfit_image_file_size"
+    t.datetime "outfit_image_updated_at"
+    t.integer  "user_id"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.string   "caption"
+  end
+
+  add_index "outfits", ["user_id"], name: "index_outfits_on_user_id"
+
+  create_table "products", force: :cascade do |t|
     t.string   "title"
     t.decimal  "price"
     t.text     "description"
@@ -46,21 +59,8 @@ ActiveRecord::Schema.define(version: 20151015104754) do
     t.integer  "category_id"
   end
 
-  add_index "items", ["user_id", "created_at"], name: "index_items_on_user_id_and_created_at"
-  add_index "items", ["user_id"], name: "index_items_on_user_id"
-
-  create_table "outfits", force: :cascade do |t|
-    t.string   "outfit_image_file_name"
-    t.string   "outfit_image_content_type"
-    t.integer  "outfit_image_file_size"
-    t.datetime "outfit_image_updated_at"
-    t.integer  "user_id"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-    t.string   "caption"
-  end
-
-  add_index "outfits", ["user_id"], name: "index_outfits_on_user_id"
+  add_index "products", ["user_id", "created_at"], name: "index_products_on_user_id_and_created_at"
+  add_index "products", ["user_id"], name: "index_products_on_user_id"
 
   create_table "sizes", force: :cascade do |t|
     t.text     "title"

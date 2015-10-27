@@ -11,8 +11,8 @@ Rails.application.routes.draw do
     end
 
   get 'outfits'  => 'outfits#outfits'
-  get 'user_items'  => 'users#show_user_items'
-  root 'items#home'
+  get 'user_products'  => 'users#show_user_products'
+  root 'products#home'
   get 'signup'  => 'users#new'
   get 'show'  => 'users#show'
   get 'login' => 'sessions#new'
@@ -21,8 +21,8 @@ Rails.application.routes.draw do
   resources :account_activations, only: [:edit]
   resources :password_resets,     only: [:new, :create, :edit, :update]
 
-  resources :items
-  get 'items_new' => 'items#new'
+  resources :products
+  get 'products_new' => 'products#new'
 
   resources :sizes
 

@@ -13,12 +13,12 @@ class UsersController < ApplicationController
   end
 
   def show
-    @items = @user.items.paginate(page: params[:page])
+    @products = @user.products.paginate(page: params[:page])
   end
 
-  def show_user_items
+  def show_user_products
     @user = User.find(current_user)
-    @items = @user.items.paginate(page: params[:page])
+    @products = @user.products.paginate(page: params[:page])
   end
 
   def create

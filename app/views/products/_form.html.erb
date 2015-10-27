@@ -3,14 +3,14 @@
     <div class="col-md-6 col-md-offset-3">
       <div class="panel panel-primary">
         <div class="panel-body">
-          <%= simple_form_for @item, html: { multipart: true } do |f| %>
+          <%= simple_form_for @product, html: { multipart: true } do |f| %>
             <%= f.input :image, label:"Choose Image"%>
             <%= f.collection_select :category_id, Category.order(:name), :id, :name, include_blank: true, :prompt => "Select One Category" %>
             <%= f.input :title, label:"Title"%>
             <%= f.input :price, label:"Price"%>
             <%= f.input :description,label:"Description" %>
-            <%= f.input :tag_list,label:"Tags - Seperate tags using comma ','. 5 tags allowed per item " %>
-            <%= f.button :submit, "Create new item", class: "btn-lg btn-success" %>
+            <%= f.input :tag_list,label:"Tags - Seperate tags using comma ','. 5 tags allowed per product" %>
+            <%= f.button :submit, "Create new product", class: "btn-lg btn-success" %>
           <% end %>
         </div>
       </div>
