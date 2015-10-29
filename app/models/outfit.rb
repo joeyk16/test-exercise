@@ -1,5 +1,7 @@
 class Outfit < ActiveRecord::Base
   belongs_to :user
+  has_many :outfit_products
+  has_many :products, through: :outfit_products
 
   validates :caption, presence: true, length: { maximum: 50 }
 

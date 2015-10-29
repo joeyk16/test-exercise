@@ -1,4 +1,5 @@
 <div class="container">
+
   <div class="col-md-6">
     <div class="outfit_image_show">
       <%= image_tag @outfit.outfit_image.url%>
@@ -8,11 +9,32 @@
       <p> Tags: <%= raw @outfit.tag_list.map { |t| link_to t, tag_path(t) }.join(', ') %> </p>
     </p>
   </div>
-
   <div class="col-lg-6 col-md-6 col-sm-5">
     <div class="seller_info_outfit">
       <%= image_tag @outfit.user.avatar.url(:thumb) %>
       <h5><%= link_to "#{@outfit.user.username}", user_path(@outfit.user) %></h5>
     </div>
   </div>
+  <h5><%= link_to "Add Products", user_outfit_add_products_path(outfit_id: @outfit.id, user_id: @outfit.user_id) %></h5>
+    <% @outfit.products.each do |product| %>
+      <div class="box panel panel-default">
+        <div class="square_item_image">
+          <%= link_to image_tag(product.image.url (:medium)), product %>
+        </div>
+        <div class ="panel-body">
+          <div class = "itemlistretailer">
+            <div class="itemlisttitle">
+              <%= product.title %>
+              <div class = "itemlistprice">
+                $<%= product.price %>
+              </div>
+            </div>
+            <div class="item_info">
+              <%= image_tag product.user.avatar(:thumb) %>
+              <%= link_to product.user.username, product.user %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
 </div>

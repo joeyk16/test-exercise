@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151027105042) do
+ActiveRecord::Schema.define(version: 20151028094236) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
@@ -31,6 +31,26 @@ ActiveRecord::Schema.define(version: 20151027105042) do
 
   add_index "category_sizes", ["category_id"], name: "index_category_sizes_on_category_id"
   add_index "category_sizes", ["size_id"], name: "index_category_sizes_on_size_id"
+
+  create_table "outfit_products", force: :cascade do |t|
+    t.integer  "product_id"
+    t.integer  "outfit_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "outfit_products", ["outfit_id"], name: "index_outfit_products_on_outfit_id"
+  add_index "outfit_products", ["product_id"], name: "index_outfit_products_on_product_id"
+
+  create_table "outfit_similar_products", force: :cascade do |t|
+    t.integer  "product_id"
+    t.integer  "outfit_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "outfit_similar_products", ["outfit_id"], name: "index_outfit_similar_products_on_outfit_id"
+  add_index "outfit_similar_products", ["product_id"], name: "index_outfit_similar_products_on_product_id"
 
   create_table "outfits", force: :cascade do |t|
     t.string   "outfit_image_file_name"

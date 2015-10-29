@@ -47,6 +47,14 @@ class ProductsController < ApplicationController
     redirect_to user_products_path
   end
 
+  def add_outfit_products
+    @products = current_user.products
+  end
+
+  def add_outfit_similar_products
+    @products = current_user.products
+  end
+
   private
 
   def set_product

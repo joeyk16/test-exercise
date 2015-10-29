@@ -7,7 +7,11 @@ Rails.application.routes.draw do
   get 'sessions/new'
 
   resources :users do
-      resources :outfits
+      resources :outfits do
+        get 'add_products'  => 'products#add_outfit_products'
+        get 'add_similar_products'  => 'products#add_outfit_similar_products'
+        post 'outfit_products'  => 'outfit_products#create'
+      end
     end
 
   get 'outfits'  => 'outfits#outfits'
