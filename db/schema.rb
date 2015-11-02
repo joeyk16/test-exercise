@@ -35,8 +35,10 @@ ActiveRecord::Schema.define(version: 20151028094236) do
   create_table "outfit_products", force: :cascade do |t|
     t.integer  "product_id"
     t.integer  "outfit_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.boolean  "approved",   default: false
+    t.boolean  "boolean",    default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   add_index "outfit_products", ["outfit_id"], name: "index_outfit_products_on_outfit_id"
@@ -45,8 +47,10 @@ ActiveRecord::Schema.define(version: 20151028094236) do
   create_table "outfit_similar_products", force: :cascade do |t|
     t.integer  "product_id"
     t.integer  "outfit_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.boolean  "approved",   default: false
+    t.boolean  "boolean",    default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   add_index "outfit_similar_products", ["outfit_id"], name: "index_outfit_similar_products_on_outfit_id"
