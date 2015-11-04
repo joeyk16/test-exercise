@@ -3,6 +3,9 @@ class OutfitProductsController < ApplicationController
   # before_action :logged_in_user, only: [:create, :destroy]
 
   def create
+    #create outfit_product with user_id == params["outfit_user_id"]
+    #then user will only see the outfit_products that belong to them on edit page.
+    binding.pry
     @outfit_product = OutfitProduct.new(outfit_product_params)
     if user_owns_outfit
       @outfit_product.save
@@ -18,10 +21,35 @@ class OutfitProductsController < ApplicationController
     end
   end
 
+  def edit
+    @outfit_products = current_user.outfit_products
+  end
+
+  def destroy
+    @outfit_product = OutfitProduct.find(params[:id])
+    @outfit_product.destroy
+    redirect_to user_outfit_products_path(params[:user_id])
+    flash[:success] = "Successfully destroyed product for outfit"
+  end
+
+  def approve
+    @outfit_product = OutfitProduct.find(params[:id])
+    @outfit_product.update_attributes(approved: true)
+    redirect_to user_outfit_products_path(params[:user_id])
+    flash[:success] = "Successfully approved product for outfit"
+  end
+
+  def decline
+    @outfit_product = OutfitProduct.find(params[:id])
+    @outfit_product.update_attributes(approved: false)
+    redirect_to user_outfit_products_path(params[:user_id])
+    flash[:success] = "Successfully declined product for outfit"
+  end
+
   private
 
   def outfit_product_params
-    params.permit(:outfit_id, :product_id)
+    params.permit(:outfit_id, :product_id, :user_id)
   end
 
   def user_owns_outfit

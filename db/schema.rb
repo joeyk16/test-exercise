@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20151028094236) do
   add_index "category_sizes", ["size_id"], name: "index_category_sizes_on_size_id"
 
   create_table "outfit_products", force: :cascade do |t|
+    t.integer  "user_id"
     t.integer  "product_id"
     t.integer  "outfit_id"
     t.boolean  "approved",   default: false
@@ -43,8 +44,10 @@ ActiveRecord::Schema.define(version: 20151028094236) do
 
   add_index "outfit_products", ["outfit_id"], name: "index_outfit_products_on_outfit_id"
   add_index "outfit_products", ["product_id"], name: "index_outfit_products_on_product_id"
+  add_index "outfit_products", ["user_id"], name: "index_outfit_products_on_user_id"
 
   create_table "outfit_similar_products", force: :cascade do |t|
+    t.integer  "user_id"
     t.integer  "product_id"
     t.integer  "outfit_id"
     t.boolean  "approved",   default: false
@@ -55,6 +58,7 @@ ActiveRecord::Schema.define(version: 20151028094236) do
 
   add_index "outfit_similar_products", ["outfit_id"], name: "index_outfit_similar_products_on_outfit_id"
   add_index "outfit_similar_products", ["product_id"], name: "index_outfit_similar_products_on_product_id"
+  add_index "outfit_similar_products", ["user_id"], name: "index_outfit_similar_products_on_user_id"
 
   create_table "outfits", force: :cascade do |t|
     t.string   "outfit_image_file_name"

@@ -12,6 +12,11 @@ Rails.application.routes.draw do
         get 'add_similar_products'  => 'products#add_outfit_similar_products'
         post 'outfit_products'  => 'outfit_products#create'
       end
+
+      get 'outfit_products'  => 'outfit_products#edit'
+      delete 'outfit_products'  => 'outfit_products#destroy'
+      get 'approve_outfit_products' => 'outfit_products#approve'
+      get 'decline_outfit_products' => 'outfit_products#decline'
     end
 
   get 'outfits'  => 'outfits#outfits'

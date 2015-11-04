@@ -19,7 +19,16 @@
           <td><h4><%= link_to product.title, product_url(product.id) %></h4></td>
           <td>$<%=product.price %></td>
           <td>
-            <button type="button" class="btn btn-default btn-sm"><%= link_to "Add Product", user_outfit_outfit_products_path(product.user_id, params[:outfit_id], product_id: product.id), method: :post %></button>
+            <button type="button" class="btn btn-default btn-sm">
+              <%= link_to "Add Product", user_outfit_outfit_products_path(
+                product.user_id,
+                outfit_id: params[:outfit_id],
+                product_id: product.id,
+                user_id: params[:user_id]
+                ),
+                method: :post
+              %>
+            </button>
           </td>
         </tr>
       <% end %>
