@@ -13,7 +13,7 @@ Rails.application.routes.draw do
         post 'outfit_products'  => 'outfit_products#create'
       end
 
-      get 'outfit_products'  => 'outfit_products#edit'
+      get 'users_outfit_products'  => 'outfit_products#users_outfit_products'
       delete 'outfit_products'  => 'outfit_products#destroy'
       get 'approve_outfit_products' => 'outfit_products#approve'
       get 'decline_outfit_products' => 'outfit_products#decline'

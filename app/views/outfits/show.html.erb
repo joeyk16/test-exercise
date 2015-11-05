@@ -15,7 +15,16 @@
       <h5><%= link_to "#{@outfit.user.username}", user_path(@outfit.user) %></h5>
     </div>
   </div>
-  <h5><%= link_to "Add Products", user_outfit_add_products_path(outfit_id: @outfit.id, user_id: @outfit.user_id) %></h5>
+  <h5>
+    <%= link_to "Add Products", user_outfit_add_products_path(outfit_id: @outfit.id, user_id: @outfit.user_id) %>
+  </h5>
+  <h5>
+    <%=
+      if @outfit.user_id == current_user.id
+        link_to "Edit Outfit Prdocuts", user_outfit_add_products_path(outfit_id: @outfit.id, user_id: @outfit.user_id)
+      end
+    %>
+  </h5>
   <% @outfit.approved_products.each do |product| %>
     <div class="box panel panel-default">
       <div class="square_item_image">

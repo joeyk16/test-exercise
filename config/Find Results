@@ -1,0 +1,47 @@
+Searching 4487 files for "outfit_products_path"
+
+/Users/josephkonop/Documents/Safsy/Website/Safsy/Safsy/app/controllers/outfit_products_controller.rb:
+   30      @outfit_product = OutfitProduct.find(params[:id])
+   31      @outfit_product.destroy
+   32:     redirect_to user_outfit_products_path(params[:user_id])
+   33      flash[:success] = "Successfully destroyed product for outfit"
+   34    end
+   ..
+   37      @outfit_product = OutfitProduct.find(params[:id])
+   38      @outfit_product.update_attributes(approved: true)
+   39:     redirect_to user_outfit_products_path(params[:user_id])
+   40      flash[:success] = "Successfully approved product for outfit"
+   41    end
+   ..
+   44      @outfit_product = OutfitProduct.find(params[:id])
+   45      @outfit_product.update_attributes(approved: false)
+   46:     redirect_to user_outfit_products_path(params[:user_id])
+   47      flash[:success] = "Successfully declined product for outfit"
+   48    end
+
+/Users/josephkonop/Documents/Safsy/Website/Safsy/Safsy/app/views/outfit_products/edit.html.erb:
+   24            </td>
+   25            <td>
+   26:             <button type="button" class="btn btn-default btn-sm"><%= link_to "Approve", user_approve_outfit_products_path(id: outfit_product.id) %></button>
+   27:             <button type="button" class="btn btn-default btn-sm"><%= link_to "Delete", user_outfit_products_path(id: outfit_product.id), method: :delete, data: { confirm: "You sure?" } %></button>
+   28            </td>
+   29          </tr>
+   ..
+   55            </td>
+   56            <td>
+   57:             <button type="button" class="btn btn-default btn-sm"><%= link_to "Decline", user_decline_outfit_products_path(id: outfit_product.id) %></button>
+   58:             <button type="button" class="btn btn-default btn-sm"><%= link_to "Delete", user_outfit_products_path(id: outfit_product.id), method: :delete, data: { confirm: "You sure?" } %></button>
+   59            </td>
+   60          </tr>
+
+/Users/josephkonop/Documents/Safsy/Website/Safsy/Safsy/app/views/products/add_outfit_products.html.erb:
+   21            <td>
+   22              <button type="button" class="btn btn-default btn-sm">
+   23:               <%= link_to "Add Product", user_outfit_outfit_products_path(
+   24                  product.user_id,
+   25                  outfit_id: params[:outfit_id],
+
+~/Documents/Safsy/Website/Safsy/Safsy/log/development.log:
+    <binary>
+
+26 matches across 4 files

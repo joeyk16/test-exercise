@@ -1,12 +1,10 @@
 class OutfitProductsController < ApplicationController
+  # outfit_product can be added multiple times. Must be added only once. Do a before do.
   # before_action :correct_user, only: [:create, :destroy]
   # before_action :logged_in_user, only: [:create, :destroy]
+  before_action :outfit_product_exists, only: [:create]
 
   def create
-    #create outfit_product with user_id == params["outfit_user_id"]
-    #then user will only see the outfit_products that belong to them on edit page.
-    binding.pry
-    @outfit_product = OutfitProduct.new(outfit_product_params)
     if user_owns_outfit
       @outfit_product.save
       @outfit_product.update_attributes(approved: true)
@@ -21,32 +19,46 @@ class OutfitProductsController < ApplicationController
     end
   end
 
-  def edit
+  def users_outfit_products
+    @outfit_products = current_user.outfit_products
+  end
+
+  def outfit_products
     @outfit_products = current_user.outfit_products
   end
 
   def destroy
     @outfit_product = OutfitProduct.find(params[:id])
     @outfit_product.destroy
-    redirect_to user_outfit_products_path(params[:user_id])
+    redirect_to user_users_outfit_products_path(params[:user_id])
     flash[:success] = "Successfully destroyed product for outfit"
   end
 
   def approve
     @outfit_product = OutfitProduct.find(params[:id])
     @outfit_product.update_attributes(approved: true)
-    redirect_to user_outfit_products_path(params[:user_id])
+    redirect_to user_users_outfit_products_path(params[:user_id])
     flash[:success] = "Successfully approved product for outfit"
   end
 
   def decline
     @outfit_product = OutfitProduct.find(params[:id])
     @outfit_product.update_attributes(approved: false)
-    redirect_to user_outfit_products_path(params[:user_id])
+    redirect_to user_users_outfit_products_path(params[:user_id])
     flash[:success] = "Successfully declined product for outfit"
   end
 
   private
+
+  def outfit_product_exists
+    outfit_product = OutfitProduct.find_by(outfit_id: params[:outfit_id] , product_id: params[:product_id])
+    if outfit_product == nil
+      @outfit_product = OutfitProduct.new(outfit_product_params)
+    else
+      redirect_to user_outfit_path(id: params[:outfit_id], user_id: params[:user_id])
+      flash[:info] = "Outfit product already exists"
+    end
+  end
 
   def outfit_product_params
     params.permit(:outfit_id, :product_id, :user_id)
