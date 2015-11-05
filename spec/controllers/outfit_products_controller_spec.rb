@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe OutfitsController, type: :controller do
+RSpec.describe OutfitProductsController, type: :controller do
   let!(:user) { create(:user, admin: false) }
   let!(:outfit) { create(:outfit) }
   let!(:outfit_with_user) { create(:outfit, user_id: user.id) }
@@ -14,6 +14,9 @@ RSpec.describe OutfitsController, type: :controller do
   end
 
   let(:outfit_params) { outfit_with_user.attributes }
+
+  let!(:category) { create(:category, name: "Shirt") }
+  let!(:category1) { create(:category, name: "Short") }
 
   describe "GET #index" do
     it "user sees only their outfits" do

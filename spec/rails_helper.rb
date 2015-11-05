@@ -6,6 +6,9 @@ require 'spec_helper'
 require 'rspec/rails'
 require "shoulda/matchers"
 
+let!(:category) { create(:category, name: "Shirt") }
+let!(:category1) { create(:category, name: "Short") }
+
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|

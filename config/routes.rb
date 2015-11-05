@@ -7,17 +7,18 @@ Rails.application.routes.draw do
   get 'sessions/new'
 
   resources :users do
-      resources :outfits do
-        get 'add_products'  => 'products#add_outfit_products'
-        get 'add_similar_products'  => 'products#add_outfit_similar_products'
-        post 'outfit_products'  => 'outfit_products#create'
-      end
-
-      get 'users_outfit_products'  => 'outfit_products#users_outfit_products'
-      delete 'outfit_products'  => 'outfit_products#destroy'
-      get 'approve_outfit_products' => 'outfit_products#approve'
-      get 'decline_outfit_products' => 'outfit_products#decline'
+    resources :outfits do
+      get 'add_products'  => 'products#add_outfit_products'
+      get 'add_similar_products'  => 'products#add_outfit_similar_products'
+      post 'outfit_products'  => 'outfit_products#create'
+      get 'outfit_products'  => 'outfit_products#outfit_products'
     end
+
+    get 'users_outfit_products'  => 'outfit_products#users_outfit_products'
+    delete 'outfit_products'  => 'outfit_products#destroy'
+    get 'approve_outfit_products' => 'outfit_products#approve'
+    get 'decline_outfit_products' => 'outfit_products#decline'
+  end
 
   get 'outfits'  => 'outfits#outfits'
   get 'user_products'  => 'users#show_user_products'
