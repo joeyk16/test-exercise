@@ -76,7 +76,6 @@ class OutfitProductsController < ApplicationController
     end
   end
 
-
   def outfit_product_params
     params.permit(:outfit_id, :product_id, :user_id)
   end

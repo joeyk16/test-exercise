@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe OutfitProductsController, type: :controller do
+  let!(:category) { create(:category, name: "Shirt") }
+  let!(:category1) { create(:category, name: "Short") }
+
   let!(:user) { create(:user, admin: false) }
   let!(:other_user) { create(:user, admin: false) }
 
@@ -26,7 +29,7 @@ RSpec.describe OutfitProductsController, type: :controller do
     )
   }
 
-  let(:oufit_product_with_different_user) {
+  let(:outfit_product_params) {
     build(:outfit_product,
       user_id: other_outfit.user_id,
       product_id: other_product.id,
@@ -34,17 +37,14 @@ RSpec.describe OutfitProductsController, type: :controller do
     )
   }
 
-  let!(:category) { create(:category, name: "Shirt") }
-  let!(:category1) { create(:category, name: "Short") }
-
   describe "POST #create" do
     context "outfit product when it's not your outfit" do
       before do
         post :create, {
-          outfit: oufit_product_with_different_user,
+          outfit: outfit_product_params,
           user_id: user.id,
-          outfit_id: oufit_product_with_different_user["outfit_id"],
-          product_id: oufit_product_with_different_user["product_id"]
+          outfit_id: outfit_product_params["outfit_id"],
+          product_id: outfit_product_params["product_id"]
         },
         { user_id: user.id }
       end
@@ -53,30 +53,30 @@ RSpec.describe OutfitProductsController, type: :controller do
         expect(assigns(:outfit_product)).to be_persisted
         expect(assigns(:outfit_product).approved.to_s).to eq("false")
         expect(response).to redirect_to(user_outfit_path(
-          id: oufit_product_with_different_user["outfit_id"],
-          user_id: oufit_product_with_different_user["user_id"]
+          id: outfit_product_params["outfit_id"],
+          user_id: outfit_product_params["user_id"]
           )
         )
       end
     end
 
-    context "outfit product when it's not your outfit" do
+    context "outfit product when it's your outfit" do
       before do
         post :create, {
-          outfit: oufit_product_with_different_user,
+          outfit: outfit_product_params,
           user_id: other_user.id,
-          outfit_id: oufit_product_with_different_user["outfit_id"],
-          product_id: oufit_product_with_different_user["product_id"]
+          outfit_id: outfit_product_params["outfit_id"],
+          product_id: outfit_product_params["product_id"]
         },
         { user_id: other_user.id }
       end
 
-      it "outfit product saved with approved false status" do
+      it "outfit product saved with approved true status" do
         expect(assigns(:outfit_product)).to be_persisted
         expect(assigns(:outfit_product).approved.to_s).to eq("true")
         expect(response).to redirect_to(user_outfit_path(
-          id: oufit_product_with_different_user["outfit_id"],
-          user_id: oufit_product_with_different_user["user_id"]
+          id: outfit_product_params["outfit_id"],
+          user_id: outfit_product_params["user_id"]
           )
         )
       end
@@ -101,16 +101,22 @@ RSpec.describe OutfitProductsController, type: :controller do
     end
   end
 
-  # describe "DELETE #destroy" do
-  #   it "user deletes outfit" do
-  #     delete :destroy, { id: outfit_with_user.id, user_id: user.id }, { user_id: user.id }
-  #     expect(response).to redirect_to(user_outfits_path(user))
-  #     expect(assigns(:outfit)).to eq(outfit_with_user)
-  #   end
+  describe "Outfit Product exists" do
+    context "2 of the same products added to outfit" do
+      before do
+        post :create, {
+          outfit: oufit_product.attributes,
+          user_id: user.id,
+          outfit_id: outfit.id,
+          product_id: product.id
+        },
+        { user_id: user.id }
+      end
 
-  #   it "vistor redirects to login path" do
-  #     delete :destroy, { id: outfit_with_user.id, user_id: user.id }, { }
-  #     expect(response).to redirect_to(login_path)
-  #   end
-  # end
+      it "Outfit Product not created and shows error" do
+        expect(response).to redirect_to(user_outfit_path(id: outfit.id, user_id: user.id))
+        expect(flash[:info]).to eq "Product already associated with this outfit"
+      end
+    end
+  end
 end
