@@ -28,6 +28,13 @@ FactoryGirl.define do
     name
   end
 
+  factory :outfit_product do
+   user_id Faker::Number.number(2)
+   product_id Faker::Number.number(2)
+   outfit_id Faker::Number.number(2)
+   approved true
+  end
+
   factory :product do
     sequence(:title) { |n| "title#{n}" }
     price Faker::Number.number(3)
