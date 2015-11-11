@@ -102,7 +102,7 @@ RSpec.describe OutfitProductsController, type: :controller do
   end
 
   describe "Outfit Product exists" do
-    context "2 of the same products added to outfit" do
+    context "add product to outfit" do
       before do
         post :create, {
           outfit: oufit_product.attributes,
@@ -113,7 +113,7 @@ RSpec.describe OutfitProductsController, type: :controller do
         { user_id: user.id }
       end
 
-      it "Outfit Product not created and shows error" do
+      it "product has already been added to outfit" do
         expect(response).to redirect_to(user_outfit_path(id: outfit.id, user_id: user.id))
         expect(flash[:info]).to eq "Product already associated with this outfit"
       end
