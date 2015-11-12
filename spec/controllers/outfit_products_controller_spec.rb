@@ -84,7 +84,7 @@ RSpec.describe OutfitProductsController, type: :controller do
   end
 
   describe "DELETE #destroy" do
-    context "user deletes" do
+    context "outfit product deletes" do
       before do
         request.env["HTTP_REFERER"] = "where_i_came_from"
         delete :destroy, {
@@ -95,7 +95,7 @@ RSpec.describe OutfitProductsController, type: :controller do
         { user_id: user.id }
       end
 
-      it "outfit product saved with approved status" do
+      it "outfit product is destroyed" do
         expect(assigns(:outfit_product)).to_not be_persisted
       end
     end
@@ -122,7 +122,7 @@ RSpec.describe OutfitProductsController, type: :controller do
 
   describe "Outfit Product can't have more then 6 products" do
     context "add 7 products to outfit" do
-      let(:outfit_product_params1) {
+      let(:outfit_product_params) {
         build(:outfit_product,
           user_id: user.id,
           product_id: 20,
@@ -131,14 +131,19 @@ RSpec.describe OutfitProductsController, type: :controller do
       }
 
       before do
-        6.times.map { create(:outfit_product, product_id: create(:product).id, outfit_id: oufit_product_saved.id, user_id: user.id
-        ) }
+        6.times.map do
+          create(:outfit_product,
+            product_id: create(:product).id,
+            outfit_id: oufit_product_saved.id,
+            user_id: user.id
+          )
+        end
 
         post :create, {
-          outfit: outfit_product_params1,
-          user_id: outfit_product_params1["user_id"],
-          outfit_id: outfit_product_params1["outfit_id"],
-          product_id: outfit_product_params1["product_id"]
+          outfit: outfit_product_params,
+          user_id: outfit_product_params["user_id"],
+          outfit_id: outfit_product_params["outfit_id"],
+          product_id: outfit_product_params["product_id"]
         },
         { user_id: user.id }
       end
@@ -146,6 +151,51 @@ RSpec.describe OutfitProductsController, type: :controller do
       it "product has already been added to outfit" do
         expect(response).to redirect_to(user_outfit_path(id: outfit.id, user_id: user.id))
         expect(flash[:danger]).to eq "Outfit has too many products. Limit is 6 per outfit"
+      end
+    end
+  end
+
+  describe "Approved status" do
+    let(:outfit_product_params) {
+      build(:outfit_product,
+        user_id: user.id,
+        approved: false,
+        id: oufit_product_saved.id
+      )
+    }
+
+    context "update approved status to false" do
+      before do
+        request.env["HTTP_REFERER"] = "where_i_came_from"
+        patch :decline, {
+          outfit: outfit_product_params,
+          user_id: oufit_product_saved["user_id"],
+          id: oufit_product_saved.id
+        },
+        { user_id: user.id }
+      end
+
+      it "outfit product isn't approved" do
+        expect(assigns(:outfit_product).approved.to_s).to eq("false")
+        expect(flash[:success]).to eq "Successfully declined product for outfit"
+      end
+    end
+
+    context "update approved status to true" do
+      before do
+        outfit_product_params["approved"] = true
+        request.env["HTTP_REFERER"] = "where_i_came_from"
+        patch :approve, {
+          outfit: outfit_product_params,
+          user_id: oufit_product_saved["user_id"],
+          id: oufit_product_saved.id
+        },
+        { user_id: user.id }
+      end
+
+      it "outfit product is approved" do
+        expect(assigns(:outfit_product).approved.to_s).to eq("true")
+        expect(flash[:success]).to eq "Successfully approved product for outfit"
       end
     end
   end
