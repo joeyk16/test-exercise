@@ -119,4 +119,34 @@ RSpec.describe OutfitProductsController, type: :controller do
       end
     end
   end
+
+  describe "Outfit Product can't have more then 6 products" do
+    context "add 7 products to outfit" do
+      let(:outfit_product_params1) {
+        build(:outfit_product,
+          user_id: user.id,
+          product_id: 20,
+          outfit_id: oufit_product_saved.id
+        )
+      }
+
+      before do
+        6.times.map { create(:outfit_product, product_id: create(:product).id, outfit_id: oufit_product_saved.id, user_id: user.id
+        ) }
+
+        post :create, {
+          outfit: outfit_product_params1,
+          user_id: outfit_product_params1["user_id"],
+          outfit_id: outfit_product_params1["outfit_id"],
+          product_id: outfit_product_params1["product_id"]
+        },
+        { user_id: user.id }
+      end
+
+      it "product has already been added to outfit" do
+        expect(response).to redirect_to(user_outfit_path(id: outfit.id, user_id: user.id))
+        expect(flash[:danger]).to eq "Outfit has too many products. Limit is 6 per outfit"
+      end
+    end
+  end
 end

@@ -5,8 +5,6 @@ class OutfitProductsController < ApplicationController
   before_action :outfit_product_exists, only: [:create]
   before_action :outfit_products_limit, only: [:create]
 
-
-
   def create
     @outfit_product = OutfitProduct.new(outfit_product_params)
     outfit_path = user_outfit_path(id: @outfit_product.outfit_id, user_id: @outfit_product.product.user_id)
@@ -68,7 +66,7 @@ class OutfitProductsController < ApplicationController
   end
 
   def outfit_products_limit
-    outfit_product = OutfitProduct.where(outfit_id: params[:outfit_id], product_id: params[:product_id])
+    outfit_product = OutfitProduct.where(outfit_id: params[:outfit_id])
     if (outfit_product == nil) || (outfit_product.count < 6)
     else
       redirect_to user_outfit_path(id: params[:outfit_id], user_id: params[:user_id])
