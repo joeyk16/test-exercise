@@ -37,6 +37,17 @@ RSpec.describe OutfitProductsController, type: :controller do
     )
   }
 
+  let!(:outfit_products) {
+    [oufit_product_saved] +
+    6.times.map do
+      create(:outfit_product,
+        product_id: create(:product).id,
+        outfit_id: oufit_product_saved.id,
+        user_id: user.id
+      )
+    end
+  }
+
   describe "POST #create" do
     context "outfit product when it's not your outfit" do
       before do
@@ -131,14 +142,6 @@ RSpec.describe OutfitProductsController, type: :controller do
       }
 
       before do
-        6.times.map do
-          create(:outfit_product,
-            product_id: create(:product).id,
-            outfit_id: oufit_product_saved.id,
-            user_id: user.id
-          )
-        end
-
         post :create, {
           outfit: outfit_product_params,
           user_id: outfit_product_params["user_id"],
@@ -196,6 +199,17 @@ RSpec.describe OutfitProductsController, type: :controller do
       it "outfit product is approved" do
         expect(assigns(:outfit_product).approved.to_s).to eq("true")
         expect(flash[:success]).to eq "Successfully approved product for outfit"
+      end
+    end
+  end
+
+  describe "GET #user_outfit_products" do
+    context "outfit products path" do
+      before do
+          get :users_outfit_products, { user_id: user.id }, { user_id: user.id }
+        end
+      it "has outfit products that belong to user" do
+        expect(assigns(:outfit_products)).to eq(outfit_products)
       end
     end
   end

@@ -29,8 +29,7 @@ class OutfitProductsController < ApplicationController
   end
 
   def outfit_products
-    outfit = Outfit.find(params[:outfit_id])
-    @outfit_products = outfit.outfit_products
+    @outfit_products = Outfit.find(params[:outfit_id]).outfit_products
   end
 
   def destroy
