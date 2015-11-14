@@ -1,7 +1,6 @@
 class OutfitProductsController < ApplicationController
   # outfit_product can be added multiple times. Must be added only once. Do a before do.
-  # before_action :correct_user, only: [:create, :destroy]
-  # before_action :logged_in_user, only: [:create, :destroy]
+  before_action :logged_in_user, only: [:create, :destroy, :users_outfit_products, :outfit_products, :approve, :decline]
   before_action :outfit_product_exists, only: [:create]
   before_action :outfit_products_limit, only: [:create]
 
@@ -29,6 +28,7 @@ class OutfitProductsController < ApplicationController
   end
 
   def outfit_products
+    #add layer for security here.
     @outfit_products = Outfit.find(params[:outfit_id]).outfit_products
   end
 
