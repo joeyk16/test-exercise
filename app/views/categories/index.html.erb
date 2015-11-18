@@ -14,8 +14,16 @@
       <% @categories.each do |category, ancestry| %>
         <tr>
           <td><%= category.name %></td>
-          <td><%= category.parent %></td>
-          <td><%= category.category_sizes %></td>
+          <td>
+            <% if category.parent == nil %>
+              <%= puts "N/A" %>
+            <% else %>
+              <%= category.parent.name %>
+            <% end %>
+          </td>
+          <td>
+            <%= category.sizes.map{|s| s.title} %>
+          </td>
           <td><%= link_to 'Show', category %><%= link_to 'Edit', edit_category_path(category) %><%= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>
       <% end %>

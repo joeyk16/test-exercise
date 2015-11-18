@@ -7,11 +7,11 @@ class CategoriesController < ApplicationController
   end
 
   def show
-    @tags = Item.where(category_id: @category.id).tag_counts_on(:tags)
+    @tags = Product.where(category_id: @category.id).tag_counts_on(:tags)
     if params[:tag]
-      @items = Item.tagged_with(params[:tag])
+      @products = Product.tagged_with(params[:tag])
     else
-      @items = Item.where(category_id: @category.id).order("created_at DESC")
+      @products = Product.where(category_id: @category.id).order("created_at DESC")
     end
   end
 
