@@ -17,6 +17,9 @@ class CategoriesController < ApplicationController
 
   def new
     @category = Category.new
+    3.times do
+      @category.sizes.build
+    end
   end
 
   def edit
@@ -34,8 +37,8 @@ class CategoriesController < ApplicationController
   end
 
   def update
-    if @Cateogry.update(category_params)
-       redirect_to @Cateogry
+    if @category.update(category_params)
+       redirect_to @category
        flash[:success] = 'Category was successfully updated.'
     else
       render "edit"
@@ -43,7 +46,9 @@ class CategoriesController < ApplicationController
   end
 
   def destroy
-    Category.find(params[:id]).destroy
+    category = Category.find(params[:id])
+    category.sizes.destroy_all
+    category.destroy
     flash[:success] = "Category deleted"
     redirect_to categories_path
   end
@@ -55,6 +60,6 @@ class CategoriesController < ApplicationController
   end
 
   def category_params
-    params.require(:category).permit(:name, :parent_id, size_ids: [])
+    params.require(:category).permit(:name, :parent_id, size_ids: [], sizes_attributes: [:id, :title, :_destroy])
   end
 end

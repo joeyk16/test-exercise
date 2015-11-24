@@ -26,6 +26,7 @@ gem 'rspec-rails', '~>3.0'
 gem 'capybara', '~> 2.4.4'
 gem 'factory_girl_rails', '~> 4.0'
 gem "cocoon"
+gem "nested_form"
 
 group :development do
   gem 'byebug'

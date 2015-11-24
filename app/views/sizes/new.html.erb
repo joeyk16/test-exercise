@@ -5,6 +5,7 @@
       <div class="panel-body">
         <%= simple_form_for @size do |f| %>
           <%= f.input :title %>
+          <%= f.association :category %>
           <%= f.button :submit, "Create Size", class: "btn btn-primary" %>
         <% end %>
       </div>

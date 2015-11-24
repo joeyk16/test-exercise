@@ -1,5 +1,5 @@
 class RemoveSizesIdsFromCategories < ActiveRecord::Migration
-  def change
-    remove_column :categories, :size_ids, :integer
+  def up
+    drop_table :sizes
   end
 end
