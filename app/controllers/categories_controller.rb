@@ -28,7 +28,7 @@ class CategoriesController < ApplicationController
   def create
     @category = Category.new(category_params)
     if @category.save
-      redirect_to @category
+      redirect_to categories_path
       flash[:success] = "You have created a new category"
     else
       flash[:danger] = "Your category didn't save"
@@ -38,7 +38,7 @@ class CategoriesController < ApplicationController
 
   def update
     if @category.update(category_params)
-       redirect_to @category
+       redirect_to categories_path
        flash[:success] = 'Category was successfully updated.'
     else
       render "edit"

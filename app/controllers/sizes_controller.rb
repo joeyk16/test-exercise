@@ -32,6 +32,8 @@ class SizesController < ApplicationController
 
   def destroy
     Size.find(params[:id]).destroy
+    redirect_to sizes_path
+    flash[:success] = "Size was successfully deleted"
   end
 
   def update
