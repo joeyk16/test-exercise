@@ -1,19 +1,28 @@
-User.create!(username:  "Example User",
-             email: "example@railstutorial.org",
-             password:              "foobar",
-             password_confirmation: "foobar",
-             admin:     true,
-             activated: true,
-             activated_at: Time.zone.now)
+User.create!(
+  username:  "admin",
+  email: "admin@example.com",
+  password: "password",
+  password_confirmation: "password",
+  admin: true,
+  activated: true,
+  activated_at: Time.zone.now
+)
 
-50.times do |n|
-  name  = Faker::Name.name
-  email = "example-#{n+1}@railstutorial.org"
-  password = "password"
-  User.create!(username:  name,
-              email: email,
-              password:              password,
-              password_confirmation: password,
-              activated: true,
-              activated_at: Time.zone.now)
-end
+Category.create!(
+  name: "Men"
+  # ancestry:
+)
+
+Category.create!(
+  name: "Women"
+  # ancestry:
+)
+
+Product.create!(
+  title: Faker::Lorem.word,
+  price: Faker::Number.decimal(2),
+  description: Faker::Lorem.paragraphs,
+  user_id: User.find_by(username: "admin").id,
+  category_id: Category.find_by(name: "Men").id,
+  image: File.new("#{Rails.root}/spec/fixtures/image.jpg")
+)
