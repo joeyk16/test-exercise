@@ -10,7 +10,7 @@
                 <%= f.simple_fields_for :sizes do |s| %>
                   <%= render "sizes/form", s: s %>
                 <% end %>
-                <p><%= f.link_to_add "Add a size", :sizes %></p>
+                <p><%= f.link_to_add "Add a size", :sizes, :data => { :size => "#sizes" } %></p>
               <div class="form-actions"><%= f.button :submit %></div>
             </div>
           <% end %>
