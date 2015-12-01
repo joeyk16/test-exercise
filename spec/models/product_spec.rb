@@ -3,8 +3,6 @@ RSpec.describe Product, type: :model do
 
 
   describe "validations" do
-    it { is_expected.to validate_uniqueness_of(:title) }
-
     it { is_expected.to validate_length_of(:title).is_at_most(30) }
     it { is_expected.to validate_length_of(:description).is_at_most(2000) }
 

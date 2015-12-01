@@ -10,8 +10,7 @@ RSpec.describe Size, type: :model do
 	end
 
 	describe "associations" do
-		it { is_expected.to have_many(:category_sizes) }
-		it { is_expected.to have_many(:categories) }
+		it { is_expected.to belong_to(:category) }
 	end
 
 	describe "have a matching title" do

@@ -1,13 +1,12 @@
 class SizesController < ApplicationController
-  before_action :logged_in_user, only: [:create, :index, :destroy, :update]
-  before_action :admin_user, only: [:create, :index, :destroy, :update]
+  before_action :logged_in_user, only: [:destroy, :index, :edit, :show, :new, :create, :update]
+  before_action :admin_user, only: [:destroy, :index, :edit, :show, :new, :create, :update]
 
   def show
     @size = Size.find(params[:id])
   end
 
   def create
-    binding.pry
     @size = Size.new(size_params)
     if @size.save
       flash[:success] = "Size was successfully created"

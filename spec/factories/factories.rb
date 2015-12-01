@@ -21,7 +21,7 @@ FactoryGirl.define do
   end
 
   factory :size do
-    title Faker::Lorem.word
+    title
   end
 
   factory :category do

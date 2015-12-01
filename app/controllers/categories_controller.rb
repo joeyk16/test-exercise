@@ -1,5 +1,6 @@
 class CategoriesController < ApplicationController
   before_action :set_category,   only: [:show, :edit, :update]
+  before_action :logged_in_user, only: [:destroy, :index, :edit, :show, :new, :create, :update]
   before_action :admin_user,     only: [:destroy, :index, :edit, :show, :new, :create, :update]
 
   def index

@@ -1,23 +1,24 @@
 require "rails_helper"
 
-RSpec.describe CategoriesController, type: :controller do
+RSpec.describe SizesController, type: :controller do
   let!(:user) { create(:user, password: "Password456", admin: false) }
   let!(:admin) { create(:user, password: "Password123", admin: true) }
 
   let!(:category) { create(:category, name: "Shirt") }
-  let!(:category1) { create(:category, name: "Short") }
 
-  let!(:categories) do
-    [category, category1] + 3.times.map { create(:category) }
+  let!(:size) { create(:size, category_id: category.id) }
+
+  let!(:sizes) do
+    [size] + 4.times.map { create(:size, category_id: category.id) }
   end
 
-  let!(:category_params) { category_params = build(:category).attributes }
+  let(:size_params) { size_params = build(:size).attributes }
 
   describe "GET #index" do
-    it "renders template and shows category as admin" do
+    it "renders template and shows sizes logged in as admin" do
       get :index, {}, { user_id: admin.id }
       expect(response).to render_template(:index)
-      expect(assigns(:categories)).to eq(categories)
+      expect(assigns(:sizes)).to eq(sizes)
     end
 
     it "redirects visitor" do
@@ -32,24 +33,24 @@ RSpec.describe CategoriesController, type: :controller do
   end
 
   describe "GET #show" do
-    it "renders template and shows category as admin" do
-      get :show, { id: category.id }, { user_id: admin.id }
+    it "renders template and shows size logged in as admin" do
+      get :show, { id: size.id }, { user_id: admin.id }
       expect(response).to render_template(:show)
     end
 
     it "redirects visitor" do
-      get :show, { id: category.id }
+      get :show, { id: size.id }
       expect(response).to redirect_to(login_url)
     end
 
     it "user renders template and redirects" do
-      get :show, { id: category.id }, { user_id: user.id }
+      get :show, { id: size.id }, { user_id: user.id }
       expect(response).to redirect_to(root_path)
     end
   end
 
   describe "GET #new" do
-    it "renders template as admin" do
+    it "renders new template logged in as admin" do
       get :new, {}, { user_id: admin.id }
       expect(response).to render_template(:new)
       expect(response).to have_http_status(:success)
@@ -67,29 +68,29 @@ RSpec.describe CategoriesController, type: :controller do
   end
 
   describe "POST #create" do
-    it "as admin" do
-      post :create, { category: category_params }, { user_id: admin.id }
-      expect(assigns(:category).errors).to be_empty
-      expect(response).to redirect_to(categories_path)
+    it "creates size logged in as admin" do
+      post :create, { size: size_params }, { user_id: admin.id }
+      expect(assigns(:size).errors).to be_empty
+      expect(response).to redirect_to(sizes_path)
     end
 
     it "redirects visitor" do
-      get :create, { category: category_params }
+      get :create, { size: size_params }
       expect(response).to redirect_to(login_url)
     end
 
     it "user renders template and redirects" do
-      get :create, { category: category_params }, { user_id: user.id }
+      get :create, { size: size_params }, { user_id: user.id }
       expect(response).to redirect_to(root_path)
     end
   end
 
   describe "GET #edit" do
-    it "as admin" do
+    it "edit size logged in as admin" do
       get :edit, { id: category.id }, { user_id: admin.id }
       expect(response).to render_template(:edit)
       expect(response).to have_http_status(:success)
-      expect(assigns(:category)).to eq(category)
+      expect(assigns(:size)).to eq(size)
     end
 
     it "redirects visitor" do
@@ -104,31 +105,36 @@ RSpec.describe CategoriesController, type: :controller do
   end
 
   describe "POST #update" do
-    it "as admin" do
-      patch :update, { id: category.id, category: category_params }, { user_id: admin.id }
-      expect(response).to redirect_to(categories_path)
-      expect(assigns(:category)).to eq(category)
+    it "update size logged in as admin" do
+      patch :update, { id: size.id, size: size_params }, { user_id: admin.id }
+      expect(response).to redirect_to(sizes_path)
+      expect(flash[:success]).to eq("Size was successfully updated")
     end
 
     it "redirects visitor" do
-      patch :update, { id: category.id, category: category_params }, {}
+      patch :update, { id: size.id, size: size_params }, {}
       expect(response).to redirect_to(login_url)
     end
 
     it "user renders template and redirects" do
-      patch :update, { id: category.id, category: category_params }, { user_id: user.id }
+      patch :update, { id: size.id, size: size_params }, { user_id: user.id }
       expect(response).to redirect_to(root_path)
     end
   end
 
   describe "DELETE #destroy" do
-    it "as admin" do
-      delete :destroy, { id: category.id }, { user_id: admin.id }
-      expect(response).to redirect_to(categories_path)
+    it "delete size logged in as admin" do
+      delete :destroy, { id: size.id }, { user_id: admin.id }
+      expect(response).to redirect_to(sizes_path)
     end
 
-    it "as unauthorised user" do
-      delete :destroy, { id: category.id }, { user_id: user.id }
+    it "redirects visitor" do
+      delete :destroy, { id: size.id, size: size_params }, {}
+      expect(response).to redirect_to(login_url)
+    end
+
+    it "user renders template and redirects" do
+      delete :destroy, { id: size.id, size: size_params }, { user_id: user.id }
       expect(response).to redirect_to(root_path)
     end
   end
