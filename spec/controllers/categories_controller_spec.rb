@@ -14,7 +14,7 @@ RSpec.describe CategoriesController, type: :controller do
   let!(:category_params) { category_params = build(:category).attributes }
 
   describe "GET #index" do
-    it "renders template and shows category as admin" do
+    it "renders template and shows category as admin user" do
       get :index, {}, { user_id: admin.id }
       expect(response).to render_template(:index)
       expect(assigns(:categories)).to eq(categories)
@@ -32,7 +32,7 @@ RSpec.describe CategoriesController, type: :controller do
   end
 
   describe "GET #show" do
-    it "renders template and shows category as admin" do
+    it "renders template and shows category as admin user" do
       get :show, { id: category.id }, { user_id: admin.id }
       expect(response).to render_template(:show)
     end
@@ -49,7 +49,7 @@ RSpec.describe CategoriesController, type: :controller do
   end
 
   describe "GET #new" do
-    it "renders template as admin" do
+    it "renders template as admin user" do
       get :new, {}, { user_id: admin.id }
       expect(response).to render_template(:new)
       expect(response).to have_http_status(:success)
@@ -67,7 +67,7 @@ RSpec.describe CategoriesController, type: :controller do
   end
 
   describe "POST #create" do
-    it "as admin" do
+    it "creates category as admin user" do
       post :create, { category: category_params }, { user_id: admin.id }
       expect(assigns(:category).errors).to be_empty
       expect(response).to redirect_to(categories_path)
@@ -85,7 +85,7 @@ RSpec.describe CategoriesController, type: :controller do
   end
 
   describe "GET #edit" do
-    it "as admin" do
+    it "edits category as admin user" do
       get :edit, { id: category.id }, { user_id: admin.id }
       expect(response).to render_template(:edit)
       expect(response).to have_http_status(:success)
@@ -104,7 +104,7 @@ RSpec.describe CategoriesController, type: :controller do
   end
 
   describe "POST #update" do
-    it "as admin" do
+    it "updates category as admin user" do
       patch :update, { id: category.id, category: category_params }, { user_id: admin.id }
       expect(response).to redirect_to(categories_path)
       expect(assigns(:category)).to eq(category)
@@ -122,7 +122,7 @@ RSpec.describe CategoriesController, type: :controller do
   end
 
   describe "DELETE #destroy" do
-    it "as admin" do
+    it "destroys category as admin user" do
       delete :destroy, { id: category.id }, { user_id: admin.id }
       expect(response).to redirect_to(categories_path)
     end
