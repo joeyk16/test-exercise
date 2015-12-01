@@ -4,6 +4,8 @@ class Product < ActiveRecord::Base
 	belongs_to :user
 	belongs_to :category
 
+  has_many :product_sizes
+
 	validates :title, presence: true, length: { maximum: 30 }
 	validates :description, presence: true, length: { maximum: 2000 }
 	validates :category, :user_id, :price, presence: true
