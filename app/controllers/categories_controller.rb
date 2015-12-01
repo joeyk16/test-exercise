@@ -1,6 +1,7 @@
 class CategoriesController < ApplicationController
   before_action :set_category,   only: [:show, :edit, :update]
-  before_action :admin_user,     only: [:destroy, :index, :edit, :show]
+  before_action :logged_in_user, only: [:destroy, :index, :edit, :show, :new, :create, :update]
+  before_action :admin_user,     only: [:destroy, :index, :edit, :show, :new, :create, :update]
 
   def index
     @categories = Category.all
@@ -17,6 +18,9 @@ class CategoriesController < ApplicationController
 
   def new
     @category = Category.new
+    3.times do
+      @category.sizes.build
+    end
   end
 
   def edit
@@ -25,7 +29,7 @@ class CategoriesController < ApplicationController
   def create
     @category = Category.new(category_params)
     if @category.save
-      redirect_to @category
+      redirect_to categories_path
       flash[:success] = "You have created a new category"
     else
       flash[:danger] = "Your category didn't save"
@@ -34,8 +38,8 @@ class CategoriesController < ApplicationController
   end
 
   def update
-    if @Cateogry.update(category_params)
-       redirect_to @Cateogry
+    if @category.update(category_params)
+       redirect_to categories_path
        flash[:success] = 'Category was successfully updated.'
     else
       render "edit"
@@ -43,7 +47,9 @@ class CategoriesController < ApplicationController
   end
 
   def destroy
-    Category.find(params[:id]).destroy
+    category = Category.find(params[:id])
+    category.sizes.destroy_all
+    category.destroy
     flash[:success] = "Category deleted"
     redirect_to categories_path
   end
@@ -55,6 +61,6 @@ class CategoriesController < ApplicationController
   end
 
   def category_params
-    params.require(:category).permit(:name, :parent_id, size_ids: [])
+    params.require(:category).permit(:name, :parent_id, size_ids: [], sizes_attributes: [:id, :title, :_destroy])
   end
 end

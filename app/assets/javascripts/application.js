@@ -20,3 +20,4 @@
 //= require masonry/jquery.imagesloaded.min
 //= require cocoon
 //= require_tree .
+//= require jquery_nested_form

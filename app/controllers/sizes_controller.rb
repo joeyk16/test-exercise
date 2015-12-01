@@ -1,50 +1,54 @@
 class SizesController < ApplicationController
-  before_action :set_size, only: [:edit, :update]
-  before_action :admin_user, only: [:destroy, :index, :edit, :show]
+  before_action :logged_in_user, only: [:destroy, :index, :edit, :show, :new, :create, :update]
+  before_action :admin_user, only: [:destroy, :index, :edit, :show, :new, :create, :update]
 
-	def new
-		@size = Size.new
-	end
+  def show
+    @size = Size.find(params[:id])
+  end
 
   def create
     @size = Size.new(size_params)
     if @size.save
+      flash[:success] = "Size was successfully created"
       redirect_to sizes_path
-      flash[:success] = "You have created a new size"
     else
-      render 'new'
+      flash[:danger] = "Size wasn't created"
+      render :new
     end
+  end
+
+  def new
+    @size = Size.new
   end
 
   def index
   	@sizes = Size.all
   end
 
-  def destroy
-    Size.find(params[:id]).destroy
-    flash[:sucess] = "Size deleted"
-    redirect_to sizes_path
+  def edit
+    @size = Size.find(params[:id])
   end
 
-  def edit
+  def destroy
+    Size.find(params[:id]).destroy
+    redirect_to sizes_path
+    flash[:success] = "Size was successfully deleted"
   end
 
   def update
-    if @size.update_attributes(size_params)
-      flash[:success] = "Size updated"
+    size = Size.find(params[:id])
+    if size.update_attributes(size_params)
       redirect_to sizes_path
+      flash[:success] = "Size was successfully updated"
     else
-      render 'edit'
+      redirect :back
+      flash[:danger] = "Size didn't update"
     end
   end
 
   private
 
-  def set_size
-    @size = Size.find(params[:id])
-  end
-
   def size_params
-    params.require(:size).permit(:title)
+    params.require(:size).permit(:title, :category_id)
   end
 end

@@ -13,7 +13,7 @@
       <% @sizes.each do |size| %>
         <tr>
           <td><%= size.title %></td>
-          <td><%= size.categories.map{ |c| c.name } %></td>
+          <td><%= size.category.name %></td>
           <td><%= link_to 'Show', size %><%= link_to 'Edit', edit_size_path(size) %><%= link_to 'Destroy', size, method: :delete, data: { confirm: 'Are you sure?' } %>
           </td>
         </tr>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151027105042) do
+ActiveRecord::Schema.define(version: 20151118083610) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
@@ -22,15 +22,33 @@ ActiveRecord::Schema.define(version: 20151027105042) do
 
   add_index "categories", ["ancestry"], name: "index_categories_on_ancestry"
 
-  create_table "category_sizes", force: :cascade do |t|
-    t.integer  "category_id"
-    t.integer  "size_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+  create_table "outfit_products", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "product_id"
+    t.integer  "outfit_id"
+    t.boolean  "approved",   default: false
+    t.boolean  "boolean",    default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
-  add_index "category_sizes", ["category_id"], name: "index_category_sizes_on_category_id"
-  add_index "category_sizes", ["size_id"], name: "index_category_sizes_on_size_id"
+  add_index "outfit_products", ["outfit_id"], name: "index_outfit_products_on_outfit_id"
+  add_index "outfit_products", ["product_id"], name: "index_outfit_products_on_product_id"
+  add_index "outfit_products", ["user_id"], name: "index_outfit_products_on_user_id"
+
+  create_table "outfit_similar_products", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "product_id"
+    t.integer  "outfit_id"
+    t.boolean  "approved",   default: false
+    t.boolean  "boolean",    default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "outfit_similar_products", ["outfit_id"], name: "index_outfit_similar_products_on_outfit_id"
+  add_index "outfit_similar_products", ["product_id"], name: "index_outfit_similar_products_on_product_id"
+  add_index "outfit_similar_products", ["user_id"], name: "index_outfit_similar_products_on_user_id"
 
   create_table "outfits", force: :cascade do |t|
     t.string   "outfit_image_file_name"
@@ -47,16 +65,16 @@ ActiveRecord::Schema.define(version: 20151027105042) do
 
   create_table "products", force: :cascade do |t|
     t.string   "title"
-    t.decimal  "price"
     t.text     "description"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
     t.integer  "user_id"
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
     t.integer  "category_id"
+    t.decimal  "price",              precision: 8, scale: 2
   end
 
   add_index "products", ["user_id", "created_at"], name: "index_products_on_user_id_and_created_at"
@@ -64,9 +82,12 @@ ActiveRecord::Schema.define(version: 20151027105042) do
 
   create_table "sizes", force: :cascade do |t|
     t.text     "title"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "category_id"
   end
+
+  add_index "sizes", ["category_id"], name: "index_sizes_on_category_id"
 
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"

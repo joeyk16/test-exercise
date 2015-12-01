@@ -32,11 +32,6 @@ RSpec.describe UsersController, type: :controller do
       expect(assigns(:users).map(&:id)).to eq users.map(&:id)
     end
 
-    it "user renders template and shows users" do
-      get :index, {}, { user_id: user.id }
-      expect(response).to redirect_to(root_path)
-    end
-
     it "redirects visitor" do
       get :index
       expect(response).to redirect_to(login_path)
