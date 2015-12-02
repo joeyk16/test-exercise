@@ -9,6 +9,7 @@ class ProductsController < ApplicationController
 
   def new
   	@product = Product.new
+    @categories = Category.preload(:sizes).order(:name)
   end
 
   def home
