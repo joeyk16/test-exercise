@@ -33,6 +33,7 @@ group :development do
   gem 'web-console', '~> 2.0'
   gem 'spring'
   gem 'sqlite3'
+  gem 'quiet_assets'
 end
 
 group :test, :production do

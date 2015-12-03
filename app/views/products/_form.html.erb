@@ -6,16 +6,14 @@
         <div class="panel-body">
           <%= simple_form_for @product, html: { multipart: true } do |f| %>
             <%= f.input :image, label:"Choose Image" %>
-
             <%= f.collection_select :category_id, @categories, :id, :name, include_blank: true, :prompt => "Select One Category" %>
             <% @categories.each do |category| %>
-              <div class='sizes_container' id ='sizes_container_for_<%= category.id %>' style='display:none'>
+              <div class='sizes_container' id ='sizes_container_for_<%= category.id %>'>
                <% category.sizes.each do |size| %>
-                 <!-- place checkboxes here -->
+                <%= size.title %>
                <% end %>
               </div>
             <% end %>
-
             <%= f.input :title, label:"Title"%>
             <%= f.input :price, label:"Price"%>
             <%= f.input :description,label:"Description" %>
@@ -27,7 +25,3 @@
     </div>
   </div>
 </div>
-
-
-
-
