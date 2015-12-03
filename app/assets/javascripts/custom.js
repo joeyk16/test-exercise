@@ -1,11 +1,14 @@
 // view/products/_form
-$(function() {
-  $('.sizes_container').hide();
-  $('#product_category_id').on('change', function(){
-    $('.sizes_container input').hide();
-    $('.sizes_container input').removeAttr('checked');
+this.products = {
+  updateCategory: function() {
+    var id = $('#product_category_id').val();
+    $('.sizes_container').hide();
+    $('#sizes_container_for_' + id).show();
+  }
+};
 
-    $('#sizes_container_for_' + $(this).val()).show();
-  })
+$(function() {
+  products.updateCategory();
+  $('#product_category_id').on('change', products.updateCategory);
 });
 
