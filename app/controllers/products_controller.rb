@@ -8,7 +8,7 @@ class ProductsController < ApplicationController
   end
 
   def new
-  	@product = Product.new
+    @product_form = ProductForm.new
     @categories = Category.preload(:sizes).order(:name)
   end
 
@@ -32,8 +32,8 @@ class ProductsController < ApplicationController
   end
 
   def create
-    @product = current_user.products.new(product_params)
-    if @product.save
+    @product_form = ProductForm.new(product_params)
+    if @product_form.save
       redirect_to @product
       flash[:success] = "You have created a new product"
     else
@@ -55,9 +55,15 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-    params.require(:product).permit(:title, :category_id, :price,
-                                 :description, :image, :tag_list
-                                 )
+    params.require(:product).permit(
+      :title,
+      :price,
+      :description,
+      :tag_list,
+      :category_id,
+      :size,
+      :quantity
+    )
   end
 
   def correct_user_edit
