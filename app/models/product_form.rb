@@ -7,12 +7,12 @@ class ProductForm
 
   attribute :title, String
   attribute :price, Integer
-  attribute :description, String
-  attribute :tag_list, String
+  # attribute :description, String
+  # attribute :tag_list, String
 
-  attribute :category_id, String
-  attribute :size, String
-  attribute :quantity, String
+  # attribute :category_id, String
+  # attribute :size, String
+  # attribute :quantity, String
 
   # validates :email, presence: true
   # … more validations …
