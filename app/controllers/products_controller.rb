@@ -10,7 +10,7 @@ class ProductsController < ApplicationController
   def new
     @product_form = ProductForm.new
     # @product_form = Product.new
-    # @categories = Category.preload(:sizes).order(:name)
+    @categories = Category.preload(:sizes).order(:name)
     # @product_size = ProductSize.new
   end
 
@@ -34,6 +34,7 @@ class ProductsController < ApplicationController
   end
 
   def create
+    binding.pry
     @product_form = ProductForm.new(product_params)
     if @product_form.save
       redirect_to @product
