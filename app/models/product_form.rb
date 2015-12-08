@@ -1,23 +1,19 @@
 class ProductForm
   include Virtus.model
 
-  # extend ActiveModel::Naming
-  # include ActiveModel::Conversion
-  # include ActiveModel::Validations
-
+  extend ActiveModel::Naming
+  include ActiveModel::Conversion
+  include ActiveModel::Validations
+  #Attributes for Product
   attribute :title, String
   attribute :price, Integer
-  # attribute :description, String
-  # attribute :tag_list, String
+  attribute :description, String
+  attribute :tag_list, String
+  #Atrributes for PorductSize
+  attribute :category_id, String
+  attribute :size, String
+  attribute :quantity, String
 
-  # attribute :category_id, String
-  # attribute :size, String
-  # attribute :quantity, String
-
-  # validates :email, presence: true
-  # … more validations …
-
-  # Forms are never themselves persisted
   def persisted?
     false
   end

@@ -11,6 +11,9 @@
               <div class='sizes_container' id ='sizes_container_for_<%= category.id %>'>
                 <% category.sizes.each do |size| %>
                   <%= size.title %>
+                  <%= simple_fields_for @product_size do |f| %>
+                    <%= f.input :quantity %>
+                  <% end %>
                 <% end %>
               </div>
             <% end %>

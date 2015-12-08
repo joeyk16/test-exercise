@@ -8,9 +8,10 @@ class ProductsController < ApplicationController
   end
 
   def new
-    @product_form = Product.new
-    @categories = Category.preload(:sizes).order(:name)
-    @product_size = ProductSize.new
+    @product_form = ProductForm.new
+    # @product_form = Product.new
+    # @categories = Category.preload(:sizes).order(:name)
+    # @product_size = ProductSize.new
   end
 
   def home
