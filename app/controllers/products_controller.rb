@@ -9,9 +9,7 @@ class ProductsController < ApplicationController
 
   def new
     @product_form = ProductForm.new
-    # @product_form = Product.new
     @categories = Category.preload(:sizes).order(:name)
-    # @product_size = ProductSize.new
   end
 
   def home
@@ -35,8 +33,8 @@ class ProductsController < ApplicationController
 
   def create
     binding.pry
-    @product_form = ProductForm.new(product_params)
-    if @product_form.save
+    @product = Product.new(product_params)
+    if @product.save
       redirect_to @product
       flash[:success] = "You have created a new product"
     else

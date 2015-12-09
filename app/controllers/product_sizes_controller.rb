@@ -11,7 +11,6 @@ class ProductSizesController < ApplicationController
     product_size.save
   end
 
-
   private
 
   def product_size_params
