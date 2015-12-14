@@ -8,7 +8,7 @@ class Product < ActiveRecord::Base
 
   validates :title, presence: true, length: { maximum: 30 }
   validates :description, presence: true, length: { maximum: 2000 }
-  validates :category, :user_id, :price, presence: true
+  validates :category, :user, :price, presence: true
 
   has_attached_file :image, styles: { large: "600x600", medium: "250x250", thumb:"100x100#"}
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/

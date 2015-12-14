@@ -8,7 +8,7 @@ class ProductsController < ApplicationController
   end
 
   def new
-    @product_form = ProductForm.new
+    @product = Product.new
     @categories = Category.preload(:sizes).order(:name)
   end
 
@@ -32,13 +32,20 @@ class ProductsController < ApplicationController
   end
 
   def create
-    binding.pry
-    @product = Product.new(product_params)
-    if @product.save
-      redirect_to @product
+    @form = ProductForm.new(title: product_params[:title],
+      price: product_params[:price],
+      description: product_params[:description],
+      tag_list: product_params[:tag_list],
+      category_id: product_params[:category_id],
+      sizes_by_id: product_params[:sizes_by_id],
+      user: current_user)
+
+    if @form.save
+      redirect_to @form.product
       flash[:success] = "You have created a new product"
     else
       flash[:danger] = "Your product didn't save"
+      new
       render "new"
     end
   end
@@ -56,15 +63,13 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-    params.require(:product).permit(
-      :title,
-      :price,
-      :description,
-      :tag_list,
-      :category_id,
-      :size,
-      :quantity
-    )
+      params.require(:product).permit(
+        :title,
+        :price,
+        :description,
+        :tag_list,
+        :category_id,
+      ).merge(sizes_by_id: params[:product_form][:sizes_by_id]) # TODO
   end
 
   def correct_user_edit

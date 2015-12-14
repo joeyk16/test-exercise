@@ -4,14 +4,13 @@
     <div class="col-md-6 col-md-offset-3">
       <div class="panel panel-primary">
         <div class="panel-body">
-          <%= simple_form_for @product_form, products_path, method: :post do |f| %>
-            <%= f.collection_select :category_id, @categories, :id, :name, include_blank: true, :prompt => "Select One Category" %>
+          <%= simple_form_for @product do |f| %>
+            <%= f.collection_select :category_id, @categories, :id, :name, include_blank: true, prompt: "Select One Category" %>
             <% @categories.each do |category| %>
               <div class='sizes_container' id ='sizes_container_for_<%= category.id %>'>
                 <% category.sizes.each do |size| %>
-                  <%= f.hidden_field :size_id, value: size.id %>
-                  <%= size.title %>
-                  <%= f.input :quantity %>
+                  <%= label_tag "product_form[sizes_by_id][#{size.id}]", size.title %>
+                  <%= text_field_tag "product_form[sizes_by_id][#{size.id}]" %>
                 <% end %>
               </div>
             <% end %>
