@@ -32,13 +32,16 @@ class ProductsController < ApplicationController
   end
 
   def create
-    @form = ProductForm.new(title: product_params[:title],
+    @form = ProductForm.new(
+      image: product_params[:image],
+      title: product_params[:title],
       price: product_params[:price],
       description: product_params[:description],
       tag_list: product_params[:tag_list],
       category_id: product_params[:category_id],
       sizes_by_id: product_params[:sizes_by_id],
-      user: current_user)
+      user: current_user
+    )
 
     if @form.save
       redirect_to @form.product
@@ -64,6 +67,7 @@ class ProductsController < ApplicationController
 
   def product_params
       params.require(:product).permit(
+        :image,
         :title,
         :price,
         :description,

@@ -5,6 +5,7 @@
       <div class="panel panel-primary">
         <div class="panel-body">
           <%= simple_form_for @product do |f| %>
+            <%= f.input :image, label:"Choose Image" %>
             <%= f.collection_select :category_id, @categories, :id, :name, include_blank: true, prompt: "Select One Category" %>
             <% @categories.each do |category| %>
               <div class='sizes_container' id ='sizes_container_for_<%= category.id %>'>

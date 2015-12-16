@@ -1,9 +1,9 @@
 class ProductForm
   attr_reader :quantity_by_size_id, :product
 
-  def initialize(title:, price:, description:, tag_list:, category_id:, sizes_by_id:, user:)
+  def initialize(image:, title:, price:, description:, tag_list:, category_id:, sizes_by_id:, user:)
     @quantity_by_size_id = sizes_by_id # TODO
-    @product = Product.new(title: title, price: price, description: description,
+    @product = Product.new(image: image,title: title, price: price, description: description,
       tag_list: tag_list, category_id: category_id, user: user)
     build_product_sizes
   end
