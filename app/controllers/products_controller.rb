@@ -10,6 +10,9 @@ class ProductsController < ApplicationController
   def new
     @product = Product.new
     @categories = Category.preload(:sizes).order(:name)
+    3.times do
+      @product.product_images.build
+    end
   end
 
   def home
@@ -33,17 +36,19 @@ class ProductsController < ApplicationController
 
   def create
     @form = ProductForm.new(
-      image: product_params[:image],
+      product_image: product_params[:product_image],
       title: product_params[:title],
       price: product_params[:price],
+      size_description: product_params[:size_description],
+      shipping_description: product_params[:shipping_description],
       description: product_params[:description],
       tag_list: product_params[:tag_list],
       category_id: product_params[:category_id],
       sizes_by_id: product_params[:sizes_by_id],
       user: current_user
     )
-
     if @form.save
+      create_product_images
       redirect_to @form.product
       flash[:success] = "You have created a new product"
     else
@@ -61,18 +66,26 @@ class ProductsController < ApplicationController
 
   private
 
+  def create_product_images
+    params["product"]["product_images_attributes"].each do |image|
+      ProductImage.create(product_image: image.last, product_id: @form.product.id)
+    end
+  end
+
   def set_product
     @product = Product.find(params[:id])
   end
 
   def product_params
       params.require(:product).permit(
-        :image,
+        :product_images_attributes,
         :title,
         :price,
         :description,
         :tag_list,
         :category_id,
+        :size_description,
+        :shipping_description,
       ).merge(sizes_by_id: params[:product_form][:sizes_by_id]) # TODO
   end
 

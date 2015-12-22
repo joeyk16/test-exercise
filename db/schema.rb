@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151201112405) do
+ActiveRecord::Schema.define(version: 20151221091252) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
@@ -63,6 +63,16 @@ ActiveRecord::Schema.define(version: 20151201112405) do
 
   add_index "outfits", ["user_id"], name: "index_outfits_on_user_id"
 
+  create_table "product_images", force: :cascade do |t|
+    t.integer  "product_id"
+    t.string   "product_image_file_name"
+    t.string   "product_image_content_type"
+    t.integer  "product_image_file_size"
+    t.datetime "product_image_updated_at"
+  end
+
+  add_index "product_images", ["product_id"], name: "index_product_images_on_product_id"
+
   create_table "product_sizes", force: :cascade do |t|
     t.integer "quantity"
     t.integer "product_id"
@@ -75,15 +85,17 @@ ActiveRecord::Schema.define(version: 20151201112405) do
   create_table "products", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
-    t.datetime "created_at",                                 null: false
-    t.datetime "updated_at",                                 null: false
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
     t.integer  "user_id"
-    t.string   "image_file_name"
-    t.string   "image_content_type"
-    t.integer  "image_file_size"
-    t.datetime "image_updated_at"
+    t.string   "product_image_file_name"
+    t.string   "product_image_content_type"
+    t.integer  "product_image_file_size"
+    t.datetime "product_image_updated_at"
     t.integer  "category_id"
-    t.decimal  "price",              precision: 8, scale: 2
+    t.decimal  "price",                      precision: 8, scale: 2
+    t.text     "size_description"
+    t.text     "shipping_description"
   end
 
   add_index "products", ["user_id", "created_at"], name: "index_products_on_user_id_and_created_at"

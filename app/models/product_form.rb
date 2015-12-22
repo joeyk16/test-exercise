@@ -1,10 +1,19 @@
 class ProductForm
   attr_reader :quantity_by_size_id, :product
 
-  def initialize(image:, title:, price:, description:, tag_list:, category_id:, sizes_by_id:, user:)
+  def initialize(product_image:, title:, price:, description:, tag_list:, category_id:, sizes_by_id:, user:, size_description:, shipping_description:)
     @quantity_by_size_id = sizes_by_id # TODO
-    @product = Product.new(image: image,title: title, price: price, description: description,
-      tag_list: tag_list, category_id: category_id, user: user)
+    @product_images = product_image
+    @product = Product.new(
+      title: title,
+      price: price,
+      description: description,
+      tag_list: tag_list,
+      category_id: category_id,
+      size_description: size_description,
+      shipping_description: shipping_description,
+      user: user
+    )
     build_product_sizes
   end
 
@@ -21,7 +30,6 @@ class ProductForm
       end
     end
   end
-
   # def product_size_attributes
   #   @product_size_attributes ||= Category.all.each do |category|
   #     ProductSize.build(product: super, size: )

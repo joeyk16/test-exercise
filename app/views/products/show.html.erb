@@ -9,12 +9,12 @@
             <li data-target="#myCarousel" data-slide-to="1"></li>
           </ol>
           <!-- Wrapper for slides -->
-          <div class="carousel-inner" role="listbox">
+        <div class="carousel-inner" role="listbox">
             <div class="item active">
-              <%= image_tag @product.image.url(:large) %>
+              <%= image_tag @product.product_images[0].url(:large) %>
             </div>
             <div class="item">
-              <%= image_tag @product.image.url(:large) %>
+              <%= image_tag @product.product_images[1].url(:large) %>
             </div>
           </div>
           <!-- Left and right controls -->
@@ -31,8 +31,8 @@
     </div>
     <!-- right column -->
     <div class="col-lg-6 col-md-6 col-sm-5">
-      <div class = "itemtitle"><%= @product.title %> </div>
-      <div class = "price">$<%= @product.price %> </div>
+      <div class = "itemtitle"><%= @product.title %></div>
+      <div class = "price">$<%= @product.price %></div>
       <% if current_user?(@product.user) %>
         <%= link_to "Edit Products", edit_product_path(@product) %>
       <% end %>
@@ -72,55 +72,19 @@
   		<p> Tags: <%= raw @product.tag_list.map { |t| link_to t, tag_path(t) }.join(', ') %> </p>
       <div class="product-tab w100 clearfix">
         <ul class="nav nav-tabs">
-          <li class="active"><a href="#details" data-toggle="tab">Details</a></li>
-          <li><a href="#size" data-toggle="tab">Size</a></li>
-          <li><a href="#shipping" data-toggle="tab">Shipping</a></li>
+          <li class="active"><a href="#details" data-toggle="tab">Item Details</a></li>
+          <li><a href="#size" data-toggle="tab">Size Details</a></li>
+          <li><a href="#shipping" data-toggle="tab">Shipping Details</a></li>
         </ul>
-            <!-- Tab panes -->
         <div class="tab-content">
           <div class="tab-pane active" id="details">
-            Description: <%= @product.description %>
+            <%= @product.description %>
           </div>
-          <div class="tab-pane" id="size"> 16" waist<br>
-            34" inseam<br>
-            10.5" front rise<br>
-            8.5" knee<br>
-            7.5" leg opening<br>
-            <br>
-            Measurements taken from size 30<br>
-            Model wears size 31. Model is 6'2 <br>
-            <br>
+          <div class="tab-pane" id="size">
+            <%= @product.size_description %>
           </div>
           <div class="tab-pane" id="shipping">
-            <table>
-              <colgroup>
-                <col style="width:33%">
-                <col style="width:33%">
-                <col style="width:33%">
-              </colgroup>
-              <tbody>
-              <tr>
-                <td>Standard</td>
-                <td>1-5 business days</td>
-                <td>$7.95</td>
-              </tr>
-              <tr>
-                <td>Two Day</td>
-                <td>2 business days</td>
-                <td>$15</td>
-              </tr>
-              <tr>
-                <td>Next Day</td>
-                <td>1 business day</td>
-                <td>$30</td>
-              </tr>
-              </tbody>
-              <tfoot>
-              <tr>
-                <td colspan="3">* Free on orders of $50 or more</td>
-              </tr>
-              </tfoot>
-            </table>
+            <%= @product.shipping_description %>
           </div>
         </div><!-- /.tab content -->
       </div><!--/.product-tab-->
