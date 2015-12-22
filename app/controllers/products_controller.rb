@@ -10,9 +10,7 @@ class ProductsController < ApplicationController
   def new
     @product = Product.new
     @categories = Category.preload(:sizes).order(:name)
-    3.times do
-      @product.product_images.build
-    end
+    @product.product_images.build
   end
 
   def home
@@ -67,8 +65,8 @@ class ProductsController < ApplicationController
   private
 
   def create_product_images
-    params["product"]["product_images_attributes"].each do |image|
-      ProductImage.create(product_image: image.last, product_id: @form.product.id)
+    params["product"]["product_images_attributes"].each do |index, image|
+      ProductImage.create(product_image: image, product_id: @form.product.id)
     end
   end
 
