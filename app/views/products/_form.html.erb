@@ -5,25 +5,30 @@
       <div class="panel panel-primary">
         <div class="panel-body">
           <%= simple_nested_form_for @product do |f| %>
+
             <%= f.fields_for :product_images do |product_image| %>
               <% if product_image.object.new_record? %>
                 <%= product_image.file_field(:product_image) %>
                 <%= product_image.link_to_remove "Remove Image", data: { confirm: "Are you sure you want to delete this image?" } %>
               <% else %>
-                <%= image_tag(product_image.url(:thumb)) %>
                 <%= product_image.hidden_field :_destroy %>
               <% end %>
             <% end %>
             <p><%= f.link_to_add "Add a image", :product_images, :data => { :product_image => "#product_images" } %></p>
+
             <%= f.collection_select :category_id, @categories, :id, :name, include_blank: true, prompt: "Select One Category" %>
             <% @categories.each do |category| %>
               <div class='sizes_container' id ='sizes_container_for_<%= category.id %>'>
                 <% category.sizes.each do |size| %>
-                  <%= label_tag "product_form[sizes_by_id][#{size.id}]", size.title %>
-                  <%= text_field_tag "product_form[sizes_by_id][#{size.id}]" %>
+                  <%= label_tag size.title %>
+                  <%= f.simple_fields_for :product_sizes do |product_size| %>
+                    <%= product_size.input :quantity %>
+                    <%= product_size.hidden_field :size_id %>
+                  <% end %>
                 <% end %>
               </div>
             <% end %>
+
             <%= f.input :title, label:"Title"%>
             <%= f.input :price, label:"Price"%>
             <%= f.input :description,label:"Description" %>
