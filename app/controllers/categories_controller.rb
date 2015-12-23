@@ -27,6 +27,7 @@ class CategoriesController < ApplicationController
   end
 
   def create
+    binding.pry
     @category = Category.new(category_params)
     if @category.save
       redirect_to categories_path

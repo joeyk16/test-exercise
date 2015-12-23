@@ -11,5 +11,5 @@ class Product < ActiveRecord::Base
   validates :description, presence: true, length: { maximum: 2000 }
   validates :category, :user, :price, presence: true
 
-  accepts_nested_attributes_for :product_images, allow_destroy: true
+  accepts_nested_attributes_for :product_images, :product_sizes, allow_destroy: true
 end

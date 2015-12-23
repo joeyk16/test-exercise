@@ -11,6 +11,7 @@ class ProductsController < ApplicationController
     @product = Product.new
     @categories = Category.preload(:sizes).order(:name)
     @product.product_images.build
+    @product.product_sizes.build
   end
 
   def home
@@ -33,25 +34,14 @@ class ProductsController < ApplicationController
   end
 
   def create
-    @form = ProductForm.new(
-      product_image: product_params[:product_image],
-      title: product_params[:title],
-      price: product_params[:price],
-      size_description: product_params[:size_description],
-      shipping_description: product_params[:shipping_description],
-      description: product_params[:description],
-      tag_list: product_params[:tag_list],
-      category_id: product_params[:category_id],
-      sizes_by_id: product_params[:sizes_by_id],
-      user: current_user
-    )
-    if @form.save
-      create_product_images
-      redirect_to @form.product
+    binding.pry
+    @product = Product.new product_params
+    @product.user_id = current_user.id
+    if @product.save
+      redirect_to @product
       flash[:success] = "You have created a new product"
     else
       flash[:danger] = "Your product didn't save"
-      new
       render "new"
     end
   end
@@ -75,16 +65,17 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-      params.require(:product).permit(
-        :product_images_attributes,
-        :title,
-        :price,
-        :description,
-        :tag_list,
-        :category_id,
-        :size_description,
-        :shipping_description,
-      ).merge(sizes_by_id: params[:product_form][:sizes_by_id]) # TODO
+     params.require(:product).permit(
+      :title,
+      :price,
+      :description,
+      :tag_list,
+      :category_id,
+      :size_description,
+      :shipping_description,
+      product_images_attributes: [:product_image, :_destroy],
+      product_sizes_attributes: [:size_id, :quantity]
+    )
   end
 
   def correct_user_edit
