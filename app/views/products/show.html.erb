@@ -6,16 +6,39 @@
           <!-- Indicators -->
           <ol class="carousel-indicators">
             <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <% if @product.product_images[1] %>
+              <li data-target="#myCarousel" data-slide-to="1"></li>
+            <% end %>
+            <% if @product.product_images[2] %>
+              <li data-target="#myCarousel" data-slide-to="2"></li>
+            <% end %>
+            <% if @product.product_images[3] %>
+              <li data-target="#myCarousel" data-slide-to="3"></li>
+            <% end %>
+            <% if @product.product_images[4] %>
+              <li data-target="#myCarousel" data-slide-to="4"></li>
+            <% end %>
           </ol>
           <!-- Wrapper for slides -->
           <div class="carousel-inner" role="listbox">
             <div class="item active">
-              <%= image_tag @product.product_images[0].url(:large) %>
+              <%= image_tag @product.product_images[0].product_image.url(:large) %>
             </div>
-            <div class="item">
-              <%= image_tag @product.image.url(:large) %>
-            </div>
+            <% if @product.product_images[1] %>
+              <div class="item">
+                <%= image_tag @product.product_images[1].product_image.url(:large) %>
+              </div>
+            <% end %>
+            <% if @product.product_images[2] %>
+              <div class="item">
+                <%= image_tag @product.product_images[2].product_image.url(:large) %>
+              </div>
+            <% end %>
+            <% if @product.product_images[3] %>
+              <div class="item">
+                <%= image_tag @product.product_images[3].product_image.url(:large) %>
+              </div>
+            <% end %>
           </div>
           <!-- Left and right controls -->
           <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">

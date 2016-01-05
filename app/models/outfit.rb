@@ -1,7 +1,7 @@
 class Outfit < ActiveRecord::Base
   belongs_to :user
 
-  validates :caption, presence: true, length: { maximum: 50 }
+  validates :caption, presence: true, length: { maximum: 45}
 
   acts_as_taggable
 
