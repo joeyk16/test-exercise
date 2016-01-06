@@ -27,6 +27,7 @@ gem 'capybara', '~> 2.4.4'
 gem 'factory_girl_rails', '~> 4.0'
 gem "cocoon"
 gem "nested_form"
+gem 'aws-sdk', '< 2.0'
 
 group :development do
   gem 'byebug'
