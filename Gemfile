@@ -29,18 +29,22 @@ gem "cocoon"
 gem "nested_form"
 gem 'aws-sdk', '< 2.0'
 
-group :development do
-  gem 'byebug'
+group :development, :test do
   gem 'web-console', '~> 2.0'
   gem 'spring'
   gem 'sqlite3'
   gem 'quiet_assets'
 end
 
-group :test, :production do
-  gem 'pg'
-end
+# group :test, :production do TODO: If app works delete
+#   gem 'pg'
+# end
 
 group :test do
   gem 'shoulda-matchers'
+end
+
+group :production do
+  gem 'pg'
+  gem 'rails_12factor'
 end
