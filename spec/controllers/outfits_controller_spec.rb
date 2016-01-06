@@ -15,9 +15,6 @@ RSpec.describe OutfitsController, type: :controller do
 
   let(:outfit_params) { outfit_with_user.attributes }
 
-  let!(:category) { create(:category, name: "Shirt") }
-  let!(:category1) { create(:category, name: "Short") }
-
   describe "GET #index" do
     it "user sees only their outfits" do
       get :index, { user_id: user.id }, { user_id: user.id }

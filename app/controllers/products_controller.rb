@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:edit, :show, :update]
-  before_action :correct_user_edit,   only: [:edit, :update, :destroy]
+  before_action :correct_user_edit, only: [:edit, :update, :destroy]
   before_action :logged_in_user, only: [:new, :edit, :update, :destroy]
 
   def index
@@ -49,6 +49,14 @@ class ProductsController < ApplicationController
     @product.destroy
     flash[:success] = "Product deleted"
     redirect_to user_products_path
+  end
+
+  def add_outfit_products
+    @products = current_user.products
+  end
+
+  def add_outfit_similar_products
+    @products = current_user.products
   end
 
   private
