@@ -8,7 +8,7 @@ class Outfit < ActiveRecord::Base
            class_name: 'Product'
   has_many :approved_products, through: :approved_outfit_products, source: :product
 
-  validates :caption, presence: true, length: { maximum: 50 }
+  validates :caption, presence: true, length: { maximum: 45}
 
   acts_as_taggable
 

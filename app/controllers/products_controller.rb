@@ -8,7 +8,10 @@ class ProductsController < ApplicationController
   end
 
   def new
-  	@product = Product.new
+    @product = Product.new
+    @categories = Category.preload(:sizes).order(:name)
+    @product.product_images.build
+    @product.product_sizes.build
   end
 
   def home
@@ -31,7 +34,8 @@ class ProductsController < ApplicationController
   end
 
   def create
-    @product = current_user.products.new(product_params)
+    @product = Product.new product_params
+    @product.user_id = current_user.id
     if @product.save
       redirect_to @product
       flash[:success] = "You have created a new product"
@@ -57,14 +61,28 @@ class ProductsController < ApplicationController
 
   private
 
+  def create_product_images
+    params["product"]["product_images_attributes"].each do |index, image|
+      ProductImage.create(product_image: image, product_id: @form.product.id)
+    end
+  end
+
   def set_product
     @product = Product.find(params[:id])
   end
 
   def product_params
-    params.require(:product).permit(:title, :category_id, :price,
-                                 :description, :image, :tag_list
-                                 )
+     params.require(:product).permit(
+      :title,
+      :price,
+      :description,
+      :tag_list,
+      :category_id,
+      :size_description,
+      :shipping_description,
+      product_images_attributes: [:product_image, :_destroy],
+      product_sizes_attributes: [:size_id, :quantity]
+    )
   end
 
   def correct_user_edit
