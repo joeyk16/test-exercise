@@ -40,9 +40,12 @@ FactoryGirl.define do
     price Faker::Number.number(3)
     description Faker::Lorem.sentence
     user_id Faker::Number.number(2)
-    category_id Faker::Number.number(2)
-    image File.open("#{Rails.root}/spec/fixtures/image.jpg")
     category
+    user
+  end
+
+  factory :product_size do
+    quantity Faker::Number.number(2)
   end
 
   factory :outfit do
