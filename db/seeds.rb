@@ -20,41 +20,41 @@ Category.create!(
   # ancestry:
 )
 
-Outfit.create!(
-  caption: Faker::Lorem.sentence(2),
-  outfit_image: File.new("#{Rails.root}/app/assets/images/seeds/outfits/outfit_01.jpg"),
-  user_id: User.find_by(username: "admin").id
-)
+# Outfit.create!(
+#   caption: Faker::Lorem.sentence(2),
+#   outfit_image: File.new("#{Rails.root}/app/assets/images/seeds/outfits/outfit_01.jpg"),
+#   user_id: User.find_by(username: "admin").id
+# )
 
-Outfit.create!(
-  caption: Faker::Lorem.sentence(2),
-  outfit_image: File.new("#{Rails.root}/app/assets/images/seeds/outfits/outfit_02.jpg"),
-  user_id: User.find_by(username: "admin").id
-)
+# Outfit.create!(
+#   caption: Faker::Lorem.sentence(2),
+#   outfit_image: File.new("#{Rails.root}/app/assets/images/seeds/outfits/outfit_02.jpg"),
+#   user_id: User.find_by(username: "admin").id
+# )
 
-Outfit.create!(
-  caption: Faker::Lorem.sentence(2),
-  outfit_image: File.new("#{Rails.root}/app/assets/images/seeds/outfits/outfit_03.jpg"),
-  user_id: User.find_by(username: "admin").id
-)
+# Outfit.create!(
+#   caption: Faker::Lorem.sentence(2),
+#   outfit_image: File.new("#{Rails.root}/app/assets/images/seeds/outfits/outfit_03.jpg"),
+#   user_id: User.find_by(username: "admin").id
+# )
 
-Outfit.create!(
-  caption: Faker::Lorem.sentence(2),
-  outfit_image: File.new("#{Rails.root}/app/assets/images/seeds/outfits/outfit_04.jpg"),
-  user_id: User.find_by(username: "admin").id
-)
+# Outfit.create!(
+#   caption: Faker::Lorem.sentence(2),
+#   outfit_image: File.new("#{Rails.root}/app/assets/images/seeds/outfits/outfit_04.jpg"),
+#   user_id: User.find_by(username: "admin").id
+# )
 
-Outfit.create!(
-  caption: Faker::Lorem.sentence(2),
-  outfit_image: File.new("#{Rails.root}/app/assets/images/seeds/outfits/outfit_05.jpg"),
-  user_id: User.find_by(username: "admin").id
-)
+# Outfit.create!(
+#   caption: Faker::Lorem.sentence(2),
+#   outfit_image: File.new("#{Rails.root}/app/assets/images/seeds/outfits/outfit_05.jpg"),
+#   user_id: User.find_by(username: "admin").id
+# )
 
-Outfit.create!(
-  caption: Faker::Lorem.sentence(2),
-  outfit_image: File.new("#{Rails.root}/app/assets/images/seeds/outfits/outfit_06.jpg"),
-  user_id: User.find_by(username: "admin").id
-)
+# Outfit.create!(
+#   caption: Faker::Lorem.sentence(2),
+#   outfit_image: File.new("#{Rails.root}/app/assets/images/seeds/outfits/outfit_06.jpg"),
+#   user_id: User.find_by(username: "admin").id
+# )
 
 # Product.create!(
 #   title: Faker::Lorem.word,
