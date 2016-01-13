@@ -15,7 +15,7 @@
     <tbody>
       <% @products.each do |product| %>
         <tr>
-          <td><div class ="small_fifty_image"><%= image_tag product.image.url(:thumb) %></div></td>
+          <td><div class ="small_fifty_image"><%= image_tag product.product_images[0].product_image.url(:thumb) %></div></td>
           <td><h4><%= link_to product.title, product_url(product.id) %></h4></td>
           <td>$<%=product.price %></td>
           <td>
