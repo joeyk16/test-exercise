@@ -14,11 +14,10 @@ class User < ActiveRecord::Base
 
   has_secure_password
 
-  has_attached_file :avatar, styles: { large: "250x250", medium:"100x100", small:"50x50", thumb:"30x30#"}
+  has_attached_file :avatar, styles: { large: "250x250", medium:"100x100", small:"50x50", thumb:"30x30#"}, :storage => :s3, :bucket  => ENV['S3_BUCKET_NAME']
   validates_attachment_content_type :avatar, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
-  has_attached_file :header_image, styles: { large: "1170x266" }
+  has_attached_file :header_image, styles: { large: "1170x266" }, :storage => :s3, :bucket  => ENV['S3_BUCKET_NAME']
   validates_attachment_content_type :header_image, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
-
 
   # Returns the hash digest of the given string.
   def self.digest(string)
