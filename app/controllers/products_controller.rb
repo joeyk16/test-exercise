@@ -19,6 +19,7 @@ class ProductsController < ApplicationController
   end
 
   def edit
+    @categories = Category.preload(:sizes)
   end
 
   def show
