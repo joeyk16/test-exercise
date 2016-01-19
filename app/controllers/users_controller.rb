@@ -1,11 +1,11 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_user, only: [:show, :update, :edit]
-  before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
   before_action :correct_user,   only: [:edit, :update]
   before_action :admin_user,     only: [:destroy, :index]
 
   def index
-    @users = User.paginate(page: params[:page])
+    @users = User.all
   end
 
   def new

@@ -2,11 +2,11 @@ class ProductsController < ApplicationController
   before_action :set_product, only: [:edit, :show, :update]
   before_action :correct_user_edit, only: [:edit, :update, :destroy]
   before_action :logged_in_user, only: [:new, :edit, :update, :destroy]
-
+​
   def index
     @products = Product.all
   end
-
+​
   def new
     @product = Product.new
     @categories = Category.preload(:sizes).order(:name)
@@ -18,11 +18,11 @@ class ProductsController < ApplicationController
       end
     end
   end
-
+​
   def home
     @products = Product.paginate(page: params[:page])
   end
-
+​
   def edit
     @categories = Category.preload(:sizes)
 ​
@@ -34,10 +34,10 @@ class ProductsController < ApplicationController
       end
     end
   end
-
+​
   def show
   end
-
+​
   def update
     if @product.update(product_params)
        redirect_to @product
@@ -46,7 +46,7 @@ class ProductsController < ApplicationController
       render "edit"
     end
   end
-
+​
   def create
     @product = Product.new product_params
     @product.user_id = current_user.id
@@ -60,35 +60,35 @@ class ProductsController < ApplicationController
       render "new"
     end
   end
-
+​
   def destroy
     @product.destroy
     flash[:success] = "Product deleted"
     redirect_to user_products_path
   end
-
+​
   def add_outfit_products
     @products = current_user.products
   end
-
+​
   def add_outfit_similar_products
     @products = current_user.products
   end
-
+​
   private
-
+​
   def create_product_images
     params["product"]["product_images_attributes"].each do |index, image|
       ProductImage.create(product_image: image, product_id: @form.product.id)
     end
   end
-
+​
   def set_product
     @product = Product.find(params[:id])
   end
-
+​
   def product_params
-    params.require(:product).permit(
+     params.require(:product).permit(
       :title,
       :price,
       :description,
@@ -100,7 +100,7 @@ class ProductsController < ApplicationController
       product_sizes_attributes: [:size_id, :quantity, :id]
     )
   end
-
+​
   def correct_user_edit
     if @product = current_user.products.find_by(id: params[:id])
     else
