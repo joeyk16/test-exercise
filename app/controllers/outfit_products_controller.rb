@@ -1,6 +1,5 @@
 class OutfitProductsController < ApplicationController
-  # outfit_product can be added multiple times. Must be added only once. Do a before do.
-  before_action :logged_in_user, only: [:create, :destroy, :users_outfit_products, :outfit_products, :approve, :decline]
+  before_action :authenticate_user!
   before_action :outfit_product_exists, only: [:create]
   before_action :outfit_products_limit, only: [:create]
 

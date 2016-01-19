@@ -56,7 +56,7 @@
     <div class="col-lg-6 col-md-6 col-sm-5">
       <div class = "itemtitle"><%= @product.title %></div>
       <div class = "price">$<%= @product.price %></div>
-      <% if current_user?(@product.user) %>
+      <% if current_user == @product.user %>
         <%= link_to "Edit Products", edit_product_path(@product) %>
       <% end %>
       <div class="productFilter productFilterLook2">

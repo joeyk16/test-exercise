@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show, :home]
   before_action :set_product, only: [:edit, :show, :update]
   before_action :correct_user_edit, only: [:edit, :update, :destroy]
-  before_action :logged_in_user, only: [:new, :edit, :update, :destroy]
 
   def index
     @products = Product.all
@@ -19,6 +19,7 @@ class ProductsController < ApplicationController
   end
 
   def edit
+    @categories = Category.preload(:sizes)
   end
 
   def show

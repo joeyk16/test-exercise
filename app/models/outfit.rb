@@ -12,6 +12,6 @@ class Outfit < ActiveRecord::Base
 
   acts_as_taggable
 
-  has_attached_file :outfit_image, styles: { large: "250x250", thumb:"30x30#"}
+  has_attached_file :outfit_image, styles: { large: "250x250", thumb:"30x30#"}, :storage => :s3, :bucket  => ENV['S3_BUCKET_NAME']
   validates_attachment_content_type :outfit_image, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
 end

@@ -1,5 +1,5 @@
 class ProductSizesController < ApplicationController
-  before_action :logged_in_user, only: [:create]
+  before_action :authenticate_user!
 
   def create
     product_size = ProductSize.new(product_size_params)
