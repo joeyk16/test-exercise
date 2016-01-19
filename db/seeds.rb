@@ -4,8 +4,6 @@ User.create!(
   password: "password",
   password_confirmation: "password",
   admin: true,
-  activated: true,
-  activated_at: Time.zone.now,
   header_image: File.new("#{Rails.root}/app/assets/images/seeds/header/header_01.jpg"),
   avatar: File.new("#{Rails.root}/app/assets/images/seeds/avatar/avatar_01.png")
 )
