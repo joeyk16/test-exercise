@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   resources :categories
 
   get 'password_resets/new'

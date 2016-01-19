@@ -10,9 +10,9 @@ class Product < ActiveRecord::Base
   has_many :product_sizes
   has_many :product_images, :dependent => :destroy
 
- # validates :title, presence: true, length: { maximum: 30 }
- # validates :description, presence: true, length: { maximum: 2000 }
-  validates :category, :user, presence: true # , :price
+  validates :title, presence: true, length: { maximum: 30 }
+  validates :description, presence: true, length: { maximum: 2000 }
+  validates :category, :user, :price, presence: true
 
   accepts_nested_attributes_for :product_images, allow_destroy: true
   accepts_nested_attributes_for :product_sizes,
