@@ -5,7 +5,7 @@
       <div class="panel panel-primary">
         <div class="panel-body">
           <%= simple_nested_form_for @product do |f| %>
-
+​
             <%= f.fields_for :product_images do |product_image| %>
               <% if product_image.object.new_record? %>
                 <%= product_image.file_field(:product_image) %>
@@ -14,23 +14,25 @@
                 <%= product_image.hidden_field :_destroy %>
               <% end %>
             <% end %>
-
+​
             <p><%= f.link_to_add "Add a image", :product_images, :data => { :product_image => "#product_images" } %></p>
-
+​
             <%= f.collection_select :category_id, @categories, :id, :name, include_blank: true, prompt: "Select One Category" %>
-
+​
+            <hr>
             <% @categories.each do |category| %>
-              <div class='sizes_container' id ='sizes_container_for_<%= category.id %>'>
-                <% category.sizes.each do |size| %>
-                  <%= label_tag size.title %>
-                  <%= f.simple_fields_for :product_sizes do |product_size| %>
-                    <%= product_size.input :quantity %>
-                    <%= product_size.hidden_field :size_id %>
-                  <% end %>
+              <h3><%= category.name %></h3>
+​
+                <%= f.simple_fields_for :product_sizes do |psf| %>
+                  <% ps = psf.object %>
+                  <% next unless category.size_ids.include?(ps.size_id) %>
+​
+                  <%= psf.input :quantity, label: "Quantity for size #{ps.size}" %>
+                  <%= psf.hidden_field :size_id, value: ps.size_id %>
                 <% end %>
-              </div>
             <% end %>
-
+            <hr>
+​
             <%= f.input :title, label:"Title"%>
             <%= f.input :price, label:"Price"%>
             <%= f.input :description,label:"Description" %>
@@ -44,3 +46,4 @@
     </div>
   </div>
 </div>
+​
