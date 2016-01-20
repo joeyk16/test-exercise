@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_user, only: [:show, :update, :edit]
-  before_action :correct_user,   only: [:edit, :update]
-  before_action :admin_user,     only: [:destroy, :index]
+  before_action :correct_user, only: [:edit, :update]
+  before_action :admin_user, only: [:create, :new, :destroy, :index]
 
   def index
     @users = User.all
@@ -24,9 +24,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      @user.send_activation_email
-      flash[:info] = "Please check your email to activate your account."
-      redirect_to root_url
+      flash[:success] = "User Created"
+      redirect_to root_path
     else
       render 'new'
     end
@@ -45,9 +44,14 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    User.find(params[:id]).destroy
-    flash[:success] = "User deleted"
-    redirect_to users_path
+    @user =  User.find(params[:id])
+    if @user.destroy
+      redirect_to users_path
+      flash[:success] = "User deleted"
+    else
+      redirect_to users_path
+      flash[:danger] = "User did not delete"
+    end
   end
 
   private
@@ -66,5 +70,9 @@ class UsersController < ApplicationController
       :header_image,
       :description
     )
+  end
+
+  def correct_user
+    redirect_to root_path unless current_user == @user
   end
 end

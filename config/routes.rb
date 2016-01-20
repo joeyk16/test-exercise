@@ -9,8 +9,7 @@ Rails.application.routes.draw do
 
   resources :users do
     resources :outfits do
-      get 'add_products'  => 'products#add_outfit_products'
-      get 'add_similar_products'  => 'products#add_outfit_similar_products'
+      get 'add_products'  => 'outfit_products#add_outfit_products'
       post 'outfit_products'  => 'outfit_products#create'
       get 'outfit_products'  => 'outfit_products#outfit_products'
     end
