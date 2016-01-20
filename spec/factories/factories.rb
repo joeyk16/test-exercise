@@ -61,7 +61,6 @@ FactoryGirl.define do
     admin false
     password Faker::Internet.password(8)
     password_confirmation { |user| user.password }
-    activated true
     description Faker::Lorem.sentence
     # activated_at "<%= Time.zone.now %>"
   end

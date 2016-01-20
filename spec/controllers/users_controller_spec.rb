@@ -62,8 +62,19 @@ RSpec.describe UsersController, type: :controller do
 
   describe "POST #create" do
     it "user created" do
+      sign_in(user)
       post :create, user: user_params
       expect(assigns(:user)).to be_persisted
+    end
+
+    it "redirects visitor" do
+      get :index
+      expect(response).to redirect_to(login_path)
+    end
+
+    it "user renders template and redirects" do
+      get :index, {}, { user_id: user.id }
+      expect(response).to redirect_to(root_path)
     end
   end
 
