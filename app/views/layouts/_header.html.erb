@@ -63,11 +63,19 @@
               </li>
             </ul>
           <% end %>
-          <li><%= link_to "Your Outfits", user_outfits_path(current_user) %><li>
+          <ul class="nav navbar-nav">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Outfits<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><%= link_to "Your Outfits", user_outfits_path(current_user) %></li>
+                <li><%= link_to "Outfit Products", user_users_outfit_products_path(current_user) %></li>
+              </ul>
+            </li>
+          </ul>
           <li>
-          <%= link_to root_path do %>
-            <i class="glyphicon glyphicon-envelope"></i>
-          <% end %>
+            <%= link_to root_path do %>
+              <i class="glyphicon glyphicon-envelope"></i>
+            <% end %>
           </li>
           <ul class="nav navbar-nav">
             <div class "avatar_nav">
