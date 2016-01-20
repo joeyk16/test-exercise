@@ -52,6 +52,10 @@ class OutfitProductsController < ApplicationController
     flash[:success] = "Successfully declined product for outfit"
   end
 
+  def add_outfit_products
+    @products = current_user.products
+  end
+
   private
 
   def outfit_product_exists

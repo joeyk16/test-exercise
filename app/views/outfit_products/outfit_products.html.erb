@@ -3,6 +3,7 @@
   <div class="page-header">
     <h2>Approve Products For Outfits</h2>
   </div>
+
   <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
     <thead>
       <tr>
@@ -15,7 +16,7 @@
       <% @outfit_products.where(approved: false).each do |outfit_product| %>
         <tr>
           <td>
-            <%= image_tag Product.find(outfit_product.product_id).image.url(:thumb) %>
+            <%= image_tag Product.find(outfit_product.product_id).product_images[0].product_image.url(:thumb) %>
             <%= Product.find(outfit_product.product_id).title %>
           </td>
           <td>
@@ -46,7 +47,7 @@
       <% @outfit_products.where(approved: true).each do |outfit_product| %>
         <tr>
           <td>
-            <%= image_tag Product.find(outfit_product.product_id).image.url(:thumb) %>
+            <%= image_tag Product.find(outfit_product.product_id).product_images[0].product_image.url(:thumb) %>
             <%= Product.find(outfit_product.product_id).title %>
           </td>
           <td>
