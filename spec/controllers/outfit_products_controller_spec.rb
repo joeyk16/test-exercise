@@ -1,4 +1,5 @@
-require 'rails_helper'
+require "rails_helper"
+require "test_helper"
 
 RSpec.describe OutfitProductsController, type: :controller do
   let!(:category) { create(:category, name: "Shirt") }
@@ -51,13 +52,13 @@ RSpec.describe OutfitProductsController, type: :controller do
   describe "POST #create" do
     context "outfit product when it's not your outfit" do
       before do
+        sign_in(user)
         post :create, {
           outfit: outfit_product_params,
           user_id: user.id,
           outfit_id: outfit_product_params["outfit_id"],
           product_id: outfit_product_params["product_id"]
-        },
-        { user_id: user.id }
+        }
       end
 
       it "outfit product saved with approved false status" do
@@ -73,13 +74,13 @@ RSpec.describe OutfitProductsController, type: :controller do
 
     context "outfit product when it's your outfit" do
       before do
+        sign_in(other_user)
         post :create, {
           outfit: outfit_product_params,
           user_id: other_user.id,
           outfit_id: outfit_product_params["outfit_id"],
           product_id: outfit_product_params["product_id"]
-        },
-        { user_id: other_user.id }
+        }
       end
 
       it "outfit product saved with approved true status" do
@@ -104,7 +105,7 @@ RSpec.describe OutfitProductsController, type: :controller do
       end
 
       it "redirects to login page" do
-        expect(response).to redirect_to(login_path)
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
   end
@@ -112,13 +113,13 @@ RSpec.describe OutfitProductsController, type: :controller do
   describe "DELETE #destroy" do
     context "outfit product deletes" do
       before do
+        sign_in(user)
         request.env["HTTP_REFERER"] = "where_i_came_from"
         delete :destroy, {
           id: oufit_product_saved.id,
           user_id: user.id,
           outfit_id: outfit.id,
-        },
-        { user_id: user.id }
+        }
       end
 
       it "outfit product is destroyed" do
@@ -137,7 +138,7 @@ RSpec.describe OutfitProductsController, type: :controller do
       end
 
       it "redirects to login page" do
-        expect(response).to redirect_to(login_path)
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
   end
@@ -145,13 +146,13 @@ RSpec.describe OutfitProductsController, type: :controller do
   describe "Outfit Product exists" do
     context "add product to outfit" do
       before do
+        sign_in(user)
         post :create, {
           outfit: oufit_product.attributes,
           user_id: user.id,
           outfit_id: outfit.id,
           product_id: product.id
-        },
-        { user_id: user.id }
+        }
       end
 
       it "product has already been added to outfit" do
@@ -171,7 +172,7 @@ RSpec.describe OutfitProductsController, type: :controller do
       end
 
       it "redirects to login page" do
-        expect(response).to redirect_to(login_path)
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
   end
@@ -187,13 +188,13 @@ RSpec.describe OutfitProductsController, type: :controller do
       }
 
       before do
+        sign_in(user)
         post :create, {
           outfit: outfit_product_params,
           user_id: outfit_product_params["user_id"],
           outfit_id: outfit_product_params["outfit_id"],
           product_id: outfit_product_params["product_id"]
-        },
-        { user_id: user.id }
+        }
       end
 
       it "product has already been added to outfit" do
@@ -213,7 +214,7 @@ RSpec.describe OutfitProductsController, type: :controller do
       end
 
       it "redirects to login page" do
-        expect(response).to redirect_to(login_path)
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
   end
@@ -229,13 +230,13 @@ RSpec.describe OutfitProductsController, type: :controller do
 
     context "update approved status to false" do
       before do
+        sign_in(user)
         request.env["HTTP_REFERER"] = "where_i_came_from"
         patch :decline, {
           outfit: outfit_product_params,
           user_id: oufit_product_saved["user_id"],
           id: oufit_product_saved.id
-        },
-        { user_id: user.id }
+        }
       end
 
       it "outfit product isn't approved" do
@@ -247,14 +248,14 @@ RSpec.describe OutfitProductsController, type: :controller do
 
     context "update approved status to true" do
       before do
+        sign_in(user)
         outfit_product_params["approved"] = true
         request.env["HTTP_REFERER"] = "where_i_came_from"
         patch :approve, {
           outfit: outfit_product_params,
           user_id: oufit_product_saved["user_id"],
           id: oufit_product_saved.id
-        },
-        { user_id: user.id }
+        }
       end
 
       it "outfit product is approved" do
@@ -275,7 +276,7 @@ RSpec.describe OutfitProductsController, type: :controller do
       end
 
       it "redirects to login page" do
-        expect(response).to redirect_to(login_path)
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
   end
@@ -283,7 +284,8 @@ RSpec.describe OutfitProductsController, type: :controller do
   describe "GET #user_outfit_products" do
     context "outfit products path" do
       before do
-          get :users_outfit_products, { user_id: user.id }, { user_id: user.id }
+        sign_in(user)
+          get :users_outfit_products, { user_id: user.id }
         end
       it "has outfit products that belong to user" do
         expect(assigns(:outfit_products)).to eq(outfit_products)

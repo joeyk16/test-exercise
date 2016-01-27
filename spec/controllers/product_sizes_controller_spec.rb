@@ -22,17 +22,17 @@ RSpec.describe ProductSizesController, type: :controller do
     }
   }
 
-  describe "POST #create" do
-    context "creates size logged in as admin" do
-      before do
-        product_size_count = ProductSize.count
-        post :create, { product_size: product_size_params }, { user_id: admin.id }
-      end
+  # describe "POST #create" do
+  #   context "creates size logged in as admin" do
+  #     before do
+  #       product_size_count = ProductSize.count
+  #       post :create, { product_size: product_size_params }, { user_id: admin.id }
+  #     end
 
       # it "saves and ProductSize.count increases by 1" do
       #   # expect(product_size_count).to eq(product_size_count + 1)
       # end
-    end
+    # end
 
     # it "redirects visitor" do
     #   get :create, { product_size: product_size_params }

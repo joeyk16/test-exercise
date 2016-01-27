@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:new, :edit, :update, :destroy, :create]
   before_action :set_product, only: [:edit, :show, :update]
   before_action :correct_user_edit, only: [:edit, :update, :destroy]
 
@@ -90,7 +90,7 @@ class ProductsController < ApplicationController
   def correct_user_edit
     if @product = current_user.products.find_by(id: params[:id])
     else
-      redirect_to root_url if @product.nil?
+      redirect_to root_path if @product.nil?
     end
   end
 end

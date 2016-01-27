@@ -4,10 +4,11 @@ RSpec.describe ProductsController, type: :controller do
   let!(:user) { create(:user, password: "Password456", admin: false) }
   let!(:user2) { create(:user, admin: false) }
   let!(:product) { create(:product, user_id: user.id) }
+  let!(:product_02) { create(:product, user_id: user2.id) }
   let!(:admin) { create(:user, password: "Password123", admin: true) }
 
   let!(:products) do
-    [product] + 3.times.map { create(:product) }
+    [product, product_02] + 3.times.map { create(:product) }
   end
 
   let!(:product_params) { product_params = build(:product).attributes }
@@ -33,6 +34,7 @@ RSpec.describe ProductsController, type: :controller do
 
   describe "GET #new" do
     it "renders template" do
+      sign_in(user)
       get :new, {}, { user_id: user.id }
       expect(response).to render_template(:new)
       expect(response).to have_http_status(:success)
@@ -40,29 +42,43 @@ RSpec.describe ProductsController, type: :controller do
 
     it "visitor redirected to root_url" do
       get :new
-      expect(response).to redirect_to(login_path)
+      expect(response).to redirect_to(new_user_session_path)
     end
   end
 
   describe "POST #create" do
     it "as user" do
-      post :create, { product: product_params }, { user_id: user.id }
+      sign_in(user)
+      post :create, { product: product_params }
       expect(assigns(:product).errors).to be_empty
+    end
+
+    it "redirects visitor" do
+      post :create, { product: product_params }
+      expect(response).to redirect_to(new_user_session_path)
     end
   end
 
   describe "GET #edit" do
     it "as user" do
-      get :edit, { id: product.id }, { user_id: user.id }
+      sign_in(user)
+      get :edit, { id: product.id }
       expect(response).to render_template(:edit)
       expect(response).to have_http_status(:success)
       expect(assigns(:product)).to eq(product)
+    end
+
+    it "user you can't edit another users product" do
+      sign_in(user2)
+      get :edit, { id: product.id }
+      expect(response).to redirect_to(root_path)
     end
   end
 
   describe "POST #update" do
     it "as user" do
-      patch :update, { id: product.id, product: product_params }, { user_id: user.id }
+      sign_in(user)
+      patch :update, { id: product.id, product: product_params }
       expect(response).to redirect_to(assigns(:product))
       expect(assigns(:product)).to eq(product)
     end
@@ -70,13 +86,14 @@ RSpec.describe ProductsController, type: :controller do
 
   describe "DELETE #destroy" do
     it "as user" do
-      delete :destroy, { id: product.id }, { user_id: user.id }
+      sign_in(user)
+      delete :destroy, { id: product.id }
       expect(response).to redirect_to(user_products_path)
     end
 
     it "as unauthorised user" do
       delete :destroy, { id: product.id }, { user_id: user2.id }
-      expect(response).to redirect_to(root_path)
+      expect(response).to redirect_to(new_user_session_path)
     end
   end
 end
