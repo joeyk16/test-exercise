@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:new, :edit, :update, :destroy, :create]
   before_action :set_product, only: [:edit, :show, :update]
   before_action :correct_user_edit, only: [:edit, :update, :destroy]
 
@@ -7,7 +7,7 @@ class ProductsController < ApplicationController
     @products = Product.all
   end
 
-   def new
+  def new
     @product = Product.new
     @categories = Category.preload(:sizes).order(:name)
     @product.product_images.build
@@ -51,7 +51,7 @@ class ProductsController < ApplicationController
     @product = Product.new product_params
     @product.user_id = current_user.id
     @categories = Category.preload(:sizes).order(:name)
-​
+
     if @product.save
       redirect_to @product
       flash[:success] = "You have created a new product"
@@ -90,7 +90,7 @@ class ProductsController < ApplicationController
   def correct_user_edit
     if @product = current_user.products.find_by(id: params[:id])
     else
-      redirect_to root_url if @product.nil?
+      redirect_to root_path if @product.nil?
     end
   end
 end
