@@ -43,5 +43,5 @@ RSpec.describe ProductSizesController, type: :controller do
     #   get :create, { product_size: product_size_params }, { user_id: user.id }
     #   expect(response).to redirect_to(root_path)
     # end
-  end
+  # end
 end

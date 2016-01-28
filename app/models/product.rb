@@ -6,7 +6,6 @@ class Product < ActiveRecord::Base
 
   has_many :outfit_products
   has_many :outfits, through: :outfit_products
-
   has_many :product_sizes
   has_many :product_images, :dependent => :destroy
 
