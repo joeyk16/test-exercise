@@ -12,7 +12,8 @@
             <%= f.simple_fields_for :product_sizes do |psf| %>
               <% ps = psf.object %>
         ​
-              <%= psf.input :quantity, label: "Quantity for size #{ps.size} for category #{ps.size.category}" %>
+              <%= psf.input :quantity, label: "Quantity for size #{ps.size} for category #{ps.size.category}",
+                wrapper_html: { 'data-size_category_id' => ps.size.category_id } %>
               <%= psf.hidden_field :size_id, value: ps.size_id %>
             <% end %>
 
