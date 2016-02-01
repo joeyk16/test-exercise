@@ -3,4 +3,6 @@ class Size < ActiveRecord::Base
 	validates :title, uniqueness: true
 
   belongs_to :category
+
+  delegate :to_s, to: :title
 end

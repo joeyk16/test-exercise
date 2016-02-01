@@ -1,5 +1,8 @@
 <center><h1>Create New Product</h1></center>
-<%= render 'form' %>
+
+<% @root_categories.each do |category| %>
+  <%= render 'form', root_category: category, product: @product %>
+<% end %>
 
 
 
