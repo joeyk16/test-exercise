@@ -26,15 +26,15 @@ class ProductsController < ApplicationController
   end
 
   def edit
-    @root_categories = Category.where(ancestry: nil).preload(:sizes).order(:name)
+    category = @product.category         # T-Shirt
+    @root_categories = [category.parent] # Men
 
-    @root_categories.each do |category|
-      category.sizes.each do |size|
-        @product.product_sizes.detect do |ps|
-          ps.size_id == size.id
-        end || @product.product_sizes.build(size_id: size.id, quantity: 0)
-      end
+    category.sizes.each do |size|
+      @product.product_sizes.detect do |ps|
+        ps.size_id == size.id
+      end || @product.product_sizes.build(size_id: size.id, quantity: 0)
     end
+
     @product.product_images.build unless @product.product_images.any?
   end
 

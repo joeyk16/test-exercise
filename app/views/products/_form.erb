@@ -6,7 +6,8 @@
           <h3><%= root_category.name %></h3>
 
           <%= simple_nested_form_for product do |f| %>
-            <%= f.collection_select :category_id, root_category.children, :id, :name, include_blank: true, prompt: "Select One Category" %>
+            <%= f.collection_select :category_id, children_categories_allowed_for(root_category, product),
+              :id, :name, include_blank: true, prompt: "Select One Category" %>
 ​
             <%= f.simple_fields_for :product_sizes do |psf| %>
               <% ps = psf.object %>
