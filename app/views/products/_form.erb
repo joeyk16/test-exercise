@@ -3,9 +3,9 @@
     <div class="col-md-6 col-md-offset-3">
       <div class="panel panel-primary">
         <div class="panel-body">
-          <h3><%= root_category.name %></h3>
+          <%= simple_nested_form_for product, html: { class: :js_product_form, id: "js_root_category_#{root_category.id}" } do |f| %>
+            <h3><%= root_category.name %></h3>
 
-          <%= simple_nested_form_for product do |f| %>
             <%= f.collection_select :category_id, children_categories_allowed_for(root_category, product),
               :id, :name, include_blank: true, prompt: "Select One Category" %>
 ​
