@@ -1,6 +1,5 @@
 <center><h1>Create New Product</h1></center>
 
-
 <%= select_tag :js_root_category, options_for_select(@root_categories.map { |c| [c.name, c.id] }) %>
 
 <% @root_categories.each do |category| %>
