@@ -9,12 +9,14 @@ class ProductsController < ApplicationController
 
   def new
     @product = Product.new
-    @categories = Category.preload(:sizes).order(:name)
+    @root_categories = Category.where(ancestry: nil).preload(:sizes).order(:name)
     @product.product_images.build
 
-    @categories.each do |category|
-      category.sizes.each do |size|
-        @product.product_sizes.build(size_id: size.id, quantity: 0)
+    @root_categories.each do |root_category|
+      root_category.children.each do |category|
+        category.sizes.each do |size|
+          @product.product_sizes.build(size_id: size.id, quantity: 0)
+        end
       end
     end
   end
@@ -24,15 +26,16 @@ class ProductsController < ApplicationController
   end
 
   def edit
-    @categories = Category.preload(:sizes)
+    category = @product.category         # T-Shirt
+    @root_categories = [category.parent] # Men
 
-    @categories.each do |category|
-      category.sizes.each do |size|
-        @product.product_sizes.detect do |ps|
-          ps.size_id == size.id
-        end || @product.product_sizes.build(size_id: size.id, quantity: 0)
-      end
+    category.sizes.each do |size|
+      @product.product_sizes.detect do |ps|
+        ps.size_id == size.id
+      end || @product.product_sizes.build(size_id: size.id, quantity: 0)
     end
+
+    @product.product_images.build unless @product.product_images.any?
   end
 
   def show
@@ -50,7 +53,7 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new product_params
     @product.user_id = current_user.id
-    @categories = Category.preload(:sizes).order(:name)
+    @root_categories = Category.preload(:sizes).order(:name)
 
     if @product.save
       redirect_to @product

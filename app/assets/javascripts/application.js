@@ -21,3 +21,5 @@
 //= require cocoon
 //= require_tree .
 //= require jquery_nested_form
+//= require product
+//= require sizes
