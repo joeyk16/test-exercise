@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     delete 'outfit_products'  => 'outfit_products#destroy'
     get 'approve_outfit_products' => 'outfit_products#approve'
     get 'decline_outfit_products' => 'outfit_products#decline'
+    get 'my_account' => 'users#my_account'
   end
 
   get 'outfits'  => 'outfits#outfits'

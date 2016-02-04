@@ -1,0 +1,43 @@
+<div class="container">
+  <h1>my account</h1>
+
+  <h3>Details</h3>
+  <table>
+    <tr>
+      <td><p>Username</p></td>
+      <td><p><%= @user.username %></p></td>
+    </tr>
+    <tr>
+      <td><p>First Name</p></td>
+      <td><p><%= @user.first_name %></p></td>
+    </tr>
+    <tr>
+      <td><p>Last Name</p></td>
+      <td><p><%= @user.last_name %></p></td>
+    </tr>
+    <tr>
+      <td><p>Email</p></td>
+      <td><p><%= @user.email %></p></td>
+    </tr>
+    <tr>
+      <td><p>Date Of Birth</p></td>
+      <td><p><%= @user.last_name %></p></td>
+    </tr>
+    <tr>
+      <td><p>Gender</p></td>
+      <td><p><%= @user.last_name %></p></td>
+    </tr>
+    <tr>
+      <td><p>Avatar</p></td>
+      <td><p><%=image_tag @user.avatar.url(:thumb) %></p></td>
+    </tr>
+    <tr>
+      <td><p>Profile Header Image</p></td>
+      <td><p><%= image_tag @user.header_image.url(:thumb) %></p></td>
+    </tr>
+  </table>
+</div>
+
+
+
+

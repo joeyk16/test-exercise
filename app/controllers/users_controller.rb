@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_user, only: [:show, :update, :edit]
   before_action :correct_user, only: [:edit, :update]
+  before_action :current_user, only: [:my_account, :user_details_form]
   before_action :admin_user, only: [:create, :new, :destroy, :index]
 
   def index
@@ -54,6 +55,12 @@ class UsersController < ApplicationController
     end
   end
 
+  def my_account
+  end
+
+  def user_details_form
+  end
+
   private
 
   def set_user
@@ -74,5 +81,9 @@ class UsersController < ApplicationController
 
   def correct_user
     redirect_to root_path unless current_user == @user
+  end
+
+  def current_user
+    @user = current_user
   end
 end
