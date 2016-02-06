@@ -19,6 +19,8 @@ Rails.application.routes.draw do
     get 'approve_outfit_products' => 'outfit_products#approve'
     get 'decline_outfit_products' => 'outfit_products#decline'
     get 'my_account' => 'users#my_account'
+    get 'destroy_avatar' => 'users#destroy_avatar'
+    get 'destroy_header_image' => 'users#destroy_header_image'
   end
 
   get 'outfits'  => 'outfits#outfits'

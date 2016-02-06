@@ -21,11 +21,7 @@
     </tr>
     <tr>
       <td><p>Date Of Birth</p></td>
-      <td><p><%= @user.last_name %></p></td>
-    </tr>
-    <tr>
-      <td><p>Gender</p></td>
-      <td><p><%= @user.last_name %></p></td>
+      <td><p><%= @user.date_of_birth %></p></td>
     </tr>
     <tr>
       <td><p>Avatar</p></td>
@@ -36,6 +32,8 @@
       <td><p><%= image_tag @user.header_image.url(:thumb) %></p></td>
     </tr>
   </table>
+
+  <%= link_to "Edit Details", edit_user_path(current_user) %>
 </div>
 
 
