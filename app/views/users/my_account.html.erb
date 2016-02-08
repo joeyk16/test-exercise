@@ -34,6 +34,17 @@
   </table>
 
   <%= link_to "Edit Details", edit_user_path(current_user) %>
+
+  <h3>Address</h3>
+  <%= link_to "Create Address", new_user_address_path %>
+    <tbody>
+      <% @user.addresses.each do |address| %>
+        <tr>
+          <td><%= address.address_line_1 %></td>
+          <td><%= link_to 'Edit', edit_user_address_path(address) %><%= link_to 'Destroy', user_address_path(address), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
 </div>
 
 
