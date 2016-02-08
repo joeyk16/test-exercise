@@ -1,5 +1,5 @@
-class AddressController < ApplicationController
-  before_action :set_category,   only: [:show, :edit, :update]
+class AddressesController < ApplicationController
+  before_action :set_address,   only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
 
   def index
@@ -18,9 +18,10 @@ class AddressController < ApplicationController
 
   def create
     @address = Address.new(address_params)
+    @address.user = current_user
     if @address.save
-      redirect_to addresses_path
-      flash[:success] = "You have created a new address"
+      redirect_to user_my_account_path
+      flash[:success] = "Address Created"
     else
       flash[:danger] = "Your address didn't save"
       render "new"
@@ -29,7 +30,7 @@ class AddressController < ApplicationController
 
   def update
     if @address.update(address_params)
-       redirect_to addresses_path
+       redirect_to user_my_account_path
        flash[:success] = 'Address was successfully updated.'
     else
       render "edit"
@@ -37,10 +38,9 @@ class AddressController < ApplicationController
   end
 
   def destroy
-    @address = Address.find(params[:id])
     @address.destroy
     flash[:success] = "Address deleted"
-    redirect_to addresses_path
+    redirect_to user_my_account_path(current_user)
   end
 
   private

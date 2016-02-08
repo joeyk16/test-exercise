@@ -32,6 +32,7 @@ gem 'factory_girl_rails', '~> 4.0'
 gem "cocoon"
 gem "nested_form"
 gem 'aws-sdk', '< 2.0'
+gem 'country_select'
 
 group :development, :test do
   gem 'web-console', '~> 2.0'
