@@ -37,21 +37,47 @@ class UsersController < ApplicationController
   def update
     if @user.update_attributes(user_params)
       flash[:success] = "Profile updated"
-      redirect_to @user
+      redirect_to :back
     else
       render 'edit'
+      flash[:danger] = "Profile updated"
     end
   end
 
   def destroy
     @user =  User.find(params[:id])
     if @user.destroy
-      redirect_to users_path
       flash[:success] = "User deleted"
     else
-      redirect_to users_path
       flash[:danger] = "User did not delete"
     end
+    redirect_to users_path
+  end
+
+  def destroy_avatar
+    if current_user.avatar?
+      current_user.avatar.destroy
+      current_user.save
+      flash[:success] = "Image deleted"
+    else
+      flash[:danger] = "Image did not delete"
+    end
+    redirect_to :back
+  end
+
+  def destroy_header_image
+    if current_user.header_image?
+      current_user.header_image = nil
+      current_user.save
+      flash[:success] = "Image deleted"
+    else
+      flash[:danger] = "Image did not delete"
+    end
+    redirect_to :back
+  end
+
+  def my_account
+    @user = current_user
   end
 
   private
@@ -66,6 +92,9 @@ class UsersController < ApplicationController
       :email,
       :password,
       :password_confirmation,
+      :date_of_birth,
+      :first_name,
+      :last_name,
       :avatar,
       :header_image,
       :description

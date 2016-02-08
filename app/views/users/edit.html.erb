@@ -1,3 +1,4 @@
+<%= javascript_include_tag :defaults, "nested_form" %>
 <div class="container">
   <div class="col-md-6 col-md-offset-3">
     <h1><%=@user.username%> Update Profile</h1>
@@ -5,10 +6,26 @@
       <div class="panel-body">
         <%= render 'shared/error_messages', form_object: @user%>
         <%= simple_form_for @user do |f| %>
-          <%= f.input :avatar, as: :file %>
-          <%= f.input :header_image, as: :file %>
+
+          <% if current_user.avatar? %>
+            <%= image_tag current_user.avatar.url(:thumb) %>
+            <%= link_to "Delete Avatar", user_destroy_avatar_path(current_user) %>
+          <% else %>
+            <%= f.input :avatar, as: :file %>
+          <% end %>
+
+          <% if current_user.header_image? %>
+            <%= image_tag current_user.header_image.url(:thumb) %>
+            <%= link_to "Delete Header Image", user_destroy_header_image_path(current_user) %>
+          <% else %>
+            <%= f.input :header_image, as: :file %>
+          <% end %>
+
           <%= f.input :username, class: 'form-control' %>
+          <%= f.input :first_name, required: true, autofocus: true %>
+          <%= f.input :last_name, required: true, autofocus: true %>
           <%= f.input :email, class: 'form-control' %>
+          <%= f.input :date_of_birth, :as => :string, :input_html => {:class => 'datepicker'}, placeholder: 'mm-dd-yyyy' %>
           <%= f.input :description, class: 'form-control' %>
           <%= f.button :submit, "Save changes", class: "btn btn-primary" %>
         <% end %>

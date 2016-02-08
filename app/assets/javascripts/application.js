@@ -23,3 +23,6 @@
 //= require jquery_nested_form
 //= require product
 //= require sizes
+//= require bootstrap-datepicker
+//= require date_picker
+

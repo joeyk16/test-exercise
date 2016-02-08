@@ -1,0 +1,60 @@
+<div class="container">
+  <h1>my account</h1>
+
+  <h3>Details</h3>
+  <table>
+    <tr>
+      <td><p>Username</p></td>
+      <td><p><%= @user.username %></p></td>
+    </tr>
+    <tr>
+      <td><p>First Name</p></td>
+      <td><p><%= @user.first_name %></p></td>
+    </tr>
+    <tr>
+      <td><p>Last Name</p></td>
+      <td><p><%= @user.last_name %></p></td>
+    </tr>
+    <tr>
+      <td><p>Email</p></td>
+      <td><p><%= @user.email %></p></td>
+    </tr>
+    <tr>
+      <td><p>Date Of Birth</p></td>
+      <td><p><%= @user.date_of_birth %></p></td>
+    </tr>
+    <tr>
+      <td><p>Avatar</p></td>
+      <td><p><%=image_tag @user.avatar.url(:thumb) %></p></td>
+    </tr>
+    <tr>
+      <td><p>Profile Header Image</p></td>
+      <td><p><%= image_tag @user.header_image.url(:thumb) %></p></td>
+    </tr>
+  </table>
+
+  <%= link_to "Edit Details", edit_user_path(current_user) %>
+
+  <h3>Address</h3>
+  <%= link_to "Create Address", new_user_address_path %>
+  <table>
+    <thead>
+      <tr>
+        <th>Address</th>
+        <th>Primary Delivery</th>
+        <th>Primary Billing</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @user.addresses.each do |address| %>
+        <tr>
+          <td><%= address.full_address %></td>
+          <td><%= address.default_devlivery_address %></td>
+          <td><%= address.default_billing_address %></td>
+          <td><%= link_to 'Edit', edit_user_address_path(current_user, address) %><%= link_to 'Destroy', user_address_path(current_user, address), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
