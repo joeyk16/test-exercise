@@ -1,13 +1,6 @@
 class AddressesController < ApplicationController
-  before_action :set_address,   only: [:show, :edit, :update, :destroy]
+  before_action :set_address,   only: [:edit, :update, :destroy]
   before_action :authenticate_user!
-
-  def index
-    @addresses = current_user.addresses
-  end
-
-  def show
-  end
 
   def new
     @address = Address.new

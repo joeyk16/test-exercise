@@ -107,8 +107,9 @@ RSpec.describe UsersController, type: :controller do
   describe "PATCH #update" do
     it "user updated" do
       sign_in(user)
+      request.env["HTTP_REFERER"] = "where_i_came_from"
       patch :update, { id: user.id, user: user_params }
-      expect(response).to redirect_to(assigns(:user))
+      expect(response).to redirect_to "where_i_came_from"
       expect(assigns(:user)).to eq(user)
     end
 

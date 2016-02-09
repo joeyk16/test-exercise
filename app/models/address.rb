@@ -1,9 +1,9 @@
 class Address < ActiveRecord::Base
   belongs_to :user
 
-  validates :address_line_1, :suburb, :state, :postcode, :country, presence: true
+  validates :address_line_1, :suburb, :state, :postcode, :country, :user, presence: true
 
-  def full_address
+  def post_address
     "#{address_line_1}, #{suburb}, #{state}, #{country}, #{postcode}"
   end
 end

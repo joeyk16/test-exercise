@@ -48,6 +48,15 @@ FactoryGirl.define do
     quantity Faker::Number.number(2)
   end
 
+  factory :address do
+    address_line_1 Faker::Address.street_address
+    suburb Faker::Address.city
+    state Faker::Address.state
+    postcode Faker::Address.postcode
+    country Faker::Address.country
+    user
+  end
+
   factory :outfit do
     caption Faker::Lorem.word
     user_id Faker::Number.number(2)
