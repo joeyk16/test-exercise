@@ -32,29 +32,17 @@
       <td><p><%= image_tag @user.header_image.url(:thumb) %></p></td>
     </tr>
   </table>
-
   <%= link_to "Edit Details", edit_user_path(current_user) %>
+
+  <br>
 
   <h3>Address</h3>
   <%= link_to "Create Address", new_user_address_path %>
-  <table>
-    <thead>
-      <tr>
-        <th>Address</th>
-        <th>Primary Delivery</th>
-        <th>Primary Billing</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @user.addresses.each do |address| %>
-        <tr>
-          <td><%= address.post_address %></td>
-          <td><%= address.default_devlivery_address %></td>
-          <td><%= address.default_billing_address %></td>
-          <td><%= link_to 'Edit', edit_user_address_path(current_user, address) %><%= link_to 'Destroy', user_address_path(current_user, address), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <%= render 'addresses/address_list', user: @user %>
+
+  <br>
+
+  <h3>Shipping Method</h3>
+  <%= link_to "Create Shipping Method", new_user_shipping_method_path %>
+  <%= render 'shipping_methods/shipping_methods_list', user: @user %>
 </div>
