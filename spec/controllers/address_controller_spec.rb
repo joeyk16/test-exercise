@@ -67,6 +67,7 @@ RSpec.describe AddressesController, type: :controller do
     it "user deletes outfit" do
       sign_in(user)
       delete :destroy, { id: address.id, user_id: user.id }
+      expect(assigns(:address)).to_not be_persisted
       expect(response).to redirect_to(user_my_account_path(user))
     end
 
