@@ -48,6 +48,13 @@ FactoryGirl.define do
     quantity Faker::Number.number(2)
   end
 
+  factory :shipping_method do
+    name
+    country Faker::Address.country
+    price_in_cents Faker::Number.number(2)
+    user
+  end
+
   factory :address do
     address_line_1 Faker::Address.street_address
     suburb Faker::Address.city
