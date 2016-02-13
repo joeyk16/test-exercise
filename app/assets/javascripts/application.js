@@ -22,7 +22,11 @@
 //= require_tree .
 //= require jquery_nested_form
 //= require product
-//= require sizes
 //= require bootstrap-datepicker
 //= require date_picker
-
+//= require items
+//= require jquery.dataTables.min
+//= require jquery
+//= require product
+//= require sizes
+//= require tables
