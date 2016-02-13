@@ -32,10 +32,17 @@
       <td><p><%= image_tag @user.header_image.url(:thumb) %></p></td>
     </tr>
   </table>
-
   <%= link_to "Edit Details", edit_user_path(current_user) %>
+
+  <br>
 
   <h3>Address</h3>
   <%= link_to "Create Address", new_user_address_path %>
   <%= render 'addresses/address_list', user: @user %>
+
+  <br>
+
+  <h3>Shipping Method</h3>
+  <%= link_to "Create Shipping Method", new_user_shipping_method_path %>
+  <%= render 'shipping_methods/shipping_methods_list', user: @user %>
 </div>

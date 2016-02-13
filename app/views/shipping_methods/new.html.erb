@@ -1,0 +1,4 @@
+<h1>Create New Shipping Method</h1>
+<%= simple_form_for @shipping_method, url: user_shipping_methods_path, method: :post do |f| %>
+<%= render 'form', f: f%>
+<% end %>

@@ -1,0 +1,6 @@
+<%= f.hidden_field :user_id, value: current_user.id %>
+<%= f.input :name %>
+<%= f.input :price_in_cents %>
+<%= f.country_select :country %>
+<%= f.button :submit, class: "btn btn-primary" %>
+

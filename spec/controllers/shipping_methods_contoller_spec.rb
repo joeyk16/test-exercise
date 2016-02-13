@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe AddressesController, type: :controller do
+RSpec.describe ShippingMethodsController, type: :controller do
   let!(:user) { create(:user, admin: false) }
-  let!(:address) { create(:address, user_id: user.id) }
+  let!(:shipping_method) { create(:shipping_method, user_id: user.id) }
 
-  let(:address_params) { address.attributes }
+  let(:shipping_method_params) { shipping_method.attributes }
 
   describe "GET #new" do
     it "user renders new template" do
@@ -21,11 +21,11 @@ RSpec.describe AddressesController, type: :controller do
   end
 
   describe "POST #create" do
-    it "user creates address" do
+    it "user creates shipping_method" do
       sign_in(user)
-      post :create, { address: address_params, user_id: user }
+      post :create, { shipping_method: shipping_method_params, user_id: user }
       expect(response).to redirect_to(user_my_account_path(user))
-      expect(assigns(:address)).to be_persisted
+      expect(assigns(:shipping_method)).to be_persisted
     end
 
     it "vistor redirects to login path" do
@@ -35,16 +35,17 @@ RSpec.describe AddressesController, type: :controller do
   end
 
   describe "GET #edit" do
-    it "user edits address" do
+    it "user edits shipping_method" do
       sign_in(user)
-      get :edit, { id: address.id, user_id: user.id }
+      get :edit, { id: shipping_method.id, user_id: user.id }
       expect(response).to render_template(:edit)
       expect(response).to have_http_status(:success)
-      expect(assigns(:address)).to eq(address)
+      expect(assigns(:shipping_method)).to eq(shipping_method)
+      expect(assigns(:shipping_method)).to be_persisted
     end
 
     it "vistor redirects to login path" do
-      get :edit, { id: address.id, user_id: user.id }, {}
+      get :edit, { id: shipping_method.id, user_id: user.id }, {}
       expect(response).to redirect_to(new_user_session_path)
     end
   end
@@ -52,13 +53,14 @@ RSpec.describe AddressesController, type: :controller do
   describe "PATCH #update" do
     it "user updates outfit" do
       sign_in(user)
-      patch :update, { id: address.id, user_id: user.id, address: address_params }
+      patch :update, { id: shipping_method.id, user_id: user.id, shipping_method: shipping_method_params }
       expect(response).to redirect_to(user_my_account_path(user))
-      expect(assigns(:address)).to eq(address)
+      expect(assigns(:shipping_method)).to eq(shipping_method)
+      expect(assigns(:shipping_method)).to be_persisted
     end
 
     it "vistor redirects to login path" do
-      patch :update, { id: address.id, user_id: user.id, address: address_params }, {}
+      patch :update, { id: shipping_method.id, user_id: user.id, shipping_method: shipping_method_params }, {}
       expect(response).to redirect_to(new_user_session_path)
     end
   end
@@ -66,13 +68,13 @@ RSpec.describe AddressesController, type: :controller do
   describe "DELETE #destroy" do
     it "user deletes outfit" do
       sign_in(user)
-      delete :destroy, { id: address.id, user_id: user.id }
-      expect(assigns(:address)).to_not be_persisted
+      delete :destroy, { id: shipping_method.id, user_id: user.id }
+      expect(assigns(:shipping_method)).to_not be_persisted
       expect(response).to redirect_to(user_my_account_path(user))
     end
 
     it "vistor redirects to login path" do
-      delete :destroy, { id: address.id, user_id: user.id }, { }
+      delete :destroy, { id: shipping_method.id, user_id: user.id }, { }
       expect(response).to redirect_to(new_user_session_path)
     end
   end
