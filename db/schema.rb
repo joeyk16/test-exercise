@@ -131,7 +131,7 @@ ActiveRecord::Schema.define(version: 20160212234110) do
   create_table "shipping_methods", force: :cascade do |t|
     t.string  "name"
     t.integer "user_id"
-    t.integer "price"
+    t.integer "price_in_cents"
     t.string  "country"
   end
 

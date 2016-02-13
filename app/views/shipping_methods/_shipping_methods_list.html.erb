@@ -1,0 +1,20 @@
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Country</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% user.shipping_methods.each do |shipping_method| %>
+      <tr>
+        <td><%= shipping_method.name %></td>
+        <td><%= shipping_method.price_in_cents %></td>
+        <td><%= shipping_method.country %></td>
+        <td><%= link_to 'Edit', edit_user_shipping_method_path(current_user, shipping_method) %><%= link_to 'Destroy', user_shipping_method_path(current_user, shipping_method), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
