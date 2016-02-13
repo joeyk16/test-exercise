@@ -11,7 +11,6 @@ class AddressesController < ApplicationController
 
   def create
     @address = Address.new(address_params)
-    @address.user = current_user
     if @address.save
       redirect_to user_my_account_path
       flash[:success] = "Address Created"
