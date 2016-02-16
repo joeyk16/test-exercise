@@ -55,32 +55,25 @@
     <!-- right column -->
     <div class="col-lg-6 col-md-6 col-sm-5">
       <div class = "itemtitle"><%= @product.title %></div>
+
       <div class = "price">$<%= @product.price %></div>
+
       <% if current_user == @product.user %>
         <%= link_to "Edit Products", edit_product_path(@product) %>
       <% end %>
+
       <div class="productFilter productFilterLook2">
-        <div class="filterBox">
-          <select>
-            <option value="strawberries" selected>Size</option>
-          </select>
-        </div>
-        <div class="filterBox">
-          <select>
-            <option value="strawberries" selected>Quantity</option>
-          </select>
-        </div>
-        <div class="filterBox">
-          <select>
-            <option value="strawberries" selected>Shipping</option>
-          </select>
-        </div>
+        <%= simple_form_for @cart, url: user_carts_path(current_user), method: :post do |f|%>
+          <%= f.hidden_field :user_id, value: current_user.id %>
+          <%= f.hidden_field :product_id, value: @product.id %>
+          <%= f.hidden_field :outfit_id, value: params[:outfit_id] %>
+          <%= f.hidden_field :price, value: @product.price %>
+          <%= f.input :quantity, collection: 1..10, selected: 1 %>
+          <%= f.input :size_id, collection: @sizes %>
+          <%= f.button :submit, value: "Add to cart" %>
+        <% end %>
       </div>
-      <div class="cart-actions">
-        <div class="button"><button type="button" class="btn btn-addtocart btn-sm">Add To Cart</button></div>
-        <div class="button"><button type="button" class="btn btn-wishlist btn-sm">Add to Wishlist</button> </div>
-        <div class="button"><button type="button" class="btn btn-contact btn-sm">Message User</button> </div>
-      </div>
+
       <div class="sellerinfoitemshow">
         <%= image_tag @product.user.avatar.url(:thumb) %>
         <h5><%= link_to "#{@product.user.username}", user_path(@product.user) %></h5>

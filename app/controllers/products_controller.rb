@@ -39,6 +39,8 @@ class ProductsController < ApplicationController
   end
 
   def show
+    @cart = Cart.new
+    @sizes = @product.sizes
   end
 
   def update

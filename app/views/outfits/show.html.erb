@@ -28,7 +28,7 @@
   <% @outfit.approved_products.each do |product| %>
     <div class="box panel panel-default">
       <div class="square_item_image">
-        <%= link_to image_tag(product.product_images[0].product_image.url(:medium)), product_path(product, outfit_user_id: @outfit.user) %>
+        <%= link_to image_tag(product.product_images[0].product_image.url(:medium)), product_path(product, outfit_id: @outfit.id) %>
       </div>
       <div class ="panel-body">
         <div class = "itemlistretailer">

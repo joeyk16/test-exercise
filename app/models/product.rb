@@ -17,4 +17,9 @@ class Product < ActiveRecord::Base
   accepts_nested_attributes_for :product_sizes,
    allow_destroy: true,
    reject_if: ->(attrs) { attrs[:quantity].to_i.zero? }
+
+   def sizes
+    size_ids = product_sizes.map{ |ps| ps.size_id }
+    Size.where(id: size_ids)
+   end
 end
