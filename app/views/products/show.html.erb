@@ -63,15 +63,7 @@
       <% end %>
 
       <div class="productFilter productFilterLook2">
-        <%= simple_form_for @cart, url: user_carts_path(current_user), method: :post do |f|%>
-          <%= f.hidden_field :user_id, value: current_user.id %>
-          <%= f.hidden_field :product_id, value: @product.id %>
-          <%= f.hidden_field :outfit_id, value: params[:outfit_id] %>
-          <%= f.hidden_field :price, value: @product.price %>
-          <%= f.input :quantity, collection: 1..10, selected: 1 %>
-          <%= f.input :size_id, collection: @sizes %>
-          <%= f.button :submit, value: "Add to cart" %>
-        <% end %>
+        <%= render 'carts/form', cart: @cart, product: @product, sizes: @size %>
       </div>
 
       <div class="sellerinfoitemshow">
