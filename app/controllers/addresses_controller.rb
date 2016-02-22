@@ -2,6 +2,10 @@ class AddressesController < ApplicationController
   before_action :set_address,   only: [:edit, :update, :destroy]
   before_action :authenticate_user!
 
+  def index
+    @addresses = Address.where(user: current_user)
+  end
+
   def new
     @address = Address.new
   end

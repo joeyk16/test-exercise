@@ -3,7 +3,7 @@ class Address < ActiveRecord::Base
 
   validates :address_line_1, :suburb, :state, :postcode, :country, :user, presence: true
 
-  def post_address
+  def address_to_s
     "#{address_line_1}, #{suburb}, #{state}, #{country}, #{postcode}"
   end
 end
