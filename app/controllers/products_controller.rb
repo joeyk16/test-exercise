@@ -39,8 +39,9 @@ class ProductsController < ApplicationController
   end
 
   def show
-    @cart = Cart.new
+    @order = Order.new
     @sizes = @product.sizes
+    @shipping = @product.product_shipping_methods
   end
 
   def update
@@ -81,7 +82,7 @@ class ProductsController < ApplicationController
   def product_params
      params.require(:product).permit(
       :title,
-      :price,
+      :price_in_cents,
       :description,
       :tag_list,
       :category_id,

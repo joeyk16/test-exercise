@@ -1,0 +1,24 @@
+<h1>Cart</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th>Quantity</th>
+      <th>Price</th>
+      <th>Shipping</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @order.each do |order| %>
+      <tr>
+        <td><%= image_tag Product.find(order.product_id).product_images[0].product_image.url(:thumb) %><%= Product.find(order.product_id).title %></td>
+        <td><%= order.quantity %></td>
+        <td><%= Product.find(order.product_id).price %></td>
+        <td><%= ShippingMethod.find(order.shipping_method_id).name %></td>
+        <td><%=link_to "Delete Order", user_order_path(current_user, @order), method: :delete %> <%=link_to "Process Order", user_order_path(current_user, @order) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

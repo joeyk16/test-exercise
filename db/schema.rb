@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160216095116) do
+ActiveRecord::Schema.define(version: 20160222104602) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -44,21 +44,6 @@ ActiveRecord::Schema.define(version: 20160216095116) do
 
   add_index "addresses", ["user_id"], name: "index_addresses_on_user_id"
 
-  create_table "carts", force: :cascade do |t|
-    t.integer  "quantity"
-    t.integer  "product_id"
-    t.integer  "outfit_id"
-    t.integer  "size_id"
-    t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "carts", ["outfit_id"], name: "index_carts_on_outfit_id"
-  add_index "carts", ["product_id"], name: "index_carts_on_product_id"
-  add_index "carts", ["size_id"], name: "index_carts_on_size_id"
-  add_index "carts", ["user_id"], name: "index_carts_on_user_id"
-
   create_table "categories", force: :cascade do |t|
     t.string   "name"
     t.string   "ancestry"
@@ -67,6 +52,23 @@ ActiveRecord::Schema.define(version: 20160216095116) do
   end
 
   add_index "categories", ["ancestry"], name: "index_categories_on_ancestry"
+
+  create_table "orders", force: :cascade do |t|
+    t.integer  "quantity"
+    t.integer  "product_id"
+    t.integer  "outfit_id"
+    t.integer  "size_id"
+    t.integer  "user_id"
+    t.integer  "shipping_method_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "orders", ["outfit_id"], name: "index_orders_on_outfit_id"
+  add_index "orders", ["product_id"], name: "index_orders_on_product_id"
+  add_index "orders", ["shipping_method_id"], name: "index_orders_on_shipping_method_id"
+  add_index "orders", ["size_id"], name: "index_orders_on_size_id"
+  add_index "orders", ["user_id"], name: "index_orders_on_user_id"
 
   create_table "outfit_products", force: :cascade do |t|
     t.integer  "user_id"
@@ -131,13 +133,13 @@ ActiveRecord::Schema.define(version: 20160216095116) do
   create_table "products", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
-    t.datetime "created_at",                                   null: false
-    t.datetime "updated_at",                                   null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
     t.integer  "user_id"
     t.integer  "category_id"
-    t.decimal  "price",                precision: 8, scale: 2
     t.text     "size_description"
     t.text     "shipping_description"
+    t.integer  "price_in_cents"
   end
 
   add_index "products", ["user_id", "created_at"], name: "index_products_on_user_id_and_created_at"

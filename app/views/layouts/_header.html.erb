@@ -31,6 +31,7 @@
         </li>
         <li><%= link_to "Outfits", outfits_path %></li>
       </ul>
+
       <form class="form-inline global-search" role="form">
         <div class="form-group">
           <label class="sr-only" for="">Enter search terms</label>
@@ -39,6 +40,7 @@
         </div>
         <button type="submit" id="s" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
       </form>
+
       <ul class="nav navbar-nav navbar-right">
         <% if user_signed_in? %>
           <ul class="nav navbar-nav">
@@ -63,6 +65,7 @@
               </li>
             </ul>
           <% end %>
+
           <ul class="nav navbar-nav">
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Outfits<span class="caret"></span></a>
@@ -72,11 +75,11 @@
               </ul>
             </li>
           </ul>
+
           <li>
-            <%= link_to root_path do %>
-              <i class="glyphicon glyphicon-envelope"></i>
-            <% end %>
+            <%= link_to "orders", user_orders_path(current_user), class: "btn btn-link" %>
           </li>
+
           <ul class="nav navbar-nav">
             <div class "avatar_nav">
               <% if user_signed_in? %>
@@ -96,10 +99,12 @@
               </ul>
             </li>
           </ul>
+
         <% else %>
           <li><%= link_to "Log In", new_user_session_path %></li>
           <li><%= link_to "Sign Up", new_user_registration_path %></li>
         <% end %>
+
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
