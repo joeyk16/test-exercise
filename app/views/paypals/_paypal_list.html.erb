@@ -1,0 +1,7 @@
+<% if user.paypals.any? %>
+  <p><%= user.paypals[0].email %></p>
+  <%= link_to "Edit", edit_user_paypal_path(current_user, user.paypals[0]) %>
+  <%= link_to "Destroy", user_paypal_path(current_user, user.paypals[0]), method: :delete %>
+<% else %>
+  <%= link_to "Add Your Paypal Account", new_user_paypal_path(current_user) %>
+<% end %>

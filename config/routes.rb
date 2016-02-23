@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       get 'outfit_products'  => 'outfit_products#outfit_products'
     end
     resources :addresses
+    resources :paypals, except: [:index]
     resources :shipping_methods, only: [:new, :create, :edit, :update, :destroy]
     resources :carts, only: [:create, :index, :show, :destroy]
     get 'users_outfit_products'  => 'outfit_products#users_outfit_products'

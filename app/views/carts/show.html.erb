@@ -21,6 +21,8 @@
   </tbody>
 </table>
 
+<p>Cart Total: $<%= @cart.total %></p>
+
 <h2>Shipping Address</h2>
 <% if @cart.user.addresses.find_by(default_devlivery_address: true) %>
   <%= @cart.user.addresses.find_by(default_devlivery_address: true).address_to_s %>
@@ -29,6 +31,16 @@
   <%= link_to "Add Default Shipping Address", new_user_address_path(current_user) %>
 <% end %>
 
-<p>Cart Total: $<%= @cart.total %></p>
+<h2>Pay with paypal</h2>
+<!-- TODO: Cant have array here make method -->
+<!-- TODO: Cant have array here make method -->
+<!-- TODO: Cant have array here make method -->
+<% if @cart.user.paypals.any? %>
+  <%= @cart.user.paypals[0].email %>
+  <%= link_to "edit", edit_user_paypal_path(current_user, @cart.user.paypals[0]) %>
+<% else %>
+  <%= link_to "Add Paypal account", new_user_paypal_path(current_user) %>
+<% end %>
 
-<%= link_to "Confirm And Pay", new_user_address_path(current_user) %>
+<h1><%= link_to "Confirm And Pay", new_user_address_path(current_user) %></h1>
+
