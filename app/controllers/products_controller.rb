@@ -39,7 +39,7 @@ class ProductsController < ApplicationController
   end
 
   def show
-    @order = Order.new
+    @cart = Cart.new
     @sizes = @product.sizes
     @shipping = @product.product_shipping_methods
   end

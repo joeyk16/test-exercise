@@ -15,7 +15,7 @@ Rails.application.routes.draw do
     end
     resources :addresses
     resources :shipping_methods, only: [:new, :create, :edit, :update, :destroy]
-    resources :orders, only: [:create, :index, :show, :destroy]
+    resources :carts, only: [:create, :index, :show, :destroy]
     get 'users_outfit_products'  => 'outfit_products#users_outfit_products'
     delete 'outfit_products'  => 'outfit_products#destroy'
     get 'approve_outfit_products' => 'outfit_products#approve'

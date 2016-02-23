@@ -11,13 +11,13 @@
     </tr>
   </thead>
   <tbody>
-    <% @order.each do |order| %>
+    <% @cart.each do |order| %>
       <tr>
         <td><%= image_tag Product.find(order.product_id).product_images[0].product_image.url(:thumb) %><%= Product.find(order.product_id).title %></td>
         <td><%= order.quantity %></td>
         <td><%= Product.find(order.product_id).price %></td>
         <td><%= ShippingMethod.find(order.shipping_method_id).name %></td>
-        <td><%=link_to "Delete Order", user_order_path(current_user, @order), method: :delete %> <%=link_to "Process Order", user_order_path(current_user, @order) %></td>
+        <td><%=link_to "Remove product", user_cart_path(current_user, @cart), method: :delete %> <%=link_to "Buy Now", user_cart_path(current_user, @cart) %></td>
       </tr>
     <% end %>
   </tbody>

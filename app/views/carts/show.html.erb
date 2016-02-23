@@ -1,0 +1,34 @@
+<h1>Confirm Cart</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th>Quantity</th>
+      <th>Price</th>
+      <th>Shipping</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><%= image_tag Product.find(@cart.product_id).product_images[0].product_image.url(:thumb) %><%= Product.find(@cart.product_id).title %><%= @cart.product.title %></td>
+        <td><%= @cart.quantity %></td>
+        <td>$<%= @cart.product.price %></td>
+        <td><%= @cart.shipping_method.name %></td>
+        <td><%= link_to "Remove product", user_cart_path(current_user, @cart), method: :delete %></td>
+      </tr>
+  </tbody>
+</table>
+
+<h2>Shipping Address</h2>
+<% if @cart.user.addresses.find_by(default_devlivery_address: true) %>
+  <%= @cart.user.addresses.find_by(default_devlivery_address: true).address_to_s %>
+  <%= link_to "Change address", user_addresses_path(current_user) %>
+<% else %>
+  <%= link_to "Add Default Shipping Address", new_user_address_path(current_user) %>
+<% end %>
+
+<p>Cart Total: $<%= @cart.total %></p>
+
+<%= link_to "Confirm And Pay", new_user_address_path(current_user) %>

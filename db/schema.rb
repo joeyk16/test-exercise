@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160222104602) do
+ActiveRecord::Schema.define(version: 20160223102946) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -44,16 +44,7 @@ ActiveRecord::Schema.define(version: 20160222104602) do
 
   add_index "addresses", ["user_id"], name: "index_addresses_on_user_id"
 
-  create_table "categories", force: :cascade do |t|
-    t.string   "name"
-    t.string   "ancestry"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "categories", ["ancestry"], name: "index_categories_on_ancestry"
-
-  create_table "orders", force: :cascade do |t|
+  create_table "carts", force: :cascade do |t|
     t.integer  "quantity"
     t.integer  "product_id"
     t.integer  "outfit_id"
@@ -64,11 +55,20 @@ ActiveRecord::Schema.define(version: 20160222104602) do
     t.datetime "updated_at",         null: false
   end
 
-  add_index "orders", ["outfit_id"], name: "index_orders_on_outfit_id"
-  add_index "orders", ["product_id"], name: "index_orders_on_product_id"
-  add_index "orders", ["shipping_method_id"], name: "index_orders_on_shipping_method_id"
-  add_index "orders", ["size_id"], name: "index_orders_on_size_id"
-  add_index "orders", ["user_id"], name: "index_orders_on_user_id"
+  add_index "carts", ["outfit_id"], name: "index_carts_on_outfit_id"
+  add_index "carts", ["product_id"], name: "index_carts_on_product_id"
+  add_index "carts", ["shipping_method_id"], name: "index_carts_on_shipping_method_id"
+  add_index "carts", ["size_id"], name: "index_carts_on_size_id"
+  add_index "carts", ["user_id"], name: "index_carts_on_user_id"
+
+  create_table "categories", force: :cascade do |t|
+    t.string   "name"
+    t.string   "ancestry"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "categories", ["ancestry"], name: "index_categories_on_ancestry"
 
   create_table "outfit_products", force: :cascade do |t|
     t.integer  "user_id"
