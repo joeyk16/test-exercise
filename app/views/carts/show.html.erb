@@ -15,13 +15,13 @@
         <td><%= image_tag Product.find(@cart.product_id).product_images[0].product_image.url(:thumb) %><%= Product.find(@cart.product_id).title %><%= @cart.product.title %></td>
         <td><%= @cart.quantity %></td>
         <td>$<%= @cart.product.price %></td>
-        <td><%= @cart.shipping_method.name %></td>
+        <td><%= @cart.shipping_method.name %> <%= @cart.shipping_method.price %></td>
         <td><%= link_to "Remove product", user_cart_path(current_user, @cart), method: :delete %></td>
       </tr>
   </tbody>
 </table>
 
-<p>Cart Total: $<%= @cart.total %></p>
+<p>Cart Total: $<%= @cart.total(@cart.quantity) %></p>
 
 <h2>Shipping Address</h2>
 <% if @cart.user.addresses.find_by(default_devlivery_address: true) %>
@@ -32,12 +32,9 @@
 <% end %>
 
 <h2>Pay with paypal</h2>
-<!-- TODO: Cant have array here make method -->
-<!-- TODO: Cant have array here make method -->
-<!-- TODO: Cant have array here make method -->
 <% if @cart.user.paypals.any? %>
-  <%= @cart.user.paypals[0].email %>
-  <%= link_to "edit", edit_user_paypal_path(current_user, @cart.user.paypals[0]) %>
+  <%= @cart.user.paypals.find_by(default: true).email %>
+  <%= link_to "edit", edit_user_paypal_path(current_user, @cart.user.paypals.find_by(default: true)) %>
 <% else %>
   <%= link_to "Add Paypal account", new_user_paypal_path(current_user) %>
 <% end %>
