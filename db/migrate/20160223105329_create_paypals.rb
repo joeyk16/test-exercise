@@ -3,6 +3,7 @@ class CreatePaypals < ActiveRecord::Migration
     create_table :paypals do |t|
       t.string :email
       t.references :user, index: true
+      t.boolean :default
 
       t.timestamps null: false
     end
