@@ -18,7 +18,7 @@ RSpec.describe Address, type: :model do
 
   context "full address" do
     before { address.user }
-    it { expect(address.post_address).to eq(
+    it { expect(address.address_to_s).to eq(
       "#{address.address_line_1}, #{address.suburb}, #{address.state}, #{address.country}, #{address.postcode}"
       )
     }

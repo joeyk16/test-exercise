@@ -1,6 +1,7 @@
 class PaypalsController < ApplicationController
   before_action :set_paypals,   only: [:edit, :update, :destroy]
   before_action :authenticate_user!
+  before_action :correct_user, only: [:edit, :update]
   before_action :user_has_one_default_paypal_account, only:[:create, :update]
 
   def new
@@ -55,5 +56,9 @@ class PaypalsController < ApplicationController
     if (params[:paypal][:default] == "1") && paypal
       paypal.update_attributes(default: false)
     end
+  end
+
+  def correct_user
+    redirect_to root_path unless current_user == @paypal.user
   end
 end

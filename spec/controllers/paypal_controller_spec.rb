@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe AddressesController, type: :controller do
+RSpec.describe PaypalsController, type: :controller do
   let!(:user) { create(:user, admin: false) }
   let!(:user_01) { create(:user, admin: false) }
-  let!(:address) { create(:address, user_id: user.id) }
-  let!(:address_01) { create(:address, user_id: user_01.id) }
+  let!(:paypal) { create(:paypal, user_id: user.id) }
+  let!(:paypal_01) { create(:paypal, user_id: user_01.id) }
 
-  let(:address_params) { address.attributes }
+  let(:paypal_params) { paypal.attributes }
 
   describe "GET #new" do
     it "user renders new template" do
@@ -23,36 +23,36 @@ RSpec.describe AddressesController, type: :controller do
   end
 
   describe "POST #create" do
-    it "user creates address" do
+    it "user creates paypal" do
       sign_in(user)
-      post :create, { address: address_params, user_id: user }
+      post :create, { paypal: paypal_params, user_id: user }
       expect(response).to redirect_to(user_my_account_path(user))
-      expect(assigns(:address)).to be_persisted
+      expect(assigns(:paypal)).to be_persisted
     end
 
     it "vistor redirects to login path" do
-      post :create, { address: address_params, user_id: user }
+      post :create, { user_id: user }, { }
       expect(response).to redirect_to(new_user_session_path)
     end
   end
 
   describe "GET #edit" do
-    it "user edits address" do
+    it "user edits paypal" do
       sign_in(user)
-      get :edit, { id: address.id, user_id: user.id }
+      get :edit, { id: paypal.id, user_id: user.id }
       expect(response).to render_template(:edit)
       expect(response).to have_http_status(:success)
-      expect(assigns(:address)).to eq(address)
+      expect(assigns(:paypal)).to eq(paypal)
     end
 
-    it "user can't edit different users address" do
+    it "user can't edit different users paypal account" do
       sign_in(user)
-      get :edit, { id: address_01.id, user_id: user.id }
+      get :edit, { id: paypal_01.id, user_id: user.id }
       expect(response).to redirect_to(root_path)
     end
 
     it "vistor redirects to login path" do
-      get :edit, { id: address.id, user_id: user.id }, {}
+      get :edit, { id: paypal.id, user_id: user.id }, {}
       expect(response).to redirect_to(new_user_session_path)
     end
   end
@@ -60,19 +60,19 @@ RSpec.describe AddressesController, type: :controller do
   describe "PATCH #update" do
     it "user updates outfit" do
       sign_in(user)
-      patch :update, { id: address.id, user_id: user.id, address: address_params }
+      patch :update, { id: paypal.id, user_id: user.id, paypal: paypal_params }
       expect(response).to redirect_to(user_my_account_path(user))
-      expect(assigns(:address)).to eq(address)
+      expect(assigns(:paypal)).to eq(paypal)
     end
 
-    it "user can't edit different users address" do
+    it "user can't edit different users paypal account" do
       sign_in(user)
-      patch :update, { id: address_01.id, user_id: user.id, address: address_params }
+      patch :update, { id: paypal_01.id, user_id: user.id, paypal: paypal_params }
       expect(response).to redirect_to(root_path)
     end
 
     it "vistor redirects to login path" do
-      patch :update, { id: address.id, user_id: user.id, address: address_params }, {}
+      patch :update, { id: paypal.id, user_id: user.id, paypal: paypal_params }, {}
       expect(response).to redirect_to(new_user_session_path)
     end
   end
@@ -80,19 +80,13 @@ RSpec.describe AddressesController, type: :controller do
   describe "DELETE #destroy" do
     it "user deletes outfit" do
       sign_in(user)
-      delete :destroy, { id: address.id, user_id: user.id }
-      expect(assigns(:address)).to_not be_persisted
+      delete :destroy, { id: paypal.id, user_id: user.id }
+      expect(assigns(:paypal)).to_not be_persisted
       expect(response).to redirect_to(user_my_account_path(user))
     end
 
-    it "user can't delete different users address" do
-      sign_in(user)
-      delete :destroy, { id: address_01.id, user_id: user.id }
-      expect(response).to redirect_to(root_path)
-    end
-
     it "vistor redirects to login path" do
-      delete :destroy, { id: address.id, user_id: user.id }, { }
+      delete :destroy, { id: paypal.id, user_id: user.id }, { }
       expect(response).to redirect_to(new_user_session_path)
     end
   end
