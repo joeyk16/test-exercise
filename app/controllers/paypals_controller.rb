@@ -1,7 +1,7 @@
 class PaypalsController < ApplicationController
-  before_action :set_paypals,   only: [:edit, :update, :destroy]
   before_action :authenticate_user!
-  before_action :correct_user, only: [:edit, :update]
+  before_action :set_paypals,   only: [:edit, :update, :destroy]
+  before_action :correct_user, only: [:edit, :update, :destroy]
   before_action :user_has_one_default_paypal_account, only:[:create, :update]
 
   def new

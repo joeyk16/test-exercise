@@ -85,6 +85,12 @@ RSpec.describe PaypalsController, type: :controller do
       expect(response).to redirect_to(user_my_account_path(user))
     end
 
+    it "user can't edit different users paypal account" do
+      sign_in(user)
+      delete :destroy, { id: paypal_01.id, user_id: user.id }
+      expect(response).to redirect_to(root_path)
+    end
+
     it "vistor redirects to login path" do
       delete :destroy, { id: paypal.id, user_id: user.id }, { }
       expect(response).to redirect_to(new_user_session_path)
