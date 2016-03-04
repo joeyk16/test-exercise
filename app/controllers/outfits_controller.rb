@@ -1,8 +1,8 @@
 class OutfitsController < ApplicationController
   before_action :authenticate_user!, except: [:show]
-  before_action :user_has_paypal_account?, except: [:show]
-  before_action :correct_user?, only: [:edit, :update, :destroy]
   before_action :set_outfit, only: [:show, :edit, :update, :destroy]
+  before_action :user_has_paypal_account?, except: [:show, :index]
+  before_action :correct_user?, only: [:edit, :update, :destroy]
 
   def index
     @outfits = current_user.outfits.all

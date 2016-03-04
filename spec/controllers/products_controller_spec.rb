@@ -114,7 +114,7 @@ RSpec.describe ProductsController, type: :controller do
       expect(response).to redirect_to(new_user_session_path)
     end
 
-    it "as unauthorised user" do
+    it "user can't update another user's product" do
       sign_in(user2)
       patch :update, { id: product.id, product: product_params }
       expect(response).to redirect_to(root_path)
@@ -134,6 +134,12 @@ RSpec.describe ProductsController, type: :controller do
       delete :destroy, { id: product.id }
       expect(Product.all.count).to eq(product_count - 1)
       expect(response).to redirect_to(user_products_path)
+    end
+
+    it "user you can't delete another users product" do
+      sign_in(user2)
+      delete :destroy, { id: product.id }
+      expect(response).to redirect_to(root_path)
     end
 
     it "redirects visitor" do
