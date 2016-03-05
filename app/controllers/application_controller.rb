@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
     if current_user.paypals.any?
     else
       redirect_to new_user_paypal_path(current_user)
-      flash[:danger] = "You must create Paypal Account before you can do that"
+      flash[:danger] = "You must add a Paypal Account before you can do that"
     end
   end
 

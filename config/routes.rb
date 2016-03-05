@@ -34,19 +34,16 @@ Rails.application.routes.draw do
   get 'login' => 'sessions#new'
   post 'login' => 'sessions#create'
   delete 'logout' => 'sessions#destroy'
-  resources :product_images, only: [:destroy]
 
-  resources :account_activations, only: [:edit]
-  resources :password_resets, only: [:new, :create, :edit, :update]
+  resources :product_images, only: [:destroy]
   resources :product_sizes, only: [:create]
+  resources :sizes
 
   resources :products do
     resources :photos
   end
 
   get 'products_new' => 'products#new'
-
-  resources :sizes
 
   get 'tags/:tag', to: 'categories#show', as: :tag
 end
