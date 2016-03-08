@@ -38,6 +38,7 @@ Rails.application.routes.draw do
   resources :product_images, only: [:destroy]
   resources :product_sizes, only: [:create]
   resources :sizes
+  resources :likes, only: [:create, :destroy]
 
   resources :products do
     resources :photos
