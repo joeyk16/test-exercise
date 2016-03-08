@@ -3,14 +3,20 @@ class LikesController < ApplicationController
   before_action :one_like_per_outfit, only: [:create]
 
   def create
-    like = Like.new(likes_params)
-    like.save
+    @like = Like.new(likes_params)
+    if @like.save
+    else
+      flash[:danger] = "Sorry there was an error"
+    end
     redirect_to :back
   end
 
   def destroy
-    like = Like.find_by(outfit: params[:id], user: current_user)
-    like.delete
+    if @like = Like.find_by(outfit: params[:id], user: current_user)
+      @like.delete
+    else
+      flash[:danger] = "Sorry can't do that"
+    end
     redirect_to :back
   end
 
