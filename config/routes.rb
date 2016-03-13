@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       post 'outfit_products'  => 'outfit_products#create'
       get 'outfit_products'  => 'outfit_products#outfit_products'
     end
+    resources :relationships, only: [:create, :index, :destroy]
     resources :addresses, only: [:new, :create, :edit, :update, :destroy]
     resources :shipping_methods, only: [:new, :create, :edit, :update, :destroy]
     get 'users_outfit_products'  => 'outfit_products#users_outfit_products'

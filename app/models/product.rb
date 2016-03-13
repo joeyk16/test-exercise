@@ -17,4 +17,8 @@ class Product < ActiveRecord::Base
   accepts_nested_attributes_for :product_sizes,
    allow_destroy: true,
    reject_if: ->(attrs) { attrs[:quantity].to_i.zero? }
+
+  def price
+    price_in_cents / 100.00
+  end
 end
