@@ -1,5 +1,5 @@
 class RelationshipsController < ApplicationController
-  before_action :authenticate_user!, except: [:show]
+  before_action :authenticate_user!
 
   def index
     @relationships = current_user.relationships.all

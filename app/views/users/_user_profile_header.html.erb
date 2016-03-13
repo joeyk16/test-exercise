@@ -1,11 +1,11 @@
 <div class="container">
   <div class="user_header">
-    <%= image_tag @user.header_image.url %>
+    <%= image_tag user.header_image.url %>
     <div class="col-md-3 user_show_avatar">
-  		<%= image_tag @user.avatar.url(:large) %>
+  		<%= image_tag user.avatar.url(:large) %>
   	</div>
     <section class="user_info">
-      <h1> <%= @user.username %> </h1>
+      <h1> <%= user.username %> </h1>
     </section>
   </div>
 </div>
@@ -18,8 +18,8 @@
         <li><a href="#">Products</a></li>
       </ul>
       <div class="user_show_actions">
-        <%= link_to "#{Relationship.followers(@user).count} Followers",  user_relationships_path(user_id: @user) %>
-        <%= link_to "Follow", user_relationships_path(user_id: @user, relationship: {user_id: current_user, following_id: @user} ), method: :post %>
+        <%= link_to "#{Relationship.followers(user).count} Followers",  user_relationships_path(user_id: user) %>
+        <%= link_to "Follow", user_relationships_path(user_id: user, relationship: {user_id: current_user, following_id: user} ), method: :post %>
         <button type="button" class="btn btn-contact btn-md"> Message <span class="glyphicon glyphicon-envelope"></span></button>
       </div>
     </div><!-- /.navbar-collapse -->
