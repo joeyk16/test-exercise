@@ -2,15 +2,15 @@ class RelationshipsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @relationships = current_user.relationships.all
+    @relationships = Relationship.where(relationship_params)
   end
 
   def create
     @relationship = Relationship.new(relationship_params)
-    if @relationship.save
+    if @relationship.unique && @relationship.save
       flash[:success] = "Relationship was successfully created."
     else
-      flash[:damger] = "Relationship was not deleted"
+      flash[:damger] = "Relationship was not created."
     end
     redirect_to :back
   end

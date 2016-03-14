@@ -18,7 +18,8 @@
         <li><a href="#">Products</a></li>
       </ul>
       <div class="user_show_actions">
-        <%= link_to "#{Relationship.followers(user).count} Followers",  user_relationships_path(user_id: user) %>
+        <%= link_to "#{Relationship.following(user).count} Following",  user_relationships_path(relationship: { user_id: user }, user_id: user ) %>
+        <%= link_to "#{Relationship.followers(user).count} Followers",  user_relationships_path(relationship: { following_id: user }, user_id: user ) %>
         <%= link_to "Follow", user_relationships_path(user_id: user, relationship: {user_id: current_user, following_id: user} ), method: :post %>
         <button type="button" class="btn btn-contact btn-md"> Message <span class="glyphicon glyphicon-envelope"></span></button>
       </div>

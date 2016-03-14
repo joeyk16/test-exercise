@@ -10,11 +10,9 @@
           <tr>
             <td> <%= image_tag relationship.user.avatar(:thumb) %> <%= link_to "#{relationship.user.username}",  user_path(relationship.user) %> </td>
             <td>
-              <% if params[:user_id] == current_user.id.to_s %>
-                <button type="button" class="btn btn-default btn-sm"><%= link_to "Unfollow", user_relationship_path(user_id: params[:user_id], id: relationship.id), method: :delete %></button>
-              <% elsif relationship.user.id.to_s == current_user.id.to_s %>
-                <button type="button" class="btn btn-default btn-sm"><%= link_to "Unfollow", user_relationship_path(user_id: params[:user_id], id: relationship.id), method: :delete %></button>
-              <% else %>
+              <% if Relationship.find_by(following_id: relationship.user, user: current_user) %>
+                <%= link_to "Unfollow", user_relationship_path(user_id: params[:user_id], id: Relationship.find_by(following_id: relationship.user, user: current_user).id ), method: :delete %>
+              <% elsif !(relationship.user.id.to_s == current_user.id.to_s) %>
                 <%= link_to "Follow", user_relationships_path(user_id: params[:user_id], relationship: {user_id: current_user, following_id: relationship.user} ), method: :post %>
               <% end %>
             </td>
