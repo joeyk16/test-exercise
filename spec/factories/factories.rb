@@ -64,6 +64,10 @@ FactoryGirl.define do
     user
   end
 
+  factory :relationship do
+    following_id Faker::Number.number(2)
+  end
+
   factory :outfit do
     caption Faker::Lorem.word
     user_id Faker::Number.number(2)

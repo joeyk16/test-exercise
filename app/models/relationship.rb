@@ -1,6 +1,7 @@
 class Relationship < ActiveRecord::Base
   belongs_to :user
   before_save  :unique
+  validates :user, :following_id, presence: true
 
   def self.followers(user)
     Relationship.where(following_id: user)
