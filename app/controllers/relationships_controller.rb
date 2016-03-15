@@ -1,8 +1,12 @@
 class RelationshipsController < ApplicationController
   before_action :authenticate_user!
 
-  def index
-    @relationships = Relationship.where(relationship_params)
+  def following
+    @relationships = Relationship.where(user_id: params[:user_id])
+  end
+
+  def followers
+    @relationships = Relationship.where(following_id: params[:user_id])
   end
 
   def create
@@ -17,7 +21,7 @@ class RelationshipsController < ApplicationController
 
   def destroy
     @relationship = Relationship.find(params[:id])
-    if @relationship.destroy
+    if user_owns_relationship && @relationship.destroy
       flash[:success] = "Relationship was successfully deleted."
     else
       flash[:danger] = "Relationship was not deleted."
@@ -26,6 +30,10 @@ class RelationshipsController < ApplicationController
   end
 
   private
+
+  def user_owns_relationship
+    @relationship.user == current_user
+  end
 
   def relationship_params
     params.require(:relationship).permit(:following_id, :user_id)
