@@ -1,5 +1,5 @@
 class OutfitsController < ApplicationController
-  before_action :authenticate_user!, except: [:show]
+  before_action :authenticate_user!, except: [:show, :outfits]
   before_action :correct_user_edit, only: [:edit, :update, :destroy]
   before_action :set_outfit, only: [:show, :edit, :update, :destroy]
 

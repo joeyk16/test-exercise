@@ -8,17 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://fonts.googleapis.com/css?family=Raleway:500,900,200' rel='stylesheet' type='text/css'>
     <title>Yorlook</title>
-    <!--[if lt IE 9]>
-      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/r29/html5.min.js">
-      </script>
-    <![endif]-->
   </head>
   <body>
     <%= render 'layouts/header' %>
-    <%= yield :sliderhome %>
       <% flash.each do |message_type, message| %>
         <div class="alert alert-<%= message_type %>"><%= message %></div>
       <% end %>
+      <%= yield :sliderhome %>
       <%= yield %>
     <%= render 'layouts/footer' %>
   </body>
