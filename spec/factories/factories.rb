@@ -29,7 +29,7 @@ FactoryGirl.define do
   end
 
   factory :outfit_product do
-   user_id Faker::Number.number(2)
+   user
    product_id Faker::Number.number(2)
    outfit_id Faker::Number.number(2)
    approved true
@@ -37,7 +37,7 @@ FactoryGirl.define do
 
   factory :product do
     sequence(:title) { |n| "title#{n}" }
-    price Faker::Number.number(3)
+    price_in_cents Faker::Number.number(4)
     description Faker::Lorem.sentence
     user_id Faker::Number.number(2)
     category

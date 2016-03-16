@@ -34,7 +34,8 @@ RSpec.describe OutfitProductsController, type: :controller do
     build(:outfit_product,
       user_id: other_outfit.user_id,
       product_id: other_product.id,
-      outfit_id: other_outfit.id
+      outfit_id: other_outfit.id,
+      outfit_user_id: other_user.id
     )
   end
 
@@ -44,7 +45,8 @@ RSpec.describe OutfitProductsController, type: :controller do
       create(:outfit_product,
         product_id: create(:product).id,
         outfit_id: oufit_product_saved.id,
-        user_id: user.id
+        outfit_user_id: user.id,
+        user_id: other_user.id
       )
     end
   end
@@ -79,7 +81,8 @@ RSpec.describe OutfitProductsController, type: :controller do
           outfit: outfit_product_params,
           user_id: other_user.id,
           outfit_id: outfit_product_params["outfit_id"],
-          product_id: outfit_product_params["product_id"]
+          product_id: outfit_product_params["product_id"],
+          outfit_user_id: outfit_product_params["outfit_user_id"]
         }
       end
 
