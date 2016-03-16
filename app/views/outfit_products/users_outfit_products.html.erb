@@ -75,7 +75,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @outfit_products.where(approved: false).each do |outfit_product| %>
+      <% @outfit_products_not_approved.each do |outfit_product| %>
         <tr>
           <td>
             <%= image_tag Product.find(outfit_product.product_id).product_images[0].product_image.url(:thumb) %>
@@ -86,7 +86,6 @@
             <%= Outfit.find(outfit_product.outfit_id).caption %>
           </td>
           <td>
-            <button type="button" class="btn btn-default btn-sm"><%= link_to "Decline", user_decline_outfit_products_path(id: outfit_product.id) %></button>
             <button type="button" class="btn btn-default btn-sm"><%= link_to "Delete", user_outfit_products_path(id: outfit_product.id), method: :delete, data: { confirm: "You sure?" } %></button>
           </td>
         </tr>
