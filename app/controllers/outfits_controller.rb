@@ -8,7 +8,12 @@ class OutfitsController < ApplicationController
   end
 
   def outfits
-    @outfits = Outfit.all
+    if params[:tag]
+      @tag = params[:tag]
+      @outfits = Outfit.tagged_with(params[:tag])
+    else
+      @outfits = Outfit.all
+    end
   end
 
   def show

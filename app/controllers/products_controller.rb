@@ -4,7 +4,12 @@ class ProductsController < ApplicationController
   before_action :correct_user_edit, only: [:edit, :update, :destroy]
 
   def index
-    @products = Product.all
+    if params[:tag]
+      @tag = params[:tag]
+      @products = Product.tagged_with(params[:tag])
+    else
+      @products = Product.all
+    end
   end
 
   def new

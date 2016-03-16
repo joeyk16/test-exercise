@@ -49,5 +49,6 @@ Rails.application.routes.draw do
 
   resources :sizes
 
-  get 'tags/:tag', to: 'categories#show', as: :tag
+  get 'tags/:tag', to: 'products#index', as: :tag
+  get 'outfit_tags/:tag' => 'outfits#outfits', as: :outfit_tag
 end
