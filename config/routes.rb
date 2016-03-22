@@ -13,8 +13,10 @@ Rails.application.routes.draw do
       post 'outfit_products'  => 'outfit_products#create'
       get 'outfit_products'  => 'outfit_products#outfit_products'
     end
-    resources :addresses, only: [:new, :create, :edit, :update, :destroy]
+    resources :addresses
+    resources :paypals, except: [:index]
     resources :shipping_methods, only: [:new, :create, :edit, :update, :destroy]
+    resources :carts, only: [:create, :index, :show, :destroy]
     get 'users_outfit_products'  => 'outfit_products#users_outfit_products'
     delete 'outfit_products'  => 'outfit_products#destroy'
     get 'approve_outfit_products' => 'outfit_products#approve'
@@ -32,19 +34,16 @@ Rails.application.routes.draw do
   get 'login' => 'sessions#new'
   post 'login' => 'sessions#create'
   delete 'logout' => 'sessions#destroy'
-  resources :product_images, only: [:destroy]
 
-  resources :account_activations, only: [:edit]
-  resources :password_resets, only: [:new, :create, :edit, :update]
+  resources :product_images, only: [:destroy]
   resources :product_sizes, only: [:create]
+  resources :sizes
 
   resources :products do
     resources :photos
   end
 
   get 'products_new' => 'products#new'
-
-  resources :sizes
 
   get 'tags/:tag', to: 'categories#show', as: :tag
 end

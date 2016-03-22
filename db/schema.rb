@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160212234110) do
+ActiveRecord::Schema.define(version: 20160223105329) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -43,6 +43,23 @@ ActiveRecord::Schema.define(version: 20160212234110) do
   end
 
   add_index "addresses", ["user_id"], name: "index_addresses_on_user_id"
+
+  create_table "carts", force: :cascade do |t|
+    t.integer  "quantity"
+    t.integer  "product_id"
+    t.integer  "outfit_id"
+    t.integer  "size_id"
+    t.integer  "user_id"
+    t.integer  "shipping_method_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "carts", ["outfit_id"], name: "index_carts_on_outfit_id"
+  add_index "carts", ["product_id"], name: "index_carts_on_product_id"
+  add_index "carts", ["shipping_method_id"], name: "index_carts_on_shipping_method_id"
+  add_index "carts", ["size_id"], name: "index_carts_on_size_id"
+  add_index "carts", ["user_id"], name: "index_carts_on_user_id"
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
@@ -94,6 +111,16 @@ ActiveRecord::Schema.define(version: 20160212234110) do
 
   add_index "outfits", ["user_id"], name: "index_outfits_on_user_id"
 
+  create_table "paypals", force: :cascade do |t|
+    t.string   "email"
+    t.integer  "user_id"
+    t.boolean  "default"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "paypals", ["user_id"], name: "index_paypals_on_user_id"
+
   create_table "product_images", force: :cascade do |t|
     t.integer  "product_id"
     t.string   "product_image_file_name"
@@ -116,13 +143,13 @@ ActiveRecord::Schema.define(version: 20160212234110) do
   create_table "products", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
-    t.datetime "created_at",                                   null: false
-    t.datetime "updated_at",                                   null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
     t.integer  "user_id"
     t.integer  "category_id"
-    t.decimal  "price",                precision: 8, scale: 2
     t.text     "size_description"
     t.text     "shipping_description"
+    t.integer  "price_in_cents"
   end
 
   add_index "products", ["user_id", "created_at"], name: "index_products_on_user_id_and_created_at"

@@ -1,0 +1,10 @@
+<%= simple_form_for :cart, url: user_carts_path(current_user), method: :post do |f|%>
+  <%= f.hidden_field :user_id, value: current_user.id %>
+  <%= f.hidden_field :product_id, value: product.id %>
+  <%= f.hidden_field :outfit_id, value: params[:outfit_id] %>
+  <%= f.hidden_field :price, value: product.price %>
+  <%= f.input :quantity, collection: 1..10, selected: 1 %>
+  <%= f.input :size_id, collection: sizes %>
+  <%= f.input :shipping_method_id, collection: shipping, :label_method => lambda { |shipping| "$#{shipping.price} #{shipping.name}" } %>
+  <%= f.button :submit, value: "Buy Now" %>
+<% end %>

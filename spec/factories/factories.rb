@@ -37,7 +37,7 @@ FactoryGirl.define do
 
   factory :product do
     sequence(:title) { |n| "title#{n}" }
-    price Faker::Number.number(3)
+    price_in_cents Faker::Number.number(4)
     description Faker::Lorem.sentence
     user_id Faker::Number.number(2)
     category
@@ -61,6 +61,12 @@ FactoryGirl.define do
     state Faker::Address.state
     postcode Faker::Address.postcode
     country Faker::Address.country
+    user
+  end
+
+  factory :paypal do
+    default true
+    email
     user
   end
 

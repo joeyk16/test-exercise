@@ -2,6 +2,10 @@ require 'rails_helper'
 
 RSpec.describe OutfitsController, type: :controller do
   let!(:user) { create(:user, admin: false) }
+  let!(:user2) { create(:user, admin: false) }
+  let!(:user_no_pay_pal) { create(:user, admin: false) }
+  let!(:paypal) { create(:paypal, user: user) }
+  let!(:paypal2) { create(:paypal, user: user2) }
   let!(:outfit) { create(:outfit) }
   let!(:outfit_with_user) { create(:outfit, user_id: user.id) }
 
@@ -51,6 +55,12 @@ RSpec.describe OutfitsController, type: :controller do
       get :new, { user_id: user }, { }
       expect(response).to redirect_to(new_user_session_path)
     end
+
+    it "user with no paypal acocunt redirected to user_paypals_new" do
+      sign_in(user_no_pay_pal)
+      get :new, { user_id: user }
+      expect(response).to redirect_to(new_user_paypal_path(user_no_pay_pal))
+    end
   end
 
   describe "POST #create" do
@@ -64,6 +74,12 @@ RSpec.describe OutfitsController, type: :controller do
       post :create, { user_id: user }, { }
       expect(response).to redirect_to(new_user_session_path)
     end
+
+    it "user with no paypal acocunt redirected to user_paypals_new" do
+      sign_in(user_no_pay_pal)
+      post :create, { user_id: user }
+      expect(response).to redirect_to(new_user_paypal_path(user_no_pay_pal))
+    end
   end
 
   describe "GET #edit" do
@@ -73,6 +89,12 @@ RSpec.describe OutfitsController, type: :controller do
       expect(response).to render_template(:edit)
       expect(response).to have_http_status(:success)
       expect(assigns(:outfit)).to eq(outfit_with_user)
+    end
+
+    it "user you can't edit another users outfit" do
+      sign_in(user2)
+      get :edit, { id: outfit_with_user.id, user_id: user.id }
+      expect(response).to redirect_to(root_path)
     end
 
     it "vistor redirects to login path" do
@@ -89,9 +111,21 @@ RSpec.describe OutfitsController, type: :controller do
       expect(assigns(:outfit)).to eq(outfit_with_user)
     end
 
+    it "user you can't update another users outfit" do
+      sign_in(user2)
+      patch :update, { id: outfit_with_user.id, user_id: user.id, outfit: outfit_params }
+      expect(response).to redirect_to(root_path)
+    end
+
     it "vistor redirects to login path" do
       patch :update, { id: outfit_with_user.id, user_id: user.id, outfit: outfit_params }, {}
       expect(response).to redirect_to(new_user_session_path)
+    end
+
+    it "user with no paypal acocunt redirected to user_paypals_new" do
+      sign_in(user_no_pay_pal)
+      patch :update, { id: outfit_with_user.id, user_id: user.id, outfit: outfit_params }
+      expect(response).to redirect_to(new_user_paypal_path(user_no_pay_pal))
     end
   end
 
@@ -103,9 +137,21 @@ RSpec.describe OutfitsController, type: :controller do
       expect(assigns(:outfit)).to eq(outfit_with_user)
     end
 
+    it "user you can't delete another users outfit" do
+      sign_in(user2)
+      delete :destroy, { id: outfit_with_user.id, user_id: user.id }
+      expect(response).to redirect_to(root_path)
+    end
+
     it "vistor redirects to login path" do
       delete :destroy, { id: outfit_with_user.id, user_id: user.id }, { }
       expect(response).to redirect_to(new_user_session_path)
+    end
+
+    it "user with no paypal acocunt redirected to user_paypals_new" do
+      sign_in(user_no_pay_pal)
+      delete :destroy, { id: outfit_with_user.id, user_id: user.id }
+      expect(response).to redirect_to(new_user_paypal_path(user_no_pay_pal))
     end
   end
 end
