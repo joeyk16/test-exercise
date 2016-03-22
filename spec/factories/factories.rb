@@ -35,6 +35,11 @@ FactoryGirl.define do
    approved true
   end
 
+  factory :like do
+    user
+    outfit
+  end
+
   factory :product do
     sequence(:title) { |n| "title#{n}" }
     price_in_cents Faker::Number.number(4)

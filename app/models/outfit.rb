@@ -7,6 +7,7 @@ class Outfit < ActiveRecord::Base
   has_many :approved_products, through: :approved_outfit_products,
            class_name: 'Product'
   has_many :approved_products, through: :approved_outfit_products, source: :product
+  has_many :likes
 
   validates :caption, presence: true, length: { maximum: 45}
 
