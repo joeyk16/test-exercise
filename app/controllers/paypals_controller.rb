@@ -2,7 +2,6 @@ class PaypalsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_paypals,   only: [:edit, :update, :destroy]
   before_action :correct_user, only: [:edit, :update, :destroy]
-  before_action :user_has_one_default_paypal_account, only:[:create, :update]
 
   def new
     @paypal = Paypal.new
@@ -49,13 +48,6 @@ class PaypalsController < ApplicationController
       :user_id,
       :default
     )
-  end
-
-  def user_has_one_default_paypal_account
-    paypal = Paypal.find_by(user_id: current_user, default: true)
-    if (params[:paypal][:default] == "1") && paypal
-      paypal.update_attributes(default: false)
-    end
   end
 
   def correct_user
