@@ -26,7 +26,7 @@ class LikesController < ApplicationController
     params.require(:likes).permit(
       :outfit_id,
       :user_id
-      )
+    )
   end
 
   def one_like_per_outfit
