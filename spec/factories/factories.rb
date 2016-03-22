@@ -29,7 +29,7 @@ FactoryGirl.define do
   end
 
   factory :outfit_product do
-   user_id Faker::Number.number(2)
+   user
    product_id Faker::Number.number(2)
    outfit_id Faker::Number.number(2)
    approved true
@@ -67,6 +67,10 @@ FactoryGirl.define do
     postcode Faker::Address.postcode
     country Faker::Address.country
     user
+  end
+
+  factory :relationship do
+    following_id Faker::Number.number(2)
   end
 
   factory :paypal do

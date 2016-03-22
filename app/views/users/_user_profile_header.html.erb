@@ -1,25 +1,43 @@
 <div class="container">
   <div class="user_header">
-    <%= image_tag @user.header_image.url %>
+
+    <%= image_tag user.header_image.url %>
     <div class="col-md-3 user_show_avatar">
-  		<%= image_tag @user.avatar.url(:large) %>
+  		<%= image_tag user.avatar.url(:large) %>
   	</div>
+
     <section class="user_info">
-      <h1><%= @user.username %> </h1>
+      <h1> <%= user.username %> </h1>
     </section>
-  </div>
+ </div>
 </div>
+
 <nav class="navbar navbar-usershow container">
   <div class="container-fluid-user-show">
-    <!-- Collect the nav links, forms, and other content for toggling -->
+
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
       <ul class="nav navbar-nav">
         <li><a href="#">Outfits</a></li>
         <li><a href="#">Products</a></li>
       </ul>
+
       <div class="user_show_actions">
+
+        <%= link_to "#{Relationship.following(user).count} Following", user_following_path(user_id: user ) %>
+
+        <%= link_to "#{Relationship.followers(user).count} Followers", user_followers_path(user_id: user ) %>
+
+        <% if Relationship.find_by(following_id: user.id, user: current_user) %>
+          <%= link_to "Unfollow", user_relationship_path(user_id: user, id: Relationship.find_by(following_id: user.id, user: current_user).id ), method: :delete %>
+        <% else %>
+          <%= link_to "Follow", user_relationships_path(user_id: user,
+            relationship: {user_id: current_user, following_id: user} ), method: :post %>
+        <% end %>
+
         <button type="button" class="btn btn-contact btn-md"> Message <span class="glyphicon glyphicon-envelope"></span></button>
       </div>
+
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>

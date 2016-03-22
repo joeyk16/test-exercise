@@ -1,4 +1,8 @@
-<h1>Outfits</h1>
+<% if @tag %>
+  <h1>Outfits with "<%= @tag %>" tag </h1>
+<% else %>
+  <h1>Outfits</h1>
+<% end %>
 
 <div id="items" class="transitions-enabled">
   <% @outfits.each do |outfit| %>

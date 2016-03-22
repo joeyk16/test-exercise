@@ -1,7 +1,6 @@
 class OutfitsController < ApplicationController
-  before_action :authenticate_user!, except: [:show]
+  before_action :authenticate_user!, except: [:show, :outfits]
   before_action :set_outfit, only: [:show, :edit, :update, :destroy]
-  before_action :user_has_paypal_account?, except: [:show, :index]
   before_action :correct_user?, only: [:edit, :update, :destroy]
 
   def index
@@ -9,7 +8,12 @@ class OutfitsController < ApplicationController
   end
 
   def outfits
-    @outfits = Outfit.all
+    if params[:tag]
+      @tag = params[:tag]
+      @outfits = Outfit.tagged_with(params[:tag])
+    else
+      @outfits = Outfit.all
+    end
   end
 
   def show

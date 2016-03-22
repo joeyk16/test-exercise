@@ -19,10 +19,10 @@ class Product < ActiveRecord::Base
    allow_destroy: true,
    reject_if: ->(attrs) { attrs[:quantity].to_i.zero? }
 
-   def sizes
+  def sizes
     size_ids = product_sizes.map{ |ps| ps.size_id }
     Size.where(id: size_ids)
-   end
+  end
 
   def product_shipping_methods
     user.shipping_methods

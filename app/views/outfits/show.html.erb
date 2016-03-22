@@ -14,7 +14,7 @@
 
     <p>
       <%= @outfit.caption %>
-      <p> Tags: <%= raw @outfit.tag_list.map { |t| link_to t, tag_path(t) }.join(', ') %> </p>
+      <p> Tags: <%= raw @outfit.tag_list.map { |t| link_to t, outfit_tag_path(t) }.join(', ') %> </p>
     </p>
   </div>
 
@@ -25,7 +25,7 @@
     </div>
   </div>
   <h5>
-    <%= link_to "Add Products", user_outfit_add_products_path(outfit_id: @outfit.id, user_id: @outfit.user_id) %>
+    <%= link_to "Add Products", user_outfit_add_products_path(outfit_id: @outfit.id, user_id: current_user, outfit_user_id: @outfit.user.id) %>
   </h5>
   <h5>
     <%=

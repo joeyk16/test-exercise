@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   has_many :outfit_products
   has_many :addresses
   has_many :shipping_methods
+  has_many :relationships
   has_many :carts
   has_many :paypals
 

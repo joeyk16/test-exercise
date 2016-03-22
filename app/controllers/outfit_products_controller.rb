@@ -18,7 +18,8 @@ class OutfitProductsController < ApplicationController
   end
 
   def users_outfit_products
-    @outfit_products = current_user.outfit_products
+    @outfit_products = OutfitProduct.where(outfit_user_id: current_user.id)
+    @outfit_products_not_approved = OutfitProduct.where(approved: false, user_id: current_user.id)
   end
 
   def outfit_products
@@ -73,11 +74,11 @@ class OutfitProductsController < ApplicationController
   end
 
   def outfit_product_params
-    params.permit(:outfit_id, :product_id, :user_id)
+    params.permit(:outfit_id, :product_id, :user_id, :outfit_user_id)
   end
 
   def user_owns_outfit
-    Outfit.find(params[:outfit_id]).user_id == current_user.id
+    params[:user_id] == params[:outfit_user_id]
   end
 
   def outfit_saved_instantly_approved

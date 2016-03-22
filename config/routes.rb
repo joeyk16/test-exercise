@@ -13,7 +13,10 @@ Rails.application.routes.draw do
       post 'outfit_products'  => 'outfit_products#create'
       get 'outfit_products'  => 'outfit_products#outfit_products'
     end
-    resources :addresses
+    resources :relationships, only: [:create, :destroy]
+    get 'followers' => 'relationships#followers'
+    get 'following' => 'relationships#following'
+    resources :addresses, only: [:new, :create, :edit, :update, :destroy]
     resources :paypals, except: [:index]
     resources :shipping_methods, only: [:new, :create, :edit, :update, :destroy]
     resources :carts, only: [:create, :index, :show, :destroy]
@@ -46,5 +49,8 @@ Rails.application.routes.draw do
 
   get 'products_new' => 'products#new'
 
-  get 'tags/:tag', to: 'categories#show', as: :tag
+  resources :sizes
+
+  get 'tags/:tag', to: 'products#index', as: :tag
+  get 'outfit_tags/:tag' => 'outfits#outfits', as: :outfit_tag
 end
