@@ -7,6 +7,14 @@ class ApplicationController < ActionController::Base
     redirect_to(root_url) unless current_user.try(:admin?)
   end
 
+  def user_has_paypal_account?
+    if current_user.paypals.any?
+    else
+      redirect_to new_user_paypal_path(current_user)
+      flash[:danger] = "You must add a Paypal Account before you can do that"
+    end
+  end
+
   protected
 
   def configure_permitted_parameters

@@ -35,6 +35,11 @@ FactoryGirl.define do
    approved true
   end
 
+  factory :like do
+    user
+    outfit
+  end
+
   factory :product do
     sequence(:title) { |n| "title#{n}" }
     price_in_cents Faker::Number.number(4)
@@ -66,6 +71,12 @@ FactoryGirl.define do
 
   factory :relationship do
     following_id Faker::Number.number(2)
+  end
+
+  factory :paypal do
+    default true
+    email
+    user
   end
 
   factory :outfit do

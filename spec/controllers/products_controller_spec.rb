@@ -3,6 +3,9 @@ require "rails_helper"
 RSpec.describe ProductsController, type: :controller do
   let!(:user) { create(:user, password: "Password456", admin: false) }
   let!(:user2) { create(:user, admin: false) }
+  let!(:user_no_pay_pal) { create(:user, admin: false) }
+  let!(:paypal) { create(:paypal, user: user) }
+  let!(:paypal2) { create(:paypal, user: user2) }
   let!(:product) { create(:product, user_id: user.id) }
   let!(:product_02) { create(:product, user_id: user2.id) }
   let!(:admin) { create(:user, password: "Password123", admin: true) }
@@ -35,7 +38,7 @@ RSpec.describe ProductsController, type: :controller do
   describe "GET #new" do
     it "renders template" do
       sign_in(user)
-      get :new, {}, { user_id: user.id }
+      get :new
       expect(response).to render_template(:new)
       expect(response).to have_http_status(:success)
     end
@@ -43,6 +46,12 @@ RSpec.describe ProductsController, type: :controller do
     it "visitor redirected to root_url" do
       get :new
       expect(response).to redirect_to(new_user_session_path)
+    end
+
+    it "user with no paypal acocunt redirected to user_paypals_new" do
+      sign_in(user_no_pay_pal)
+      get :new
+      expect(response).to redirect_to(new_user_paypal_path(user_no_pay_pal))
     end
   end
 
@@ -56,6 +65,12 @@ RSpec.describe ProductsController, type: :controller do
     it "redirects visitor" do
       post :create, { product: product_params }
       expect(response).to redirect_to(new_user_session_path)
+    end
+
+    it "user with no paypal acocunt redirected to user_paypals_new" do
+      sign_in(user_no_pay_pal)
+      post :create, { product: product_params }
+      expect(response).to redirect_to(new_user_paypal_path(user_no_pay_pal))
     end
   end
 
@@ -73,6 +88,17 @@ RSpec.describe ProductsController, type: :controller do
       get :edit, { id: product.id }
       expect(response).to redirect_to(root_path)
     end
+
+    it "redirects visitor" do
+      get :edit, { id: product.id }
+      expect(response).to redirect_to(new_user_session_path)
+    end
+
+    it "user with no paypal acocunt redirected to user_paypals_new" do
+      sign_in(user_no_pay_pal)
+      get :edit, { id: product.id }
+      expect(response).to redirect_to(new_user_paypal_path(user_no_pay_pal))
+    end
   end
 
   describe "POST #update" do
@@ -82,13 +108,43 @@ RSpec.describe ProductsController, type: :controller do
       expect(response).to redirect_to(assigns(:product))
       expect(assigns(:product)).to eq(product)
     end
+
+    it "redirects visitor" do
+      patch :update, { id: product.id, product: product_params }
+      expect(response).to redirect_to(new_user_session_path)
+    end
+
+    it "user can't update another user's product" do
+      sign_in(user2)
+      patch :update, { id: product.id, product: product_params }
+      expect(response).to redirect_to(root_path)
+    end
+
+    it "user with no paypal acocunt redirected to user_paypals_new" do
+      sign_in(user_no_pay_pal)
+      patch :update, { id: product.id, product: product_params }
+      expect(response).to redirect_to(new_user_paypal_path(user_no_pay_pal))
+    end
   end
 
   describe "DELETE #destroy" do
     it "as user" do
+      product_count = Product.all.count
       sign_in(user)
       delete :destroy, { id: product.id }
+      expect(Product.all.count).to eq(product_count - 1)
       expect(response).to redirect_to(user_products_path)
+    end
+
+    it "user you can't delete another users product" do
+      sign_in(user2)
+      delete :destroy, { id: product.id }
+      expect(response).to redirect_to(root_path)
+    end
+
+    it "redirects visitor" do
+      delete :destroy, { id: product.id }
+      expect(response).to redirect_to(new_user_session_path)
     end
 
     it "as unauthorised user" do

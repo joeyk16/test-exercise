@@ -55,32 +55,17 @@
     <!-- right column -->
     <div class="col-lg-6 col-md-6 col-sm-5">
       <div class = "itemtitle"><%= @product.title %></div>
+
       <div class = "price">$<%= @product.price %></div>
+
       <% if current_user == @product.user %>
         <%= link_to "Edit Products", edit_product_path(@product) %>
       <% end %>
+
       <div class="productFilter productFilterLook2">
-        <div class="filterBox">
-          <select>
-            <option value="strawberries" selected>Size</option>
-          </select>
-        </div>
-        <div class="filterBox">
-          <select>
-            <option value="strawberries" selected>Quantity</option>
-          </select>
-        </div>
-        <div class="filterBox">
-          <select>
-            <option value="strawberries" selected>Shipping</option>
-          </select>
-        </div>
+        <%= render 'carts/form', order: @cart, product: @product, shipping: @shipping, sizes: @sizes %>
       </div>
-      <div class="cart-actions">
-        <div class="button"><button type="button" class="btn btn-addtocart btn-sm">Add To Cart</button></div>
-        <div class="button"><button type="button" class="btn btn-wishlist btn-sm">Add to Wishlist</button> </div>
-        <div class="button"><button type="button" class="btn btn-contact btn-sm">Message User</button> </div>
-      </div>
+
       <div class="sellerinfoitemshow">
         <%= image_tag @product.user.avatar.url(:thumb) %>
         <h5><%= link_to "#{@product.user.username}", user_path(@product.user) %></h5>
@@ -92,7 +77,9 @@
           </p>
         </div>
       </div>
+
   		<p> Tags: <%= raw @product.tag_list.map { |t| link_to t, tag_path(t) }.join(', ') %> </p>
+
       <div class="product-tab w100 clearfix">
         <ul class="nav nav-tabs">
           <li class="active"><a href="#details" data-toggle="tab">Item Details</a></li>

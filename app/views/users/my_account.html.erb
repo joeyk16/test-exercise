@@ -45,4 +45,10 @@
   <h3>Shipping Method</h3>
   <%= link_to "Create Shipping Method", new_user_shipping_method_path %>
   <%= render 'shipping_methods/shipping_methods_list', user: @user %>
+
+  <br>
+
+  <h3>Payment Method</h3>
+  <h5>Paypal</h5>
+  <%= render 'paypals/paypal_list', user: @user %>
 </div>

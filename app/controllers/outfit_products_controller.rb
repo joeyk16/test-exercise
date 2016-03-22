@@ -1,21 +1,16 @@
 class OutfitProductsController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_outfit, only: [:destroy, :approve, :decline]
   before_action :outfit_product_exists, only: [:create]
   before_action :outfit_products_limit, only: [:create]
 
   def create
     @outfit_product = OutfitProduct.new(outfit_product_params)
-    outfit_path = user_outfit_path(id: @outfit_product.outfit_id, user_id: @outfit_product.product.user_id)
     case user_owns_outfit
     when true
-      @outfit_product.save
-      @outfit_product.update_attributes(approved: true)
-      redirect_to outfit_path
-      flash[:success] = "Successfully Added Product"
+      outfit_saved_instantly_approved
     when false
-      @outfit_product.save
-      redirect_to outfit_path
-      flash[:info] = "Please wait for outfit owner to approve your product"
+      outfit_saved_waiting_approval
     else
       redirect_to outfit_path
       flash[:danger] = "Sorry you can't add your product"
@@ -33,21 +28,18 @@ class OutfitProductsController < ApplicationController
   end
 
   def destroy
-    @outfit_product = OutfitProduct.find(params[:id])
     @outfit_product.destroy
     redirect_to :back
     flash[:success] = "Successfully destroyed product for outfit"
   end
 
   def approve
-    @outfit_product = OutfitProduct.find(params[:id])
     @outfit_product.update_attributes(approved: true)
     redirect_to :back
     flash[:success] = "Successfully approved product for outfit"
   end
 
   def decline
-    @outfit_product = OutfitProduct.find(params[:id])
     @outfit_product.update_attributes(approved: false)
     redirect_to :back
     flash[:success] = "Successfully declined product for outfit"
@@ -58,6 +50,10 @@ class OutfitProductsController < ApplicationController
   end
 
   private
+
+  def set_outfit
+    @outfit_product = OutfitProduct.find(params[:id])
+  end
 
   def outfit_product_exists
     outfit_product = OutfitProduct.find_by(outfit_id: params[:outfit_id], product_id: params[:product_id])
@@ -83,5 +79,22 @@ class OutfitProductsController < ApplicationController
 
   def user_owns_outfit
     params[:user_id] == params[:outfit_user_id]
+  end
+
+  def outfit_saved_instantly_approved
+    @outfit_product.save
+    @outfit_product.update_attributes(approved: true)
+    redirect_to outfit_path
+    flash[:success] = "Successfully Added Product"
+  end
+
+  def outfit_saved_waiting_approval
+    @outfit_product.save
+    redirect_to outfit_path
+    flash[:info] = "Please wait for outfit owner to approve your product"
+  end
+
+  def outfit_path
+    user_outfit_path(id: @outfit_product.outfit_id, user_id: @outfit_product.product.user_id)
   end
 end

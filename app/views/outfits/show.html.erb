@@ -4,11 +4,20 @@
     <div class="outfit_image_show">
       <%= image_tag @outfit.outfit_image.url%>
     </div>
+
+    <%= @outfit.likes.count %>
+    <% if Like.find_by(outfit: @outfit, user: current_user) %>
+      <%= link_to "Unlike", like_path(@outfit), method: :delete %>
+    <% else %>
+      <%= link_to "Like", likes_path(likes: { outfit_id: @outfit.id, user_id: current_user.id }), method: :post %>
+    <% end %>
+
     <p>
       <%= @outfit.caption %>
       <p> Tags: <%= raw @outfit.tag_list.map { |t| link_to t, outfit_tag_path(t) }.join(', ') %> </p>
     </p>
   </div>
+
   <div class="col-lg-6 col-md-6 col-sm-5">
     <div class="seller_info_outfit">
       <%= image_tag @outfit.user.avatar.url(:thumb) %>
@@ -28,7 +37,7 @@
   <% @outfit.approved_products.each do |product| %>
     <div class="box panel panel-default">
       <div class="square_item_image">
-        <%= link_to image_tag(product.product_images[0].product_image.url(:medium)), product_path(product, outfit_user_id: @outfit.user) %>
+        <%= link_to image_tag(product.product_images[0].product_image.url(:medium)), product_path(product, outfit_id: @outfit.id) %>
       </div>
       <div class ="panel-body">
         <div class = "itemlistretailer">

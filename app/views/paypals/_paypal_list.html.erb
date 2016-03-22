@@ -1,0 +1,25 @@
+<% if user.paypals.any? %>
+  <%= link_to "Add Paypal Account", new_user_paypal_path(current_user) %>
+  <table>
+    <thead>
+      <tr>
+        <th>Account</th>
+        <th>Default</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% user.paypals.each do |paypal| %>
+        <tr>
+          <td><%= paypal.email %></td>
+          <td><%= paypal.default %></td>
+          <td><%= link_to "Edit", edit_user_paypal_path(current_user, paypal) %><%= link_to "Destroy", user_paypal_path(current_user, paypal), method: :delete %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <%= link_to "Add Your Paypal Account", new_user_paypal_path(current_user) %>
+<% end %>
+
+

@@ -1,0 +1,4 @@
+<h1>Add Your Paypal Email</h1>
+<%= simple_form_for @paypal, url: user_paypals_path, method: :post do |f| %>
+<%= render 'form', f: f %>
+<% end %>

@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :edit, :update, :destroy, :create]
-  before_action :set_product, only: [:edit, :show, :update]
-  before_action :correct_user_edit, only: [:edit, :update, :destroy]
+  before_action :authenticate_user!, except: [:show, :index]
+  before_action :set_product, only: [:edit, :show, :update, :destroy]
+  before_action :correct_user?, only: [:edit, :update, :destroy]
 
   def index
     if params[:tag]
@@ -44,6 +44,9 @@ class ProductsController < ApplicationController
   end
 
   def show
+    @cart = Cart.new
+    @sizes = @product.sizes
+    @shipping = @product.product_shipping_methods
   end
 
   def update
@@ -57,7 +60,7 @@ class ProductsController < ApplicationController
 
   def create
     @product = Product.new product_params
-    @product.user_id = current_user.id
+    @product.user = current_user
     @root_categories = Category.preload(:sizes).order(:name)
 
     if @product.save
@@ -84,7 +87,7 @@ class ProductsController < ApplicationController
   def product_params
      params.require(:product).permit(
       :title,
-      :price,
+      :price_in_cents,
       :description,
       :tag_list,
       :category_id,
@@ -95,10 +98,7 @@ class ProductsController < ApplicationController
     )
   end
 
-  def correct_user_edit
-    if @product = current_user.products.find_by(id: params[:id])
-    else
-      redirect_to root_path if @product.nil?
-    end
+  def correct_user?
+    redirect_to root_path unless @product.user == current_user
   end
 end

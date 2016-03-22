@@ -1,7 +1,7 @@
 class OutfitsController < ApplicationController
   before_action :authenticate_user!, except: [:show, :outfits]
-  before_action :correct_user_edit, only: [:edit, :update, :destroy]
   before_action :set_outfit, only: [:show, :edit, :update, :destroy]
+  before_action :correct_user?, only: [:edit, :update, :destroy]
 
   def index
     @outfits = current_user.outfits.all
@@ -38,8 +38,7 @@ class OutfitsController < ApplicationController
 
   def update
     if @outfit.update(outfit_params)
-      redirect_to user_outfit_path(@outfit, user_id: current_user), notice: 'Outfit was successfully updated.'
-    else
+      redirect_to user_outfit_path(@outfit, user_id: current_user), notice: 'Outfit was successfully updated.'else
       render :edit
     end
   end
@@ -58,10 +57,7 @@ class OutfitsController < ApplicationController
       params.require(:outfit).permit(:caption, :outfit_image, :user_id, :tag_list)
     end
 
-  def correct_user_edit
-    if @outfit = current_user.outfits.find_by(id: params[:id])
-    else
-      redirect_to root_url if @outfit.nil?
-    end
+  def correct_user?
+    redirect_to root_path unless @outfit.user == current_user
   end
 end

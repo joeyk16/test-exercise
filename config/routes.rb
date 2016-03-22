@@ -17,7 +17,9 @@ Rails.application.routes.draw do
     get 'followers' => 'relationships#followers'
     get 'following' => 'relationships#following'
     resources :addresses, only: [:new, :create, :edit, :update, :destroy]
+    resources :paypals, except: [:index]
     resources :shipping_methods, only: [:new, :create, :edit, :update, :destroy]
+    resources :carts, only: [:create, :index, :show, :destroy]
     get 'users_outfit_products'  => 'outfit_products#users_outfit_products'
     delete 'outfit_products'  => 'outfit_products#destroy'
     get 'approve_outfit_products' => 'outfit_products#approve'
@@ -35,11 +37,11 @@ Rails.application.routes.draw do
   get 'login' => 'sessions#new'
   post 'login' => 'sessions#create'
   delete 'logout' => 'sessions#destroy'
-  resources :product_images, only: [:destroy]
 
-  resources :account_activations, only: [:edit]
-  resources :password_resets, only: [:new, :create, :edit, :update]
+  resources :product_images, only: [:destroy]
   resources :product_sizes, only: [:create]
+  resources :sizes
+  resources :likes, only: [:create, :destroy]
 
   resources :products do
     resources :photos
@@ -47,8 +49,12 @@ Rails.application.routes.draw do
 
   get 'products_new' => 'products#new'
 
+<<<<<<< HEAD
   resources :sizes
 
   get 'tags/:tag', to: 'products#index', as: :tag
   get 'outfit_tags/:tag' => 'outfits#outfits', as: :outfit_tag
+=======
+  get 'tags/:tag', to: 'categories#show', as: :tag
+>>>>>>> master
 end

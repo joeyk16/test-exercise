@@ -1,6 +1,11 @@
 class AddressesController < ApplicationController
   before_action :set_address,   only: [:edit, :update, :destroy]
   before_action :authenticate_user!
+  before_action :correct_user, only: [:edit, :update, :destroy]
+
+  def index
+    @addresses = Address.where(user: current_user)
+  end
 
   def new
     @address = Address.new
@@ -53,5 +58,9 @@ class AddressesController < ApplicationController
       :country,
       :user_id
     )
+  end
+
+  def correct_user
+    redirect_to root_path unless current_user == @address.user
   end
 end
