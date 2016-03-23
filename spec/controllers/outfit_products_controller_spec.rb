@@ -14,7 +14,7 @@ RSpec.describe OutfitProductsController, type: :controller do
   let(:product) { create(:product, user_id: user.id) }
   let(:other_product) { create(:product, user_id: other_user.id) }
 
-  let!(:oufit_product_saved) do
+  let(:oufit_product_saved) do
     create(:outfit_product,
       user_id: user.id,
       product_id: product.id,
@@ -40,7 +40,6 @@ RSpec.describe OutfitProductsController, type: :controller do
   end
 
   let!(:outfit_products) do
-    [oufit_product_saved] +
     6.times.map do
       create(:outfit_product,
         product_id: create(:product).id,
