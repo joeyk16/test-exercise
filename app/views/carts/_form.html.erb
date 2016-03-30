@@ -6,5 +6,5 @@
   <%= f.input :quantity, collection: 1..10, selected: 1 %>
   <%= f.input :size_id, collection: sizes %>
   <%= f.input :shipping_method_id, collection: shipping, :label_method => lambda { |shipping| "$#{shipping.price} #{shipping.name}" } %>
-  <%= f.button :submit, value: "Buy Now" %>
+  <%= f.button :submit, value: "Add To Cart" %>
 <% end %>

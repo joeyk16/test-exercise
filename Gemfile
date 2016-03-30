@@ -3,7 +3,6 @@ ruby '2.1.2'
 
 gem 'rails', '4.2.0'
 
-
 gem 'sass-rails', '~> 5.0'
 gem 'devise'
 gem 'uglifier', '>= 1.3.0'
@@ -11,6 +10,7 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
 gem 'turbolinks'
 gem 'pry'
+gem 'aasm'
 gem 'jquery-turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
@@ -33,6 +33,7 @@ gem "cocoon"
 gem "nested_form"
 gem 'aws-sdk', '< 2.0'
 gem 'country_select'
+gem 'paypal-sdk-rest'
 
 group :development, :test do
   gem 'web-console', '~> 2.0'
@@ -40,10 +41,6 @@ group :development, :test do
   gem 'sqlite3'
   gem 'quiet_assets'
 end
-
-# group :test, :production do TODO: If app works delete
-#   gem 'pg'
-# end
 
 group :test do
   gem 'shoulda-matchers'

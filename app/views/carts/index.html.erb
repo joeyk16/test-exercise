@@ -1,43 +1,54 @@
 <h1>Cart</h1>
-<table>
-  <thead>
-    <tr>
-      <th>Item</th>
-      <th>Quantity</th>
-      <th>Price</th>
-      <th>Shipping</th>
-      <th>Total</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @cart.each do |order| %>
+<% if @cart.any? %>
+  <table>
+    <thead>
       <tr>
-        <td><%= image_tag Product.find(order.product_id).product_images[0].product_image.url(:thumb) %><%= Product.find(order.product_id).title %></td>
-        <td><%= order.quantity %></td>
-        <td>$<%= Product.find(order.product_id).price %></td>
-        <td><%= ShippingMethod.find(order.shipping_method_id).name %><%= ShippingMethod.find(order.shipping_method_id).price %></td>
-        <td>$<%= order.total(order.quantity) %></td>
-        <td><%=link_to "Remove product", user_cart_path(current_user, @cart), method: :delete %> <%=link_to "Buy Now", user_cart_path(current_user, @cart) %></td>
+        <th>Item</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Shipping</th>
+        <th>Total</th>
+        <th>Action</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @cart.each do |order| %>
+        <tr>
+          <td><%= image_tag Product.find(order.product_id).product_images[0].product_image.url(:thumb) %><%= Product.find(order.product_id).title %></td>
+          <td><%= order.quantity %></td>
+          <td>$<%= Product.find(order.product_id).price %></td>
+          <td><%= ShippingMethod.find(order.shipping_method_id).name %><%= ShippingMethod.find(order.shipping_method_id).price %></td>
+          <td>$<%= order.item_price(order.quantity) %></td>
+          <td><%=link_to "Remove product", user_cart_path(current_user, @cart), method: :delete %> <%=link_to "Buy Now", user_cart_path(current_user, @cart) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 
-<h2>Shipping Address</h2>
-<% if @cart[0].user.addresses.find_by(default_devlivery_address: true) %>
-  <%= @cart[0].user.addresses.find_by(default_devlivery_address: true).address_to_s %>
-  <%= link_to "Change address", user_addresses_path(current_user) %>
+  <% total_price = 0 %>
+  <% @cart.each { |order| total_price += order.item_price(order.quantity) } %>
+  <h2>Total Price: $<%= total_price %></h2>
+
+  <h2>Shipping Address</h2>
+  <% if @cart[0].user.addresses.find_by(default_devlivery_address: true) %>
+    <%= @cart[0].user.addresses.find_by(default_devlivery_address: true).address_to_s %>
+    <%= link_to "Change address", user_addresses_path(current_user) %>
+  <% else %>
+    <%= link_to "Add Default Shipping Address", new_user_address_path(current_user) %>
+  <% end %>
+
+  <h2>Pay with paypal</h2>
+  <% if @cart[0].user.paypals.any? %>
+    <%= @cart[0].user.paypals.find_by(default: true).email %>
+    <%= link_to "edit", edit_user_paypal_path(current_user, @cart[0].user.paypals.find_by(default: true)) %>
+  <% else %>
+    <%= link_to "Add Paypal account", new_user_paypal_path(current_user) %>
+  <% end %>
+
+  <h1><%= link_to "Confirm And Pay", user_orders_path(current_user), method: :post %></h1>
+
 <% else %>
-  <%= link_to "Add Default Shipping Address", new_user_address_path(current_user) %>
+  <h2>Your cart is empty</h2>
 <% end %>
 
-<h2>Pay with paypal</h2>
-<% if @cart[0].user.paypals.any? %>
-  <%= @cart[0].user.paypals.find_by(default: true).email %>
-  <%= link_to "edit", edit_user_paypal_path(current_user, @cart[0].user.paypals.find_by(default: true)) %>
-<% else %>
-  <%= link_to "Add Paypal account", new_user_paypal_path(current_user) %>
-<% end %>
 
-<h1><%= link_to "Confirm And Pay", new_user_address_path(current_user) %></h1>

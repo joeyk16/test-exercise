@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
   has_many :relationships
   has_many :carts
   has_many :paypals
+  has_many :orders
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
