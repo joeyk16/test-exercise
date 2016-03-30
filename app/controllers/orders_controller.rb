@@ -48,7 +48,7 @@ class OrdersController < ApplicationController
   def create_orders
     Cart.where(user: current_user).each do |item|
       Order.create(
-        user_id: current_user,
+        user_id: current_user.id,
         outfit_user_id: item.outfit.user.id,
         product_id: item.product_id,
         product_name: item.product.title,

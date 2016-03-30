@@ -1,0 +1,18 @@
+<table>
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Price</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% orders.each do |order| %>
+      <tr>
+        <td><%= order.product.title %></td>
+        <td><%= order.product.title %></td>
+        <td><%= order.aasm_state %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
