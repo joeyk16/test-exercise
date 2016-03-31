@@ -33,7 +33,7 @@ gem "cocoon"
 gem "nested_form"
 gem 'aws-sdk', '< 2.0'
 gem 'country_select'
-gem 'paypal-sdk-rest'
+gem 'paypal-sdk-adaptivepayments'
 
 group :development, :test do
   gem 'web-console', '~> 2.0'

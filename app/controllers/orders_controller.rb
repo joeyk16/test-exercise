@@ -10,8 +10,10 @@ class OrdersController < ApplicationController
 
   def create
     if create_orders
-      redirect_to user_my_account_path
-      flash[:success] = "Order successfully was created"
+      binding.pry
+      PaypalAdaptivePay.pay_all_orders(Order.where(user_id: current_user.id).payment)
+      # redirect_to user_my_account_path
+      # flash[:success] = "Order successfully was created"
     else
       flash[:danger] = "Order was not created"
     end

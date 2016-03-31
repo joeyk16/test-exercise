@@ -145,9 +145,10 @@ GEM
       cocaine (~> 0.5.5)
       mime-types
       mimemagic (= 0.3.0)
-    paypal-sdk-rest (1.4.3)
+    paypal-sdk-adaptivepayments (1.117.1)
+      paypal-sdk-core (~> 0.3.0)
+    paypal-sdk-core (0.3.4)
       multi_json (~> 1.0)
-      uuidtools (~> 2.1)
       xml-simple
     pg (0.17.1)
     pry (0.10.1)
@@ -251,7 +252,6 @@ GEM
       execjs (>= 0.3.0)
       json (>= 1.8.0)
     unicode_utils (1.4.0)
-    uuidtools (2.1.5)
     warden (1.2.3)
       rack (>= 1.0)
     web-console (2.1.2)
@@ -290,7 +290,7 @@ DEPENDENCIES
   masonry-rails
   nested_form
   paperclip (~> 4.3)
-  paypal-sdk-rest
+  paypal-sdk-adaptivepayments
   pg
   pry
   quiet_assets

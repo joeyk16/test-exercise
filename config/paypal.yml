@@ -8,7 +8,7 @@ test: &default
   mode: sandbox
 
   # Credentials for Classic APIs
-  # app_id: APP-80W284485P519543T
+  app_id: APP-80W284485P519543T
   username: admin_api1.safsy.com.au
   password: 52E9LHSZRUFAT237
   signature: A3NHpRtCLkH.NBna4B.tWDiZKPAkAEQbsPePYpSTkk6XzNtBg5UYu6Cu
@@ -20,6 +20,8 @@ test: &default
   # ip_address: 127.0.0.1
   # # HTTP Proxy
   # http_proxy: http://proxy-ipaddress:3129/
+
+  # verbose_logging: true
 
 development:
   <<: *default
