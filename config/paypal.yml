@@ -9,9 +9,9 @@ test: &default
 
   # Credentials for Classic APIs
   app_id: APP-80W284485P519543T
-  username: user_01_api1.yorlook.com.au
-  password: SC9RYRHMM96JBYME
-  signature: AFcWxV21C7fd0v3bYYYRCpSSRl31AXWudIFQb9xnS2wS-48ZpkrK-ZMl
+  username: admin-facilitator_api1.safsy.com.au
+  password: FBXGV776WZASK7BF
+  signature: AVbK8cjRiZLqeTQypNwfbjiDECkjA5mTZa6fzi7DkZc6K86024wmwCJd
   # # With Certificate
   # cert_path: "config/cert_key.pem"
   sandbox_email_address: admin-facilitator@safsy.com.au
