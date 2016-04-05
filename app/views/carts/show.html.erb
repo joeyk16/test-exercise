@@ -21,7 +21,7 @@
   </tbody>
 </table>
 
-<p>Cart Total: $<%= @cart.total(@cart.quantity) %></p>
+<p>Cart Total: $<%= @cart.total_price(@cart.quantity) %></p>
 
 <h2>Shipping Address</h2>
 <% if @cart.user.addresses.find_by(default_devlivery_address: true) %>

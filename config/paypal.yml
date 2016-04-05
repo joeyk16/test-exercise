@@ -1,20 +1,20 @@
 test: &default
 
   # Credentials for REST APIs
-  client_id: EBWKjlELKMYqRNQ6sYvFo64FtaRLRR5BdHEESmha49TM
-  client_secret: EO422dn3gQLgDbuwqTjzrFgFtaRLRR5BdHEESmha49TM
+  client_id: AV_8nl2ZmSjeHcgywkOW1yfLSVT3Nll1yGH6yhghZtA30yKATfSXc4HDAJxA9sCGwftq2rSVJD6ewCEM
+  client_secret: EK_puJ0RGH7oohFRQeO5sjdnV5epOGWiM8F6PoQ9qPWlzpTny1ZQrOlE34pCRV17MSXvU531qRTU2GQ9
 
   # Mode can be 'live' or 'sandbox'
   mode: sandbox
 
   # Credentials for Classic APIs
   app_id: APP-80W284485P519543T
-  username: admin_api1.safsy.com.au
-  password: 52E9LHSZRUFAT237
-  signature: A3NHpRtCLkH.NBna4B.tWDiZKPAkAEQbsPePYpSTkk6XzNtBg5UYu6Cu
+  username: user_01_api1.yorlook.com.au
+  password: SC9RYRHMM96JBYME
+  signature: AFcWxV21C7fd0v3bYYYRCpSSRl31AXWudIFQb9xnS2wS-48ZpkrK-ZMl
   # # With Certificate
   # cert_path: "config/cert_key.pem"
-  sandbox_email_address: Platform.sdk.seller@gmail.com
+  sandbox_email_address: admin-facilitator@safsy.com.au
 
   # # IP Address
   # ip_address: 127.0.0.1
