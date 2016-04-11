@@ -1,7 +1,7 @@
 require 'paypal-sdk-adaptivepayments'
 class OrdersController < ApplicationController
   before_action :authenticate_user!
-  before_action :correct_user, only: [:index, :edit]
+  # before_action :correct_user, only: [:index, :edit]
 
   def index
     @orders = Order.where(user: current_user)
@@ -13,6 +13,7 @@ class OrdersController < ApplicationController
   def create
     Order.create_orders!(current_user)
     paypal_request
+    binding.pry
     if @response.success? && @response.payment_exec_status != "ERROR"
       @response.payKey
       redirect_to @paypal_api.payment_url(@response)
@@ -57,7 +58,7 @@ class OrdersController < ApplicationController
   end
 
 
-  def correct_user
-    redirect_to root_path unless current_user == @order.user
-  end
+  # def correct_user
+  #   redirect_to root_path unless current_user == @order.user
+  # end
 end

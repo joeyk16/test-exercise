@@ -1,11 +1,11 @@
 class PaypalAdaptivePaymentService
-    attr_reader :user, :return_url, :orders
+  attr_reader :user, :return_url, :orders
 
-    def initialize(params)
-      @user = params[:user]
-      @return_url = params[:return_url]
-      @orders = params[:orders]
-    end
+  def initialize(params)
+    @user = params[:user]
+    @return_url = params[:return_url]
+    @orders = params[:orders]
+  end
 
   def build_paypal_api_request
     paypal_api = PayPal::SDK::AdaptivePayments::API.new
@@ -16,7 +16,9 @@ class PaypalAdaptivePaymentService
         :currencyCode => "USD",
         :feesPayer => "SENDER",
         :ipnNotificationUrl => "http://localhost:3000/samples/adaptive_payments/ipn_notify",
-        :receiverList => receivers_list,
+        :receiverList => {
+          :receiver => receivers_list
+        },
         :reverseAllParallelPaymentsOnError => true,
         :senderEmail => @user.paypals.find_by(default: true).email,
         :returnUrl => @return_url
@@ -27,17 +29,20 @@ class PaypalAdaptivePaymentService
   private
 
   def receivers_list
-    receivers = {}
+    #TODO: What happens if user owns outfit?
+    receivers = []
     @orders.each do |order|
-      receiver = {
-        :receiver => [
-          {
-            :amount => order.total_price,
-            :email => order.product.user.paypals.find_by(default: true).email
-          }
-        ]
+      receiver_item = {
+        :amount => (order.total_price) * 0.9,
+        :email => order.product.user.paypals.find_by(default: true).email
       }
-      receivers.merge!(receiver)
+
+      receiver_outfit_owner = {
+        :amount => (order.total_price) * 0.1,
+        :email => order.product.user.paypals.find_by(default: true).email
+      }
+      receivers << receiver_item
+      receivers << receiver_outfit_owner
     end
     receivers
   end

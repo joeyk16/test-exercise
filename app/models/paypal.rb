@@ -11,8 +11,4 @@ class Paypal < ActiveRecord::Base
     return if paypal.id == self.id
     paypal.update_attributes(default: false)
   end
-
-  def default
-    find_by(default: true).email
-  end
 end
