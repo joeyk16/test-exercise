@@ -11,7 +11,6 @@ class PaypalsController < ApplicationController
   end
 
   def create
-    binding.pry
     @paypal = Paypal.new(paypal_params)
     if @paypal.save
       redirect_to user_my_account_path
@@ -35,11 +34,6 @@ class PaypalsController < ApplicationController
     @paypal.destroy
     flash[:success] = "Paypal deleted"
     redirect_to user_my_account_path(current_user)
-  end
-
-  def payment_details
-    @payment_details = api.build_payment_details(params[:PaymentDetailsRequest] || default_api_value)
-    @payment_details_response = api.payment_details(@payment_details) if request.post?
   end
 
   private

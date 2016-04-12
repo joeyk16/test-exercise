@@ -12,6 +12,7 @@ class CreateOrders < ActiveRecord::Migration
       t.string :shipping_method
       t.string :shipping_address
       t.string :aasm_state
+      t.string :transaction_id
 
       t.timestamps null: false
     end

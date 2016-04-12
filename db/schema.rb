@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160330093613) do
+ActiveRecord::Schema.define(version: 20160412092524) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -92,6 +92,7 @@ ActiveRecord::Schema.define(version: 20160330093613) do
     t.string   "shipping_method"
     t.string   "shipping_address"
     t.string   "aasm_state"
+    t.string   "transaction_id"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
   end
@@ -140,6 +141,17 @@ ActiveRecord::Schema.define(version: 20160330093613) do
   end
 
   add_index "outfits", ["user_id"], name: "index_outfits_on_user_id"
+
+  create_table "paypal_notifications", force: :cascade do |t|
+    t.integer  "order_id"
+    t.text     "notification"
+    t.string   "transaction_id"
+    t.string   "status"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "paypal_notifications", ["order_id"], name: "index_paypal_notifications_on_order_id"
 
   create_table "paypals", force: :cascade do |t|
     t.string   "email"

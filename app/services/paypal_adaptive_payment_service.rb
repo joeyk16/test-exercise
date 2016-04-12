@@ -5,6 +5,7 @@ class PaypalAdaptivePaymentService
     @user = params[:user]
     @return_url = params[:return_url]
     @orders = params[:orders]
+    @notify_url = params[:notify_url]
   end
 
   def build_paypal_api_request
@@ -21,6 +22,7 @@ class PaypalAdaptivePaymentService
         },
         :reverseAllParallelPaymentsOnError => true,
         :senderEmail => @user.paypals.find_by(default: true).email,
+        :notify_url => @notify_url,
         :returnUrl => @return_url
       }
     )
@@ -30,16 +32,17 @@ class PaypalAdaptivePaymentService
 
   def receivers_list
     #TODO: What happens if user owns outfit?
+    #TODO: Chain the payments
     receivers = []
     @orders.each do |order|
       receiver_item = {
-        :amount => (order.total_price) * 0.9,
+        :amount => ((order.total_price) * 0.9).round(2),
         :email => order.product.user.paypals.find_by(default: true).email
       }
 
       receiver_outfit_owner = {
-        :amount => (order.total_price) * 0.1,
-        :email => order.product.user.paypals.find_by(default: true).email
+        :amount => ((order.total_price) * 0.1).round(2),
+        :email => User.find(order.outfit_user_id).paypals.find_by(default: true).email
       }
       receivers << receiver_item
       receivers << receiver_outfit_owner

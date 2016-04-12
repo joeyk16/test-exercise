@@ -13,7 +13,6 @@ class OrdersController < ApplicationController
   def create
     Order.create_orders!(current_user)
     paypal_request
-    binding.pry
     if @response.success? && @response.payment_exec_status != "ERROR"
       @response.payKey
       redirect_to @paypal_api.payment_url(@response)
@@ -42,7 +41,8 @@ class OrdersController < ApplicationController
     {
       user: current_user,
       return_url: root_url,
-      orders: Order.where(user_id: current_user.id).payment
+      orders: Order.where(user_id: current_user.id).payment,
+      notify_url: paypal_notifications_url
     }
   end
 
@@ -56,7 +56,6 @@ class OrdersController < ApplicationController
       :shipping_method, :shipping_address
     )
   end
-
 
   # def correct_user
   #   redirect_to root_path unless current_user == @order.user

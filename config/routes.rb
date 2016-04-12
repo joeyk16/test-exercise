@@ -43,6 +43,7 @@ Rails.application.routes.draw do
   resources :product_sizes, only: [:create]
   resources :sizes
   resources :likes, only: [:create, :destroy]
+  resources :paypal_notifications, only: [:create]
 
   resources :products do
     resources :photos
