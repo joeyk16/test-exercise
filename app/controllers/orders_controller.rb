@@ -11,7 +11,8 @@ class OrdersController < ApplicationController
   end
 
   def create
-    Order.create_orders!(current_user)
+    Order.create_user_orders!(current_user)
+    current_user.carts.destroy_all
     paypal_request
     if @response.success? && @response.payment_exec_status != "ERROR"
       @response.payKey
@@ -41,9 +42,14 @@ class OrdersController < ApplicationController
     {
       user: current_user,
       return_url: root_url,
-      orders: Order.where(user_id: current_user.id).payment,
-      notify_url: paypal_notifications_url
+      orders: current_user_orders_awaiting_payment,
+      notify_url: paypal_notifications_url,
+      invoice_id: current_user_orders_awaiting_payment[0].invoice_id
     }
+  end
+
+  def current_user_orders_awaiting_payment
+    Order.where(user_id: current_user.id).payment
   end
 
   def set_orders

@@ -5,11 +5,15 @@
       <%= image_tag @outfit.outfit_image.url%>
     </div>
 
-    <%= @outfit.likes.count %>
-    <% if Like.find_by(outfit: @outfit, user: current_user) %>
-      <%= link_to "Unlike", like_path(@outfit), method: :delete %>
+    <% if current_user %>
+      <%= @outfit.likes.count %>
+      <% if Like.find_by(outfit: @outfit, user: current_user) %>
+        <%= link_to "Unlike", like_path(@outfit), method: :delete %>
+      <% else %>
+        <%= link_to "Like", likes_path(likes: { outfit_id: @outfit.id, user_id: current_user.id }), method: :post %>
+      <% end %>
     <% else %>
-      <%= link_to "Like", likes_path(likes: { outfit_id: @outfit.id, user_id: current_user.id }), method: :post %>
+     <p><%= @outfit.likes.count %> Likes</p>
     <% end %>
 
     <p>
@@ -24,16 +28,20 @@
       <h5><%= link_to "#{@outfit.user.username}", user_path(@outfit.user) %></h5>
     </div>
   </div>
-  <h5>
-    <%= link_to "Add Products", user_outfit_add_products_path(outfit_id: @outfit.id, user_id: current_user, outfit_user_id: @outfit.user.id) %>
-  </h5>
-  <h5>
-    <%=
-      if @outfit.user_id == current_user.id
-        link_to "Edit Outfit Prdocuts", user_outfit_outfit_products_path(outfit_id: @outfit.id, user_id: @outfit.user_id)
-      end
-    %>
-  </h5>
+
+  <% if current_user %>
+    <h5>
+      <%= link_to "Add Products", user_outfit_add_products_path(outfit_id: @outfit.id, user_id: current_user, outfit_user_id: @outfit.user.id) %>
+    </h5>
+    <h5>
+      <%=
+        if @outfit.user_id == current_user.id
+          link_to "Edit Outfit Prdocuts", user_outfit_outfit_products_path(outfit_id: @outfit.id, user_id: @outfit.user_id)
+        end
+      %>
+    </h5>
+  <% end %>
+
   <% @outfit.approved_products.each do |product| %>
     <div class="box panel panel-default">
       <div class="square_item_image">
