@@ -34,11 +34,11 @@ gem "nested_form"
 gem 'aws-sdk', '< 2.0'
 gem 'country_select'
 gem 'paypal-sdk-adaptivepayments'
+gem 'pg'
 
 group :development, :test do
   gem 'web-console', '~> 2.0'
   gem 'spring'
-  gem 'sqlite3'
   gem 'quiet_assets'
 end
 
@@ -48,6 +48,5 @@ group :test do
 end
 
 group :production do
-  gem 'pg'
   gem 'rails_12factor'
 end
