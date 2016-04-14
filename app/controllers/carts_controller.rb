@@ -11,9 +11,9 @@ class CartsController < ApplicationController
     if @cart.save
       flash[:success] = "Product added to cart"
     else
-      flash[:danger] =  "Can't buy product"
+      flash[:danger] =  "#{@cart.errors.full_messages}"
     end
-    redirect_to user_cart_path(current_user, @cart)
+    redirect_to :back
   end
 
   def show

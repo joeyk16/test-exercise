@@ -62,9 +62,13 @@
         <%= link_to "Edit Products", edit_product_path(@product) %>
       <% end %>
 
-      <div class="productFilter productFilterLook2">
-        <%= render 'carts/form', order: @cart, product: @product, shipping: @shipping, sizes: @sizes %>
-      </div>
+      <% if current_user %>
+        <div class="productFilter productFilterLook2">
+          <%= render 'carts/form', order: @cart, product: @product, shipping: @shipping, sizes: @sizes %>
+        </div>
+      <% else %>
+        <%= link_to "Sign in to buy", new_user_session_path %>
+      <% end %>
 
       <div class="sellerinfoitemshow">
         <%= image_tag @product.user.avatar.url(:thumb) %>

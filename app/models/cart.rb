@@ -6,6 +6,7 @@ class Cart < ActiveRecord::Base
   belongs_to :user
 
   validates :product, :outfit, :size, :shipping_method, :user, :quantity, presence: true
+  before_validation :user_cant_add_own_product
 
   def item_price(quanity)
     total = (product.price_in_cents * quanity) + shipping_method.price_in_cents
@@ -16,5 +17,11 @@ class Cart < ActiveRecord::Base
     total = 0
     total += ((product.price_in_cents * quanity) + shipping_method.price_in_cents)
     total / 100.00
+  end
+
+  private
+
+  def user_cant_add_own_product
+    errors.add(:base, "Can't add own product to cart") if user == product.user
   end
 end
