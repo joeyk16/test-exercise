@@ -45,7 +45,6 @@ Category.create!(
   ancestry: Category.find_by(name: "Men").id
 )
 
-
 Category.create!(
   name: "Jeans",
   ancestry: Category.find_by(name: "Women").id
@@ -151,7 +150,7 @@ sizes.each do |size|
   Size.create(title: size, category_id: Category.find_by(name: "Jeans").id)
 end
 
-Product.create!(
+p1 = Product.create!(
   title: Faker::Lorem.characters(6),
   description: Faker::Lorem.sentence,
   user_id: user_1.id,
@@ -161,17 +160,11 @@ Product.create!(
   price_in_cents: Faker::Number.number(4)
 )
 
-ProductImage.create!(
-  product_id: Product.find(1).id,
-  product_image: File.new("#{Rails.root}/app/assets/images/seeds/products/image1xxl-1.jpg")
+p1.product_images.create(
+  product_image: File.new("#{Rails.root}/app/assets/images/seeds/products/mens_clothes_01.jpg")
 )
 
-ProductImage.create!(
-  product_id: Product.find(1).id,
-  product_image: File.new("#{Rails.root}/app/assets/images/seeds/products/image1xxl.jpg")
-)
-
-Product.create!(
+p2 = Product.create!(
   title: Faker::Lorem.characters(6),
   description: Faker::Lorem.sentence,
   user_id: user_2.id,
@@ -181,17 +174,11 @@ Product.create!(
   price_in_cents: Faker::Number.number(4)
 )
 
-ProductImage.create!(
-  product_id: Product.find(2).id,
-  product_image: File.new("#{Rails.root}/app/assets/images/seeds/products/image2xxl-1.jpg")
+p2.product_images.create(
+  product_image: File.new("#{Rails.root}/app/assets/images/seeds/products/mens_clothes_02.jpg")
 )
 
-ProductImage.create!(
-  product_id: Product.find(2).id,
-  product_image: File.new("#{Rails.root}/app/assets/images/seeds/products/image2xxl.jpg")
-)
-
-Product.create!(
+p3 = Product.create!(
   title: Faker::Lorem.characters(6),
   description: Faker::Lorem.sentence,
   user_id: user_3.id,
@@ -201,12 +188,48 @@ Product.create!(
   price_in_cents: Faker::Number.number(4)
 )
 
-ProductImage.create!(
-  product_id: Product.find(3).id,
-  product_image: File.new("#{Rails.root}/app/assets/images/seeds/products/image3xxl-1.jpg")
+p3.product_images.create(
+  product_image: File.new("#{Rails.root}/app/assets/images/seeds/products/mens_clothes_03.jpg")
 )
 
-ProductImage.create!(
-  product_id: Product.find(3).id,
-  product_image: File.new("#{Rails.root}/app/assets/images/seeds/products/image3xxl.jpg")
+p4 = Product.create!(
+  title: Faker::Lorem.characters(6),
+  description: Faker::Lorem.sentence,
+  user_id: user_1.id,
+  category_id: Category.find_by(name: "Shirt").id,
+  size_description: Faker::Lorem.sentence,
+  shipping_description: Faker::Lorem.sentence,
+  price_in_cents: Faker::Number.number(4)
+)
+
+p4.product_images.create(
+  product_image: File.new("#{Rails.root}/app/assets/images/seeds/products/womens_clothes_01.jpg")
+)
+
+p5 = Product.create!(
+  title: Faker::Lorem.characters(6),
+  description: Faker::Lorem.sentence,
+  user_id: user_2.id,
+  category_id: Category.find_by(name: "Shirt").id,
+  size_description: Faker::Lorem.sentence,
+  shipping_description: Faker::Lorem.sentence,
+  price_in_cents: Faker::Number.number(4)
+)
+
+p5.product_images.create(
+  product_image: File.new("#{Rails.root}/app/assets/images/seeds/products/womens_clothes_02.jpg")
+)
+
+p6 = Product.create!(
+  title: Faker::Lorem.characters(6),
+  description: Faker::Lorem.sentence,
+  user_id: user_3.id,
+  category_id: Category.find_by(name: "Shirt").id,
+  size_description: Faker::Lorem.sentence,
+  shipping_description: Faker::Lorem.sentence,
+  price_in_cents: Faker::Number.number(4)
+)
+
+p6.product_images.create(
+  product_image: File.new("#{Rails.root}/app/assets/images/seeds/products/womens_clothes_03.jpg")
 )
