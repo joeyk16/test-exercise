@@ -28,6 +28,10 @@ User.create!(
   avatar: File.new("#{Rails.root}/app/assets/images/seeds/avatar/avatar_01.png")
 )
 
+User.all.each do |user|
+  ShippingMethod.create!(name: Faker::Commerce.product_name, user_id: user.id, price_in_cents: 1995, country: "Australia")
+end
+
 user_1 = User.find_by(username: "user_01")
 user_2 = User.find_by(username: "user_02")
 user_3 = User.find_by(username: "user_03")
@@ -104,41 +108,19 @@ Paypal.create!(
   default: true
 )
 
-Address.create!(
-  default_devlivery_address: true,
-  default_billing_address: true,
-  address_line_1: "1 Adelaide Street",
-  address_line_2: nil,
-  suburb: "Brisbane",
-  state: "Queensland",
-  postcode: 4000,
-  country: "Australia",
-  user_id: user_1.id
-)
-
-Address.create!(
-  default_devlivery_address: true,
-  default_billing_address: true,
-  address_line_1: "2 Adelaide Street",
-  address_line_2: nil,
-  suburb: "Brisbane",
-  state: "Queensland",
-  postcode: 4000,
-  country: "Australia",
-  user_id: user_2.id
-)
-
-Address.create!(
-  default_devlivery_address: true,
-  default_billing_address: true,
-  address_line_1: "3 Adelaide Street",
-  address_line_2: nil,
-  suburb: "Brisbane",
-  state: "Queensland",
-  postcode: 4000,
-  country: "Australia",
-  user_id: user_3.id
-)
+User.all.each do |user|
+  Address.create!(
+    default_devlivery_address: true,
+    default_billing_address: true,
+    address_line_1: Faker::Address.street_address,
+    address_line_2: nil,
+    suburb: "Brisbane",
+    state: "Queensland",
+    postcode: 4000,
+    country: "Australia",
+    user_id: user.id
+  )
+end
 
 sizes = ["XXSmall", "XSmall", "Small", "Medium", "Large", "XLarge", "XXLarge"]
 
@@ -159,10 +141,12 @@ p1 = Product.create!(
   shipping_description: Faker::Lorem.sentence,
   price_in_cents: Faker::Number.number(4)
 )
-
 p1.product_images.create(
   product_image: File.new("#{Rails.root}/app/assets/images/seeds/products/mens_clothes_01.jpg")
 )
+Size.where(category_id: Category.find_by(name: "Shirt").id ).each do |size|
+  ProductSize.create!(quantity: Faker::Number.number(1), size_id: size.id, product_id: p1.id)
+end
 
 p2 = Product.create!(
   title: Faker::Lorem.characters(6),
@@ -173,10 +157,12 @@ p2 = Product.create!(
   shipping_description: Faker::Lorem.sentence,
   price_in_cents: Faker::Number.number(4)
 )
-
 p2.product_images.create(
   product_image: File.new("#{Rails.root}/app/assets/images/seeds/products/mens_clothes_02.jpg")
 )
+Size.where(category_id: Category.find_by(name: "Shirt").id ).each do |size|
+  ProductSize.create!(quantity: Faker::Number.number(1), size_id: size.id, product_id: p2.id)
+end
 
 p3 = Product.create!(
   title: Faker::Lorem.characters(6),
@@ -187,10 +173,12 @@ p3 = Product.create!(
   shipping_description: Faker::Lorem.sentence,
   price_in_cents: Faker::Number.number(4)
 )
-
 p3.product_images.create(
   product_image: File.new("#{Rails.root}/app/assets/images/seeds/products/mens_clothes_03.jpg")
 )
+Size.where(category_id: Category.find_by(name: "Shirt").id ).each do |size|
+  ProductSize.create!(quantity: Faker::Number.number(1), size_id: size.id, product_id: p3.id)
+end
 
 p4 = Product.create!(
   title: Faker::Lorem.characters(6),
@@ -201,10 +189,12 @@ p4 = Product.create!(
   shipping_description: Faker::Lorem.sentence,
   price_in_cents: Faker::Number.number(4)
 )
-
 p4.product_images.create(
   product_image: File.new("#{Rails.root}/app/assets/images/seeds/products/womens_clothes_01.jpg")
 )
+Size.where(category_id: Category.find_by(name: "Shirt").id ).each do |size|
+  ProductSize.create!(quantity: Faker::Number.number(1), size_id: size.id, product_id: p4.id)
+end
 
 p5 = Product.create!(
   title: Faker::Lorem.characters(6),
@@ -215,10 +205,12 @@ p5 = Product.create!(
   shipping_description: Faker::Lorem.sentence,
   price_in_cents: Faker::Number.number(4)
 )
-
 p5.product_images.create(
   product_image: File.new("#{Rails.root}/app/assets/images/seeds/products/womens_clothes_02.jpg")
 )
+Size.where(category_id: Category.find_by(name: "Shirt").id ).each do |size|
+  ProductSize.create!(quantity: Faker::Number.number(1), size_id: size.id, product_id: p5.id)
+end
 
 p6 = Product.create!(
   title: Faker::Lorem.characters(6),
@@ -229,7 +221,21 @@ p6 = Product.create!(
   shipping_description: Faker::Lorem.sentence,
   price_in_cents: Faker::Number.number(4)
 )
-
 p6.product_images.create(
   product_image: File.new("#{Rails.root}/app/assets/images/seeds/products/womens_clothes_03.jpg")
 )
+Size.where(category_id: Category.find_by(name: "Shirt").id ).each do |size|
+  ProductSize.create!(quantity: Faker::Number.number(1), size_id: size.id, product_id: p6.id)
+end
+
+Product.all.each do |product|
+  outfit = Outfit.order("RANDOM()").first
+  OutfitProduct.create!(
+    user_id: product.user.id,
+    product_id: product.id,
+    approved: true,
+    outfit_id: outfit.id,
+    boolean: false,
+    outfit_user_id: outfit.user_id
+  )
+end
