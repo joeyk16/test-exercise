@@ -31,4 +31,11 @@ class Product < ActiveRecord::Base
   def price
     price_in_cents / 100.00
   end
+
+  def self.adjust_quantity(product_id, size_id, quantity)
+    binding.pry
+    product_size = Product.find(product_id).product_sizes.find_by(size_id: size_id)
+    product_size.quantity - quantity
+    product_size.save
+  end
 end
