@@ -33,23 +33,45 @@ class PaypalAdaptivePaymentService
   private
 
   def receivers_list
-    #TODO: What happens if user owns outfit?
-    #TODO: Chain the payments
-    #TODO: If product is from same user it must add the total to once receiveer
-    receivers = []
+    @receivers = []
     @orders.each do |order|
-      receiver_item = {
-        :amount => ((order.total_price) * 0.9).round(2),
-        :email => order.product.user.paypals.find_by(default: true).email
-      }
-
-      receiver_outfit_owner = {
-        :amount => ((order.total_price) * 0.1).round(2),
-        :email => User.find(order.outfit_user_id).paypals.find_by(default: true).email
-      }
-      receivers << receiver_item
-      receivers << receiver_outfit_owner
+      if current_user_owns_outfit?
+        one_payment(order)
+      else
+        split_payment(order)
+      end
     end
-    receivers
+    merge_payments_for_same_receiver(@receivers)
+  end
+
+  def current_user_owns_outfit?
+    order.user_id == order.outfit_user_id
+  end
+
+  def one_payment(order)
+    receiver = {
+      :amount => order.total_price.round(2),
+      :email => order.product.user.paypals.find_by(default: true).email
+    }
+    @receivers << receiver
+  end
+
+  def split_payment(order)
+    receiver_item = {
+      :amount => ((order.total_price) * 0.9).round(2),
+      :email => order.product.user.paypals.find_by(default: true).email
+    }
+
+    receiver_outfit_owner = {
+      :amount => ((order.total_price) * 0.1).round(2),
+      :email => User.find(order.outfit_user_id).paypals.find_by(default: true).email
+    }
+    @receivers << receiver_item
+    @receivers << receiver_outfit_owner
+  end
+
+  def merge_payments_for_same_receiver(receivers)
+    @receivers = receivers.group_by { |e| e[:email] }
+      .map { |k, v| { amount: v.sum { |e| e[:amount] }, email: k } }
   end
 end
