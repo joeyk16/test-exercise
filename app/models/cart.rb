@@ -7,6 +7,7 @@ class Cart < ActiveRecord::Base
 
   validates :product, :outfit, :size, :shipping_method, :user, :quantity, presence: true
   before_validation :user_cant_add_own_product
+  before_validation :product_has_enough_quantity
 
   def item_price(quanity)
     total = (product.price_in_cents * quanity) + shipping_method.price_in_cents
@@ -23,5 +24,11 @@ class Cart < ActiveRecord::Base
 
   def user_cant_add_own_product
     errors.add(:base, "Can't add own product to cart") if user == product.user
+  end
+
+  def product_has_enough_quantity
+    if product.product_sizes.find_by(size_id: size_id).quantity <= quantity
+      errors.add(:base, "Product doesn't have enough quantity")
+    end
   end
 end

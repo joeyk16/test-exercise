@@ -12,8 +12,8 @@ class OrdersController < ApplicationController
   end
 
   def create
-    Order.create_user_orders!(current_user)
-    current_user.carts.destroy_all
+    adjust_product_quantity
+    Order.process!(current_user)
     paypal_request
     if @response.success? && @response.payment_exec_status != "ERROR"
       @response.payKey
@@ -21,6 +21,17 @@ class OrdersController < ApplicationController
     else
       redirect_to user_carts_path(current_user)
       flash[:danger] = "#{@response.error[0].message}"
+    end
+  end
+
+  def adjust_product_quantity
+    current_user.carts.each do |cart|
+      if Product.enough_quantity?(cart)
+        Product.adjust_quantity!(cart)
+      else
+        redirect_to :back
+        flash[:danger] = "Product #{cart.product.title} doesn't have enough quantity"
+      end
     end
   end
 

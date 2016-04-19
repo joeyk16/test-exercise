@@ -32,8 +32,14 @@ class Product < ActiveRecord::Base
     price_in_cents / 100.00
   end
 
-  def adjust_quantity(size_id, quantity)
-    product_size = self.product_sizes.find_by(size_id: size_id)
+  def self.enough_quantity?(cart)
+    product_size = cart.product.product_sizes.find_by(size_id: cart.size_id)
+    return true if product_size.quantity >= cart.quantity
+  end
+
+  def self.adjust_quantity!(cart)
+    product_size = cart.product.product_sizes.find_by(size_id: cart.size_id)
+    quantity = cart.quantity
     if product_size.quantity >= quantity
       product_size.quantity -= quantity
     else

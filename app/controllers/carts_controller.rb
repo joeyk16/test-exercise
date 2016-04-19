@@ -1,7 +1,7 @@
 class CartsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_cart, only: [:show, :destroy]
-  before_action :correct_user, only: [:show, :index, :destroy]
+  before_action :correct_user, only: [:show, :destroy]
 
   def index
     @cart = Cart.where(user_id: current_user)
@@ -9,23 +9,12 @@ class CartsController < ApplicationController
 
   def create
     @cart = Cart.new(cart_params)
-    if @cart.save && check_product_quantity?
-      @cart.product.adjust_quantity(@cart.size_id, @cart.quantity)
+    if @cart.save
       flash[:success] = "Product added to cart"
     else
       flash[:danger] = "#{@cart.errors.full_messages}"
     end
     redirect_to :back
-  end
-
-  def check_product_quantity?
-    product_size = @cart.product.product_sizes.find_by(size_id: @cart.size_id)
-    if product_size.quantity >= @cart.quantity
-      true
-    else
-      @cart.errors.add(:base, "Product doesn't have enough quantity")
-      false
-    end
   end
 
   def show
