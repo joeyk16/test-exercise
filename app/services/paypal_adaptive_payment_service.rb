@@ -28,6 +28,7 @@ class PaypalAdaptivePaymentService
         :returnUrl => @return_url
       }
     )
+    binding.pry
   end
 
   private
@@ -35,16 +36,17 @@ class PaypalAdaptivePaymentService
   def receivers_list
     @receivers = []
     @orders.each do |order|
-      if current_user_owns_outfit?
+      if current_user_owns_outfit?(order)
         one_payment(order)
       else
         split_payment(order)
       end
     end
+
     merge_payments_for_same_receiver(@receivers)
   end
 
-  def current_user_owns_outfit?
+  def current_user_owns_outfit?(order)
     order.user_id == order.outfit_user_id
   end
 

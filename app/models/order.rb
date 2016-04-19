@@ -34,6 +34,12 @@ class Order < ActiveRecord::Base
     end
   end
 
+  def self.process!(user)
+    create_user_orders!(user)
+    add_invoice_id_to_orders_awaiting_payment(user)
+    # user.carts.destroy_all
+  end
+
   def self.create_user_orders!(user)
     Cart.where(user: user).each do |item|
       Order.create(
@@ -49,19 +55,18 @@ class Order < ActiveRecord::Base
         shipping_address: user.addresses.find_by(default_devlivery_address: true).address_to_s
       )
     end
-    self.add_invoice_id_to_orders_awaiting_payment(user)
-  end
-
-  def self.create_invoice_id(orders)
-    invoice_id = 0
-    orders.each { |order| invoice_id += order.id }
-    invoice_id
   end
 
   def self.add_invoice_id_to_orders_awaiting_payment(user)
     orders = Order.where(user_id: user.id).payment
     invoice_id = self.create_invoice_id(orders)
     orders.each { |order| order.update_attributes(invoice_id: invoice_id) }
+  end
+
+  def self.create_invoice_id(orders)
+    invoice_id = 0
+    orders.each { |order| invoice_id += order.id }
+    invoice_id
   end
 
   def total_price
