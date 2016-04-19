@@ -32,10 +32,12 @@ class Product < ActiveRecord::Base
     price_in_cents / 100.00
   end
 
-  def self.adjust_quantity(product_id, size_id, quantity)
-    binding.pry
-    product_size = Product.find(product_id).product_sizes.find_by(size_id: size_id)
-    product_size.quantity - quantity
-    product_size.save
+  def adjust_quantity(size_id, quantity)
+    product_size = self.product_sizes.find_by(size_id: size_id)
+    if product_size.quantity >= quantity
+      product_size.quantity -= quantity
+    else
+      errors.add(:base, "Product doesn't have enough quantity")
+    end
   end
 end
