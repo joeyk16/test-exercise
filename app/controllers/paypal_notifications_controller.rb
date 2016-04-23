@@ -2,11 +2,11 @@ class PaypalNotificationsController < ApplicationController
   protect_from_forgery except: :create
 
   def create
+    binding.pry
     PaypalNotification.create(
       notification: params,
-      invoice_id: params[:invoice],
+      paypal_pay_key: params[:pay_key],
       status: params[:payment_status],
-      transaction_id: params[:txn_id]
     )
     render :nothing => true
   end

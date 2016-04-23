@@ -12,26 +12,11 @@ class OrdersController < ApplicationController
   end
 
   def create
-    adjust_product_quantity
-    Order.process!(current_user)
-    paypal_request
-    if @response.success? && @response.payment_exec_status != "ERROR"
-      @response.payKey
-      redirect_to @paypal_api.payment_url(@response)
+    if orders = Order.process_all_cart_items!(current_user)
+      make_paypal_payment
     else
+      flash[:danger] = paypal_payment.errors
       redirect_to user_carts_path(current_user)
-      flash[:danger] = "#{@response.error[0].message}"
-    end
-  end
-
-  def adjust_product_quantity
-    current_user.carts.each do |cart|
-      if Product.enough_quantity?(cart)
-        Product.adjust_quantity!(cart)
-      else
-        redirect_to :back
-        flash[:danger] = "Product #{cart.product.title} doesn't have enough quantity"
-      end
     end
   end
 
@@ -43,11 +28,15 @@ class OrdersController < ApplicationController
 
   private
 
-  def paypal_request
-    @paypal_api = PayPal::SDK::AdaptivePayments::API.new
-    @response = @paypal_api.pay(
-      PaypalAdaptivePaymentService.new(paypal_params).build_paypal_api_request
-    )
+  def make_paypal_payment
+    #Maybe delete invoice id. Paypal says WARN -- : undefined method `invoice='
+    paypal_payment = PaypalPaymentService.new(paypal_params)
+    if paypal_payment.process!
+      redirect_to paypal_payment.payment_url
+    else
+      flash[:danger] = paypal_payment.errors
+      redirect_to user_carts_path(current_user)
+    end
   end
 
   def paypal_params

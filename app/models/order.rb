@@ -34,13 +34,25 @@ class Order < ActiveRecord::Base
     end
   end
 
-  def self.process!(user)
-    create_user_orders!(user)
-    add_invoice_id_to_orders_awaiting_payment(user)
+  def self.process_all_cart_items!(user)
+    return false unless enough_quantity?(user)
+    create_orders!(user)
     # user.carts.destroy_all
   end
 
-  def self.create_user_orders!(user)
+  def self.enough_quantity?(user)
+    Cart.where(user: user).each do |cart_item|
+      product_size = ProductSize.find_by(product_id: cart_item.product_id, size_id: cart_item.size_id)
+      if product_size.quantity > cart_item.quantity
+        true
+      else
+        errors.add(:base, "#{product.title} doesn't have enough quantity")
+        false
+      end
+    end
+  end
+
+  def self.create_orders!(user)
     Cart.where(user: user).each do |item|
       Order.create(
         user_id: user.id,
@@ -55,9 +67,10 @@ class Order < ActiveRecord::Base
         shipping_address: user.addresses.find_by(default_devlivery_address: true).address_to_s
       )
     end
+    add_invoice_id_to_orders(user)
   end
 
-  def self.add_invoice_id_to_orders_awaiting_payment(user)
+  def self.add_invoice_id_to_orders(user)
     orders = Order.where(user_id: user.id).payment
     invoice_id = self.create_invoice_id(orders)
     orders.each { |order| order.update_attributes(invoice_id: invoice_id) }
