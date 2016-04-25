@@ -1,12 +1,12 @@
 class PaypalPaymentService
   attr_reader :user, :orders
 
-  def initialize(user:, return_url:, orders:, notify_url:, invoice_id:)
+  def initialize(user:, return_url:, orders:, notify_url:, tracking_id:)
     @user       = user
     @return_url = return_url
     @orders     = orders
     @notify_url = notify_url
-    @invoice_id = invoice_id
+    @tracking_id = tracking_id
   end
 
   def process!
@@ -32,7 +32,7 @@ class PaypalPaymentService
       reverseAllParallelPaymentsOnError: true,
       senderEmail:        @user.paypals.find_by(default: true).email,
       returnUrl:          @return_url,
-      trackingID:        #add tracking id
+      trackingID:         @tracking_id
     )
   end
 
@@ -53,7 +53,6 @@ class PaypalPaymentService
         split_payment(order)
       end
     end
-
     merge_payments_for_same_receiver(@receivers)
   end
 
@@ -92,5 +91,4 @@ class PaypalPaymentService
   def paypal_api
     @paypal_api ||= PayPal::SDK::AdaptivePayments::API.new
   end
-
 end

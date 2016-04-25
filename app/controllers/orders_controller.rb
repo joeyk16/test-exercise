@@ -12,8 +12,8 @@ class OrdersController < ApplicationController
   end
 
   def create
-    if orders = Order.process_all_cart_items!(current_user)
-      make_paypal_payment
+    if Order.process_all_cart_items!(current_user)
+      make_paypal_payment!
     else
       flash[:danger] = paypal_payment.errors
       redirect_to user_carts_path(current_user)
@@ -28,8 +28,7 @@ class OrdersController < ApplicationController
 
   private
 
-  def make_paypal_payment
-    #Maybe delete invoice id. Paypal says WARN -- : undefined method `invoice='
+  def make_paypal_payment!
     paypal_payment = PaypalPaymentService.new(paypal_params)
     if paypal_payment.process!
       redirect_to paypal_payment.payment_url
@@ -45,7 +44,7 @@ class OrdersController < ApplicationController
       return_url: root_url,
       orders: current_user_orders_awaiting_payment,
       notify_url: paypal_notifications_url,
-      invoice_id: current_user_orders_awaiting_payment[0].invoice_id
+      tracking_id: current_user_orders_awaiting_payment[0].tracking_id
     }
   end
 

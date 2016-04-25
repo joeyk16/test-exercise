@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160423004615) do
+ActiveRecord::Schema.define(version: 20160425014405) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,10 +95,9 @@ ActiveRecord::Schema.define(version: 20160423004615) do
     t.string   "shipping_method"
     t.string   "shipping_address"
     t.string   "aasm_state"
-    t.string   "invoice_id"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.string   "paypal_pay_key"
+    t.integer  "tracking_id"
   end
 
   add_index "orders", ["product_id"], name: "index_orders_on_product_id", using: :btree
@@ -148,10 +147,10 @@ ActiveRecord::Schema.define(version: 20160423004615) do
 
   create_table "paypal_notifications", force: :cascade do |t|
     t.text     "notification"
-    t.string   "paypal_pay_key"
+    t.string   "tracking_id"
     t.string   "status"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "paypals", force: :cascade do |t|

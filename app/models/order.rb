@@ -70,16 +70,16 @@ class Order < ActiveRecord::Base
     add_invoice_id_to_orders(user)
   end
 
-  def self.add_invoice_id_to_orders(user)
+  def self.add_tracking_id_to_orders(user)
     orders = Order.where(user_id: user.id).payment
-    invoice_id = self.create_invoice_id(orders)
-    orders.each { |order| order.update_attributes(invoice_id: invoice_id) }
+    tracking_id = create_tracking_id(orders)
+    orders.each { |order| order.update_attributes(tracking_id: tracking_id) }
   end
 
-  def self.create_invoice_id(orders)
-    invoice_id = 0
-    orders.each { |order| invoice_id += order.id }
-    invoice_id
+  def self.create_tracking_id(orders)
+    tracking_id = 0
+    orders.each { |order| tracking_id += order.id }
+    tracking_id
   end
 
   def total_price
