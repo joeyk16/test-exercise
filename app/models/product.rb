@@ -34,7 +34,7 @@ class Product < ActiveRecord::Base
 
   def self.enough_quantity?(cart)
     product_size = cart.product.product_sizes.find_by(size_id: cart.size_id)
-    return true if product_size.quantity >= cart.quantity
+    product_size.quantity >= cart.quantity
   end
 
   def self.adjust_quantity!(cart)
