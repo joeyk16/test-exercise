@@ -1,7 +1,7 @@
 class CartsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_cart, only: [:show, :destroy]
-  before_action :correct_user, only: [:show, :destroy]
+  before_action :unauthorized_user, only: [:show, :destroy]
 
   def index
     @cart = Cart.where(user_id: current_user)
@@ -47,7 +47,7 @@ class CartsController < ApplicationController
     @cart = Cart.find_by(user_id: current_user)
   end
 
-  def correct_user
+  def unauthorized_user
     redirect_to root_path unless current_user == @cart.user
   end
 end

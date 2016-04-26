@@ -2,7 +2,7 @@ class OutfitsController < ApplicationController
   before_action :authenticate_user!, except: [:show, :outfits]
   before_action :set_outfit, only: [:show, :edit, :update, :destroy]
   before_action :user_has_paypal_account?, except: [:show, :index, :outfits]
-  before_action :correct_user?, only: [:edit, :update, :destroy]
+  before_action :unauthorized_user, only: [:edit, :update, :destroy]
 
   def index
     @outfits = current_user.outfits.all
@@ -58,7 +58,7 @@ class OutfitsController < ApplicationController
       params.require(:outfit).permit(:caption, :outfit_image, :user_id, :tag_list)
     end
 
-  def correct_user?
+  def unauthorized_user
     redirect_to root_path unless @outfit.user == current_user
   end
 end

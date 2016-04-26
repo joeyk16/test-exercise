@@ -15,6 +15,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def unauthorized_user(object)
+    redirect_to root_path unless current_user == @order.user
+  end
+
   protected
 
   def configure_permitted_parameters
