@@ -11,14 +11,8 @@ class PaypalPaymentService
 
   def process!
     @response = paypal_api.pay(build_request)
-
     result = !!(@response.success? && @response.payment_exec_status != "ERROR")
-    add_pay_key_to_orders if result
     result
-  end
-
-  def add_pay_key_to_orders
-    @orders.each { |order| order.update_attributes(paypal_pay_key: response.payKey) }
   end
 
   def build_request
@@ -32,7 +26,7 @@ class PaypalPaymentService
       reverseAllParallelPaymentsOnError: true,
       senderEmail:        @user.paypals.find_by(default: true).email,
       returnUrl:          @return_url,
-      trackingID:         @tracking_id
+      trackingId:         @tracking_id
     )
   end
 
