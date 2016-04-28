@@ -64,7 +64,7 @@
 
       <% if current_user %>
         <div class="productFilter productFilterLook2">
-          <%= render 'carts/form', order: @cart, product: @product, shipping: @shipping, sizes: @sizes %>
+          <%= render 'carts/form', order: @cart_item, product: @product, shipping: @shipping, sizes: @sizes %>
         </div>
       <% else %>
         <%= link_to "Sign in to buy", new_user_session_path %>

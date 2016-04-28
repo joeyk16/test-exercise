@@ -15,7 +15,7 @@ class OrdersController < ApplicationController
       make_paypal_payment!
     else
       flash[:danger] = paypal_payment.errors
-      redirect_to user_carts_path(current_user)
+      redirect_to user_cart_items_path(current_user)
     end
   end
 
@@ -33,7 +33,7 @@ class OrdersController < ApplicationController
       redirect_to paypal_payment.payment_url
     else
       flash[:danger] = paypal_payment.errors
-      redirect_to user_carts_path(current_user)
+      redirect_to user_cart_items_path(current_user)
     end
   end
 

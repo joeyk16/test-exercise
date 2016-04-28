@@ -1,0 +1,43 @@
+<h1>Confirm Cart</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th>Quantity</th>
+      <th>Price</th>
+      <th>Shipping</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><%= image_tag Product.find(@cart_item.product_id).product_images[0].product_image.url(:thumb) %><%= Product.find(@cart_item.product_id).title %><%= @cart_item.product.title %></td>
+        <td><%= @cart_item.quantity %></td>
+        <td>$<%= @cart_item.product.price %></td>
+        <td><%= @cart_item.shipping_method.name %> <%= @cart_item.shipping_method.price %></td>
+        <td><%= link_to "Remove product", user_cart_item_path(current_user, @cart_item), method: :delete %></td>
+      </tr>
+  </tbody>
+</table>
+
+<p>Cart Total: $<%= @cart_item.total_price(@cart_item.quantity) %></p>
+
+<h2>Shipping Address</h2>
+<% if @cart_item.user.addresses.find_by(default_devlivery_address: true) %>
+  <%= @cart_item.user.addresses.find_by(default_devlivery_address: true).address_to_s %>
+  <%= link_to "Change address", user_addresses_path(current_user) %>
+<% else %>
+  <%= link_to "Add Default Shipping Address", new_user_address_path(current_user) %>
+<% end %>
+
+<h2>Pay with paypal</h2>
+<% if @cart_item.user.paypals.any? %>
+  <%= @cart_item.user.paypals.find_by(default: true).email %>
+  <%= link_to "edit", edit_user_paypal_path(current_user, @cart_item.user.paypals.find_by(default: true)) %>
+<% else %>
+  <%= link_to "Add Paypal account", new_user_paypal_path(current_user) %>
+<% end %>
+
+<h1><%= link_to "Confirm And Pay", user_orders_path(current_user) %></h1>
+

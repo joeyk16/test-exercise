@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160426113607) do
+ActiveRecord::Schema.define(version: 20160428091900) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 20160426113607) do
 
   add_index "addresses", ["user_id"], name: "index_addresses_on_user_id", using: :btree
 
-  create_table "carts", force: :cascade do |t|
+  create_table "cart_items", force: :cascade do |t|
     t.integer  "quantity"
     t.integer  "product_id"
     t.integer  "outfit_id"
@@ -58,11 +58,11 @@ ActiveRecord::Schema.define(version: 20160426113607) do
     t.datetime "updated_at",         null: false
   end
 
-  add_index "carts", ["outfit_id"], name: "index_carts_on_outfit_id", using: :btree
-  add_index "carts", ["product_id"], name: "index_carts_on_product_id", using: :btree
-  add_index "carts", ["shipping_method_id"], name: "index_carts_on_shipping_method_id", using: :btree
-  add_index "carts", ["size_id"], name: "index_carts_on_size_id", using: :btree
-  add_index "carts", ["user_id"], name: "index_carts_on_user_id", using: :btree
+  add_index "cart_items", ["outfit_id"], name: "index_cart_items_on_outfit_id", using: :btree
+  add_index "cart_items", ["product_id"], name: "index_cart_items_on_product_id", using: :btree
+  add_index "cart_items", ["shipping_method_id"], name: "index_cart_items_on_shipping_method_id", using: :btree
+  add_index "cart_items", ["size_id"], name: "index_cart_items_on_size_id", using: :btree
+  add_index "cart_items", ["user_id"], name: "index_cart_items_on_user_id", using: :btree
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"

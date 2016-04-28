@@ -37,13 +37,13 @@ class Order < ActiveRecord::Base
   def self.process_all_cart_items!(user)
     return false unless enough_quantity?(user)
     create_orders!(user)
-    # user.carts.destroy_all
+    # user.cart_items.destroy_all
   end
 
   def self.enough_quantity?(user)
-    Cart.where(user: user).each do |cart_item|
-      product_size = ProductSize.find_by(product_id: cart_item.product_id, size_id: cart_item.size_id)
-      if product_size.quantity > cart_item.quantity
+    CartItem.where(user: user).each do |cart_item_item|
+      product_size = ProductSize.find_by(product_id: cart_item_item.product_id, size_id: cart_item_item.size_id)
+      if product_size.quantity > cart_item_item.quantity
         true
       else
         errors.add(:base, "#{product.title} doesn't have enough quantity")
@@ -53,18 +53,18 @@ class Order < ActiveRecord::Base
   end
 
   def self.create_orders!(user)
-    Cart.where(user: user).each do |cart_item|
+    CartItem.where(user: user).each do |cart_item_item|
       Order.create(
         user_id: user.id,
-        outfit_user_id: cart_item.outfit.user.id,
-        product_id: cart_item.product_id,
-        product_name: cart_item.product.title,
-        product_price_in_cents: cart_item.product.price_in_cents,
-        size: cart_item.size.title,
-        size_id: cart_item.size_id,
-        quantity: cart_item.quantity,
-        shipping_price_in_cents: cart_item.shipping_method.price_in_cents,
-        shipping_method: cart_item.shipping_method.name,
+        outfit_user_id: cart_item_item.outfit.user.id,
+        product_id: cart_item_item.product_id,
+        product_name: cart_item_item.product.title,
+        product_price_in_cents: cart_item_item.product.price_in_cents,
+        size: cart_item_item.size.title,
+        size_id: cart_item_item.size_id,
+        quantity: cart_item_item.quantity,
+        shipping_price_in_cents: cart_item_item.shipping_method.price_in_cents,
+        shipping_method: cart_item_item.shipping_method.name,
         shipping_address: user.addresses.find_by(default_devlivery_address: true).address_to_s
       )
     end

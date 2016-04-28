@@ -1,4 +1,4 @@
-<%= simple_form_for :cart, url: user_carts_path(current_user), method: :post do |f|%>
+<%= simple_form_for :cart, url: user_cart_items_path(current_user), method: :post do |f|%>
   <%= f.hidden_field :user_id, value: current_user.id %>
   <%= f.hidden_field :product_id, value: product.id %>
   <%= f.hidden_field :outfit_id, value: params[:outfit_id] %>

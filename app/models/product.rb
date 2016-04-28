@@ -7,7 +7,7 @@ class Product < ActiveRecord::Base
   has_many :outfit_products
   has_many :outfits, through: :outfit_products
   has_many :product_sizes
-  has_many :carts, dependent: :destroy
+  has_many :cart_items, dependent: :destroy
   has_many :product_images, dependent: :destroy
 
   validates :title, presence: true, length: { maximum: 30 }
@@ -32,14 +32,14 @@ class Product < ActiveRecord::Base
     price_in_cents / 100.00
   end
 
-  def self.enough_quantity?(cart)
-    product_size = cart.product.product_sizes.find_by(size_id: cart.size_id)
-    product_size.quantity >= cart.quantity
+  def self.enough_quantity?(cart_item)
+    product_size = cart_item.product.product_sizes.find_by(size_id: cart_item.size_id)
+    product_size.quantity >= cart_item.quantity
   end
 
-  def self.adjust_quantity!(cart)
-    product_size = cart.product.product_sizes.find_by(size_id: cart.size_id)
-    quantity = cart.quantity
+  def self.adjust_quantity!(cart_item)
+    product_size = cart_item.product.product_sizes.find_by(size_id: cart_item.size_id)
+    quantity = cart_item.quantity
     if product_size.quantity >= quantity
       product_size.quantity -= quantity
     else

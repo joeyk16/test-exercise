@@ -1,4 +1,4 @@
-class Cart < ActiveRecord::Base
+class CartItem < ActiveRecord::Base
   belongs_to :product
   belongs_to :outfit
   belongs_to :size
@@ -23,7 +23,7 @@ class Cart < ActiveRecord::Base
   private
 
   def user_cant_add_own_product
-    errors.add(:base, "Can't add own product to cart") if user == product.user
+    errors.add(:base, "Can't add own product to cart_item") if user == product.user
   end
 
   def product_has_enough_quantity

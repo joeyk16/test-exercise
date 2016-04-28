@@ -20,7 +20,7 @@ Rails.application.routes.draw do
     resources :paypals, except: [:index]
     resources :orders, except: [:new, :show]
     resources :shipping_methods, only: [:new, :create, :edit, :update, :destroy]
-    resources :carts, only: [:create, :index, :show, :destroy]
+    resources :cart_items, only: [:create, :index, :show, :destroy]
     get 'users_outfit_products'  => 'outfit_products#users_outfit_products'
     delete 'outfit_products'  => 'outfit_products#destroy'
     get 'approve_outfit_products' => 'outfit_products#approve'
