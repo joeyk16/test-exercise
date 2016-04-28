@@ -68,19 +68,19 @@ class Order < ActiveRecord::Base
         shipping_address: user.addresses.find_by(default_devlivery_address: true).address_to_s
       )
     end
-    add_tracking_id_to_orders(user)
+    add_tracking_code_to_orders(user)
   end
 
-  def self.add_tracking_id_to_orders(user)
+  def self.add_tracking_code_to_orders(user)
     orders = Order.where(user_id: user.id).payment
-    tracking_id = create_tracking_id(orders)
-    orders.each { |order| order.update_attributes(tracking_id: tracking_id) }
+    tracking_code = create_tracking_code(orders)
+    orders.each { |order| order.update_attributes(tracking_code: tracking_code) }
   end
 
-  def self.create_tracking_id(orders)
-    tracking_id = 0
-    orders.each { |order| tracking_id += order.id }
-    tracking_id
+  def self.create_tracking_code(orders)
+    tracking_code = 0
+    orders.each { |order| tracking_code += order.id }
+    tracking_code
   end
 
   def total_price

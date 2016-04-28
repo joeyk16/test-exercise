@@ -1,12 +1,12 @@
 class PaypalPaymentService
   attr_reader :user, :orders
 
-  def initialize(user:, return_url:, orders:, notify_url:, tracking_id:)
+  def initialize(user:, return_url:, orders:, notify_url:, tracking_code:)
     @user       = user
     @return_url = return_url
     @orders     = orders
     @notify_url = notify_url
-    @tracking_id = tracking_id
+    @tracking_code = tracking_code
   end
 
   def process!
@@ -26,7 +26,7 @@ class PaypalPaymentService
       reverseAllParallelPaymentsOnError: true,
       senderEmail:        @user.paypals.find_by(default: true).email,
       returnUrl:          @return_url,
-      trackingId:         @tracking_id
+      trackingId:         @tracking_code
     )
   end
 

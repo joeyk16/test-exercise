@@ -7,7 +7,7 @@ class PaypalNotification < ActiveRecord::Base
   private
 
   def update_order!
-    orders = Order.where(tracking_id: self.tracking_id)
+    orders = Order.where(tracking_code: self.tracking_code)
     if status == "Completed"
       orders.each do |order|
         order.paid

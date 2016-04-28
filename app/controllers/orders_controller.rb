@@ -43,7 +43,7 @@ class OrdersController < ApplicationController
       return_url: root_url,
       orders: current_user_orders_awaiting_payment,
       notify_url: paypal_notifications_url,
-      tracking_id: current_user_orders_awaiting_payment[0].tracking_id
+      tracking_code: current_user_orders_awaiting_payment[0].tracking_code
     }
   end
 

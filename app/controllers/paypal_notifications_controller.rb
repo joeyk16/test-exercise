@@ -4,7 +4,7 @@ class PaypalNotificationsController < ApplicationController
   def create
     PaypalNotification.create(
       notification: params,
-      tracking_id: params[:txn_id],
+      tracking_code: params[:txn_id],
       status: params[:payment_status],
     )
     render :nothing => true

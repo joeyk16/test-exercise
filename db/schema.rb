@@ -97,7 +97,7 @@ ActiveRecord::Schema.define(version: 20160426113607) do
     t.string   "aasm_state"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
-    t.integer  "tracking_id"
+    t.integer  "tracking_code"
     t.integer  "size_id"
   end
 
@@ -148,10 +148,10 @@ ActiveRecord::Schema.define(version: 20160426113607) do
 
   create_table "paypal_notifications", force: :cascade do |t|
     t.text     "notification"
-    t.string   "tracking_id"
+    t.string   "tracking_code"
     t.string   "status"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "paypals", force: :cascade do |t|
