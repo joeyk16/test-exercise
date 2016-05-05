@@ -32,7 +32,7 @@ class OrdersController < ApplicationController
     if paypal_payment.process!
       redirect_to paypal_payment.payment_url
     else
-      flash[:danger] = paypal_payment.errors
+      flash[:danger] = "Your order did not process"
       redirect_to user_cart_items_path(current_user)
     end
   end
