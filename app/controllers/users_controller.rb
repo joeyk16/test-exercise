@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!, except: [:show]
   before_action :set_user, only: [:show, :update, :edit]
-  before_action :unauthorized_user, only: [:edit, :update]
+  before_action :redirect_unauthorized_user, only: [:edit, :update]
   before_action :admin_user, only: [:create, :new, :destroy, :index]
 
   def index
@@ -101,7 +101,7 @@ class UsersController < ApplicationController
     )
   end
 
-  def unauthorized_user
+  def redirect_unauthorized_user
     redirect_to root_path unless current_user == @user
   end
 end

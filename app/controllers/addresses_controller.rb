@@ -1,7 +1,7 @@
 class AddressesController < ApplicationController
   before_action :set_address,   only: [:edit, :update, :destroy]
   before_action :authenticate_user!
-  before_action :unauthorized_user, only: [:edit, :update, :destroy]
+  before_action :redirect_unauthorized_user, only: [:edit, :update, :destroy]
 
   def index
     @addresses = Address.where(user: current_user)
@@ -60,7 +60,7 @@ class AddressesController < ApplicationController
     )
   end
 
-  def unauthorized_user
+  def redirect_unauthorized_user
     redirect_to root_path unless current_user == @address.user
   end
 end

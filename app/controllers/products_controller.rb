@@ -2,7 +2,7 @@ class ProductsController < ApplicationController
   before_action :authenticate_user!, except: [:show, :index, :home]
   before_action :set_product, only: [:edit, :show, :update, :destroy]
   before_action :user_has_paypal_account?, except: [:show, :index, :home]
-  before_action :unauthorized_user, only: [:edit, :update, :destroy]
+  before_action :redirect_unauthorized_user, only: [:edit, :update, :destroy]
 
   def index
     if params[:tag]
@@ -99,7 +99,7 @@ class ProductsController < ApplicationController
     )
   end
 
-  def unauthorized_user
+  def redirect_unauthorized_user
     redirect_to root_path unless @product.user == current_user
   end
 end

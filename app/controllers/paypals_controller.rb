@@ -1,7 +1,7 @@
 class PaypalsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_paypals,   only: [:edit, :update, :destroy]
-  before_action :unauthorized_user, only: [:edit, :update, :destroy]
+  before_action :redirect_unauthorized_user, only: [:edit, :update, :destroy]
 
   def new
     @paypal = Paypal.new
@@ -50,7 +50,7 @@ class PaypalsController < ApplicationController
     )
   end
 
-  def unauthorized_user
+  def redirect_unauthorized_user
     redirect_to root_path unless current_user == @paypal.user
   end
 end
