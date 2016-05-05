@@ -3,7 +3,8 @@
   <table>
     <thead>
       <tr>
-        <th>Item</th>
+        <th>Image</th>
+        <th>Title</th>
         <th>Quantity</th>
         <th>Price</th>
         <th>Shipping</th>
@@ -14,12 +15,13 @@
     <tbody>
       <% @cart_item.each do |order| %>
         <tr>
-          <td><%= image_tag Product.find(order.product_id).product_images[0].product_image.url(:thumb) %><%= Product.find(order.product_id).title %></td>
+          <td><%= image_tag Product.find(order.product_id).product_images[0].product_image.url(:thumb) %></td>
+          <td><%= Product.find(order.product_id).title %></td>
           <td><%= order.quantity %></td>
           <td>$<%= Product.find(order.product_id).price %></td>
           <td><%= ShippingMethod.find(order.shipping_method_id).name %><%= ShippingMethod.find(order.shipping_method_id).price %></td>
           <td>$<%= order.item_price(order.quantity) %></td>
-          <td><%=link_to "Remove product", user_cart_item_path(current_user, @cart_item), method: :delete %> <%=link_to "Buy Now", user_cart_item_path(current_user, @cart_item) %></td>
+          <td><%=link_to "Remove product", user_cart_item_path(current_user, @cart_item), method: :delete %></td>
         </tr>
       <% end %>
     </tbody>
