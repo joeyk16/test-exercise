@@ -18,6 +18,10 @@ class Order < ActiveRecord::Base
     state :complete
 
     event :paid do
+      before do
+        drop_quantity!
+      end
+
       transitions :from => :payment, :to => :processing
     end
 
@@ -84,13 +88,20 @@ class Order < ActiveRecord::Base
   end
 
   def total_price
-    total = 0
-    total += (product_price_in_cents + shipping_price_in_cents)
-    total / 100.00
+    (product_price_in_cents + shipping_price_in_cents) / 100.00
   end
 
   def drop_quantity!
     product_size = product.product_sizes.find_by(size_id: size_id)
     product_size.quantity -= quantity
+    #TODO: Notfiy seller if quantity is =< 0
+  end
+
+  def user_owns_outfit?
+    product.user.id == outfit_user_id
+  end
+
+  def outfit_user
+    User.find(outfit_user_id)
   end
 end

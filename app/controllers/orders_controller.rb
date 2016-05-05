@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_orders, only: [:edit, :destroy]
-  before_action :unauthorized_user, only: [:destroy]
+  before_action :redirect_unauthorized_user, only: [:destroy]
 
   def index
     @orders = Order.where(user: current_user)
@@ -28,7 +28,7 @@ class OrdersController < ApplicationController
   private
 
   def make_paypal_payment!
-    paypal_payment = PaypalPaymentService.new(paypal_params)
+    paypal_payment = PaypalGateway.new(paypal_params)
     if paypal_payment.process!
       redirect_to paypal_payment.payment_url
     else
@@ -41,13 +41,13 @@ class OrdersController < ApplicationController
     {
       user: current_user,
       return_url: root_url,
-      orders: current_user_orders_awaiting_payment,
+      orders: orders_awaiting_payment,
       notify_url: paypal_notifications_url,
-      tracking_code: current_user_orders_awaiting_payment[0].tracking_code
+      tracking_code: orders_awaiting_payment[0].tracking_code
     }
   end
 
-  def current_user_orders_awaiting_payment
+  def orders_awaiting_payment
     Order.where(user_id: current_user.id).payment
   end
 
@@ -62,7 +62,7 @@ class OrdersController < ApplicationController
     )
   end
 
-  def unauthorized_user
+  def redirect_unauthorized_user
     redirect_to root_path unless current_user == @order.user
   end
 end

@@ -24,4 +24,8 @@ class User < ActiveRecord::Base
   validates_attachment_content_type :avatar, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
   has_attached_file :header_image, styles: { large: "1170x266" }
   validates_attachment_content_type :header_image, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
+
+  def paypal_email
+    paypals.find_by(default: true).email
+  end
 end
