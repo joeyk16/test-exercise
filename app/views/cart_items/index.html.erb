@@ -1,5 +1,5 @@
 <h1>Cart</h1>
-<% if @cart_item.any? %>
+<% if @cart_items.any? %>
   <table>
     <thead>
       <tr>
@@ -13,7 +13,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @cart_item.each do |order| %>
+      <% @cart_items.each do |order| %>
         <tr>
           <td><%= image_tag Product.find(order.product_id).product_images[0].product_image.url(:thumb) %></td>
           <td><%= Product.find(order.product_id).title %></td>
@@ -21,7 +21,7 @@
           <td>$<%= Product.find(order.product_id).price %></td>
           <td><%= ShippingMethod.find(order.shipping_method_id).name %><%= ShippingMethod.find(order.shipping_method_id).price %></td>
           <td>$<%= order.item_price(order.quantity) %></td>
-          <td><%=link_to "Remove product", user_cart_item_path(current_user, @cart_item), method: :delete %></td>
+          <td><%=link_to "Remove product", user_cart_item_path(current_user, @cart_items), method: :delete %></td>
         </tr>
       <% end %>
     </tbody>

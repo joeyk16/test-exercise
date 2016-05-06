@@ -4,7 +4,7 @@ class CartItemsController < ApplicationController
   before_action :redirect_unauthorized_user, only: [:show, :destroy]
 
   def index
-    @cart_item = CartItem.where(user_id: current_user)
+    @cart_items = CartItem.where(user_id: current_user)
   end
 
   def create
@@ -17,11 +17,9 @@ class CartItemsController < ApplicationController
     redirect_to :back
   end
 
-  def show
-  end
-
   def destroy
     if @cart_item.delete
+      binding.pry
       redirect_to user_cart_items_path(current_user)
       flash[:success] = "CartItem has been deleted"
     else
@@ -48,6 +46,7 @@ class CartItemsController < ApplicationController
   end
 
   def redirect_unauthorized_user
+    binding.pry
     redirect_to root_path unless current_user == @cart_item.user
   end
 end

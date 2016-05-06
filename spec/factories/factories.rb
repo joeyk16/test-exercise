@@ -20,12 +20,8 @@ FactoryGirl.define do
     size_id Faker::Number.number(2)
   end
 
-  factory :size do
-    title
-  end
-
   factory :category do
-    name
+    name { Faker::Lorem.word }
   end
 
   factory :outfit_product do
@@ -41,12 +37,31 @@ FactoryGirl.define do
   end
 
   factory :product do
-    sequence(:title) { |n| "title#{n}" }
+    title { Faker::Lorem.word }
     price_in_cents Faker::Number.number(4)
     description Faker::Lorem.sentence
     user_id Faker::Number.number(2)
     category
     user
+
+    after(:create) do |product|
+      size = create(:size)
+      create(:product_size, product: product, size_id: size.id, quantity: Faker::Number.number(2))
+    end
+  end
+
+  factory :cart_item do
+    quantity Faker::Number.number(1)
+    product
+    outfit
+    size
+    user
+    shipping_method
+  end
+
+  factory :size do
+    title Faker::Lorem.word
+    category
   end
 
   factory :product_size do
