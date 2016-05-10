@@ -4,14 +4,16 @@
       <th>Product</th>
       <th>Price</th>
       <th>Status</th>
+      <th>Action</th>
     </tr>
   </thead>
   <tbody>
     <% orders.each do |order| %>
       <tr>
-        <td><%= order.product.title %></td>
-        <td><%= order.product.title %></td>
+        <td><%= image_tag order.product.thumnb_image %><%= order.product_name %></td>
+        <td><%= order.total_price  %></td>
         <td><%= order.aasm_state %></td>
+        <td><%= link_to "Summary", user_order_path(current_user, order) %></td>
       </tr>
     <% end %>
   </tbody>

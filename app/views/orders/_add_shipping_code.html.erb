@@ -1,0 +1,4 @@
+<%= simple_form_for order, url: user_add_shipping_code_path(current_user, order), method: :patch do |f| %>
+  <%= f.input :shipping_code %>
+  <%= f.button :submit, "Add Shipping Code", class: "btn btn-primary" %>
+<% end %>

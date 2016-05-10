@@ -1,0 +1,4 @@
+<h1>Edit Order</h1>
+<%= simple_form_for @order, url: user_order_path(current_user, @order), method: :patch do |f| %>
+  <%= render 'form', f: f %>
+<% end %>

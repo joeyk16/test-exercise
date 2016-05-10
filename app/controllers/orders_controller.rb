@@ -1,13 +1,27 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_orders, only: [:edit, :destroy]
+  before_action :set_orders, only: [:edit, :destroy, :update, :add_shipping_code,
+                                    :shipped!, :cancel!, :show]
   before_action :redirect_unauthorized_user, only: [:destroy]
 
   def index
     @orders = Order.where(user: current_user)
   end
 
+  def show
+  end
+
   def edit
+  end
+
+  def update
+    if @order.update(order_params)
+      redirect_to user_orders_path(current_user)
+      flash[:success] = "Order was successfully updated"
+    else
+      render "edit"
+      flash[:danger] = "Order didn't update"
+    end
   end
 
   def create
@@ -23,6 +37,33 @@ class OrdersController < ApplicationController
     @order.destroy
     flash[:success] = "Order deleted"
     redirect_to user_my_account_path(current_user)
+  end
+
+  def add_shipping_code
+    if @order.update(order_params)
+      flash[:success] = "Shipping code added"
+    else
+      flash[:danger] = "Couldn't add shipping code"
+    end
+    redirect_to :back
+  end
+
+  def ship!
+    if @order.shipped!
+      flash[:success] = "Status changed to shipped"
+    else
+      flash[:danger] = "Couldn't change status"
+    end
+    redirect_to :back
+  end
+
+  def cancel!
+    if @order.cancel!
+      flash[:success] = "Order canceled"
+    else
+      flash[:danger] = "Couldn't change status"
+    end
+    redirect_to :back
   end
 
   private
@@ -52,13 +93,13 @@ class OrdersController < ApplicationController
   end
 
   def set_orders
-    @order = Order.find(params[:id])
+    @order = Order.find(params[:id] || params[:format])
   end
 
   def order_params
     params.require(:order).permit(:user_id, :outfit_user_id, :product_id, :product_name,
       :product_price_in_cents, :size, :quantity, :shipping_price_in_cents,
-      :shipping_method, :shipping_address
+      :shipping_method, :shipping_address, :shipping_code
     )
   end
 

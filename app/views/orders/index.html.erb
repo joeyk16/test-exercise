@@ -2,3 +2,25 @@
   <%= render 'table', orders: @orders %>
 
 <h1>Orders To Ship</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Price</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% Order.where(product_user_id: current_user.id).each do |order| %>
+      <tr>
+        <td><%= image_tag order.product.thumnb_image %><%= order.product_name %></td>
+        <td><%= order.total_price %></td>
+        <td><%= order.aasm_state %></td>
+        <td>
+          <%= link_to "Summary", user_order_path(current_user, order) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

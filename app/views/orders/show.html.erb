@@ -1,0 +1,23 @@
+<h1>Order Summary</h1>
+
+<p>
+  <%= image_tag @order.product.thumnb_image if @order.product.thumnb_image %>
+  <%= @order.product_name %>
+</p>
+<p><%= @order.shipping_method %></p>
+<p><%= @order.total_price %></p>
+<p><%= @order.size %></p>
+<p><%= @order.quantity %></p>
+<p><%= @order.shipping_address %></p>
+<p><%= @order.aasm_state %></p>
+
+<% if current_user == @order.product_user_id %>
+  <%= render 'add_shipping_code', order: @order %>
+<% else %>
+  <p>Shipping code: <%= @order.shipping_code %></p>
+<% end %>
+
+<%= link_to "Shipped", user_order_shipped_path(current_user, @order, id: @order.id) %>
+<%= link_to "Cancel", user_order_canceled_path(current_user, @order, id: @order.id) %>
+
+

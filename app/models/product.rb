@@ -46,4 +46,8 @@ class Product < ActiveRecord::Base
       errors.add(:base, "Product doesn't have enough quantity")
     end
   end
+
+  def thumnb_image
+    product_images[0].product_image.url(:thumb)
+  end
 end

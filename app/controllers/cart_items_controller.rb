@@ -19,7 +19,6 @@ class CartItemsController < ApplicationController
 
   def destroy
     if @cart_item.delete
-      binding.pry
       redirect_to user_cart_items_path(current_user)
       flash[:success] = "CartItem has been deleted"
     else
@@ -46,7 +45,6 @@ class CartItemsController < ApplicationController
   end
 
   def redirect_unauthorized_user
-    binding.pry
     redirect_to root_path unless current_user == @cart_item.user
   end
 end
