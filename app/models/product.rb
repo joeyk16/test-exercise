@@ -47,7 +47,7 @@ class Product < ActiveRecord::Base
     end
   end
 
-  def thumnb_image
+  def thumb_image
     product_images[0].product_image.url(:thumb)
   end
 end

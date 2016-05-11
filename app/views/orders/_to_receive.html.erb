@@ -1,0 +1,28 @@
+<% if orders.any? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Price</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% orders.each do |order| %>
+        <tr>
+          <td>
+            <%= image_tag order.product.thumb_image %>
+            <%= order.product_name %>
+          </td>
+          <td><%= order.total_price  %></td>
+          <td><%= order.aasm_state %></td>
+          <td><%= link_to "Summary", user_order_path(current_user, order) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>There are no orders to receive</p>
+<% end %>
+

@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_orders, only: [:edit, :destroy, :update, :add_shipping_code,
-                                    :shipped!, :cancel!, :show]
+                                    :ship!, :cancel!, :show, :complete!]
   before_action :redirect_unauthorized_user, only: [:destroy]
 
   def index
@@ -60,6 +60,15 @@ class OrdersController < ApplicationController
   def cancel!
     if @order.cancel!
       flash[:success] = "Order canceled"
+    else
+      flash[:danger] = "Couldn't change status"
+    end
+    redirect_to :back
+  end
+
+  def complete!
+    if @order.complete!
+      flash[:success] = "Order completed"
     else
       flash[:danger] = "Couldn't change status"
     end

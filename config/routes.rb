@@ -19,8 +19,9 @@ Rails.application.routes.draw do
     resources :addresses, only: [:new, :create, :edit, :update, :destroy]
     resources :paypals, except: [:index]
     resources :orders, except: [:new] do
-      get 'shipped!' => 'orders#ship!', as: :shipped
-      get 'canceled!' => 'orders#cancel!', as: :canceled
+      get 'ship' => 'orders#ship!', as: :ship
+      get 'cancel' => 'orders#cancel!', as: :cancel
+      get 'complete' => 'orders#complete!', as: :complete
     end
     patch 'add_shipping_code' => 'orders#add_shipping_code'
     resources :shipping_methods, only: [:new, :create, :edit, :update, :destroy]

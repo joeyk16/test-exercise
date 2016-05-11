@@ -1,7 +1,7 @@
 <h1>Order Summary</h1>
 
 <p>
-  <%= image_tag @order.product.thumnb_image if @order.product.thumnb_image %>
+  <%= image_tag @order.product.thumb_image if @order.product.thumb_image %>
   <%= @order.product_name %>
 </p>
 <p><%= @order.shipping_method %></p>
@@ -11,13 +11,16 @@
 <p><%= @order.shipping_address %></p>
 <p><%= @order.aasm_state %></p>
 
-<% if current_user == @order.product_user_id %>
+<% if current_user.id == @order.product_user_id && !@order.complete? %>
+  <%= link_to "Shipped", user_order_ship_path(current_user, @order, id: @order.id) %>
+  <%= link_to "Cancel", user_order_cancel_path(current_user, @order, id: @order.id) %>
   <%= render 'add_shipping_code', order: @order %>
 <% else %>
   <p>Shipping code: <%= @order.shipping_code %></p>
+  <% if @order.shipped? %>
+    <%= link_to "Order Received", user_order_complete_path(current_user, @order, id: @order.id) %>
+  <% end %>
 <% end %>
 
-<%= link_to "Shipped", user_order_shipped_path(current_user, @order, id: @order.id) %>
-<%= link_to "Cancel", user_order_canceled_path(current_user, @order, id: @order.id) %>
 
 
