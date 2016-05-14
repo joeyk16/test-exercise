@@ -19,7 +19,7 @@ class Order < ActiveRecord::Base
 
     event :paid do
       before do
-        drop_quantity!
+        drop_product_quantity!
       end
 
       transitions :from => :payment, :to => :processing
@@ -42,7 +42,7 @@ class Order < ActiveRecord::Base
     (product_price_in_cents + shipping_price_in_cents) / 100.00
   end
 
-  def drop_quantity!
+  def drop_product_quantity!
     product_size = product.product_sizes.find_by(size_id: size_id)
     product_size.quantity -= quantity
     #TODO: Notfiy seller if quantity is =< 0
@@ -57,7 +57,7 @@ class Order < ActiveRecord::Base
   end
 
   class << self
-    def process_all_cart_items!(user)
+    def process_cart_items!(user)
       return false unless enough_quantity?(user)
       create_orders!(user)
       user.cart_items.destroy_all
@@ -97,14 +97,8 @@ class Order < ActiveRecord::Base
 
     def add_tracking_code_to_orders(user)
       orders = Order.where(user_id: user.id).payment
-      tracking_code = create_tracking_code(orders)
+      tracking_code = SecureRandom.hex(5)
       orders.each { |order| order.update_attributes(tracking_code: tracking_code) }
-    end
-
-    def create_tracking_code(orders)
-      tracking_code = 0
-      orders.each { |order| tracking_code += order.id }
-      tracking_code
     end
   end
 end

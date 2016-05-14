@@ -25,7 +25,7 @@ Rails.application.routes.draw do
     end
     patch 'add_shipping_code' => 'orders#add_shipping_code'
     resources :shipping_methods, only: [:new, :create, :edit, :update, :destroy]
-    resources :cart_items, only: [:create, :index, :show, :destroy]
+    resources :cart_items, only: [:create, :index, :destroy]
     get 'users_outfit_products'  => 'outfit_products#users_outfit_products'
     delete 'outfit_products'  => 'outfit_products#destroy'
     get 'approve_outfit_products' => 'outfit_products#approve'

@@ -1,10 +1,10 @@
 class PaypalGateway
-  def initialize(user:, orders:, return_url:, notify_url:, tracking_code:)
+  def initialize(user:, orders:, return_url:, notify_url:)
     @user          = user
     @orders        = orders
     @return_url    = return_url
     @notify_url    = notify_url
-    @tracking_code = tracking_code
+    @tracking_code = orders.first.tracking_code
   end
 
   def process!
@@ -56,8 +56,8 @@ class PaypalGateway
   end
 
   def merge_same_receivers(receivers)
-    receivers.group_by {|h| h[:email]}.map do |k, v|
-      {email: k, amount: v.inject(0){|s,h| s + h[:amount] } }
+    receivers.group_by { |receiver| receiver[:email] }.map do |email, amount|
+      { email: email, amount: amount.inject(0) { |s,receiver| s + receiver[:amount] } }
     end
   end
 

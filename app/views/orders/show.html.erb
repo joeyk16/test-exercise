@@ -12,13 +12,13 @@
 <p><%= @order.aasm_state %></p>
 
 <% if current_user.id == @order.product_user_id && !@order.complete? %>
-  <%= link_to "Shipped", user_order_ship_path(current_user, @order, id: @order.id) %>
-  <%= link_to "Cancel", user_order_cancel_path(current_user, @order, id: @order.id) %>
+  <%= link_to "Shipped", user_order_ship_path(current_user, @order, id: @order.id) if @order.may_shipped? %>
+  <%= link_to "Cancel", user_order_cancel_path(current_user, @order, id: @order.id) if @order.may_cancel?  %>
   <%= render 'add_shipping_code', order: @order %>
 <% else %>
   <p>Shipping code: <%= @order.shipping_code %></p>
   <% if @order.shipped? %>
-    <%= link_to "Order Received", user_order_complete_path(current_user, @order, id: @order.id) %>
+    <%= link_to "Order Received", user_order_complete_path(current_user, @order, id: @order.id) if @order.may_complete? %>
   <% end %>
 <% end %>
 

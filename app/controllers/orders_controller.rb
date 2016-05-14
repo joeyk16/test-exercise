@@ -1,8 +1,7 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_orders, only: [:edit, :destroy, :update, :add_shipping_code,
-                                    :ship!, :cancel!, :show, :complete!]
-  before_action :redirect_unauthorized_user, only: [:destroy]
+  before_action :set_orders, except: [:index, :create]
+  before_action :redirect_unauthorized_user, except: [:index, :create]
 
   def index
     @orders = Order.where(user: current_user)
@@ -25,7 +24,7 @@ class OrdersController < ApplicationController
   end
 
   def create
-    if Order.process_all_cart_items!(current_user)
+    if Order.process_cart_items!(current_user)
       make_paypal_payment!
     else
       flash[:danger] = paypal_payment.errors
@@ -49,28 +48,31 @@ class OrdersController < ApplicationController
   end
 
   def ship!
-    if @order.shipped!
+    if @order.may_shipped?
+      @order.shipped!
       flash[:success] = "Status changed to shipped"
     else
-      flash[:danger] = "Couldn't change status"
+      flash[:danger] = "Can't ship order while #{@order.aasm_state}"
     end
     redirect_to :back
   end
 
   def cancel!
-    if @order.cancel!
+    if @order.may_cancel?
+      @order.cancel!
       flash[:success] = "Order canceled"
     else
-      flash[:danger] = "Couldn't change status"
+      flash[:danger] = "Can't cancel order while #{@order.aasm_state}"
     end
     redirect_to :back
   end
 
   def complete!
-    if @order.complete!
+    if @order.may_complete?
+      @order.complete!
       flash[:success] = "Order completed"
     else
-      flash[:danger] = "Couldn't change status"
+      flash[:danger] = "Can't complete order while #{@order.aasm_state}"
     end
     redirect_to :back
   end
@@ -92,13 +94,12 @@ class OrdersController < ApplicationController
       user: current_user,
       return_url: root_url,
       orders: orders_awaiting_payment,
-      notify_url: paypal_notifications_url,
-      tracking_code: orders_awaiting_payment[0].tracking_code
+      notify_url: paypal_notifications_url
     }
   end
 
   def orders_awaiting_payment
-    Order.where(user_id: current_user.id).payment
+    Order.where(user: current_user).payment
   end
 
   def set_orders
@@ -113,6 +114,6 @@ class OrdersController < ApplicationController
   end
 
   def redirect_unauthorized_user
-    redirect_to root_path unless current_user == @order.user
+    redirect_to root_path unless (current_user == @order.user) || (current_user.id == @order.product_user_id)
   end
 end
