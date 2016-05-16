@@ -23,7 +23,7 @@ class CartItemsController < ApplicationController
     else
       flash[:danger] =  "CartItem wasn't deleted"
     end
-      redirect_to user_cart_items_path(current_user)
+    redirect_to user_cart_items_path(current_user)
   end
 
   private
