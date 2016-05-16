@@ -15,7 +15,7 @@ class PaypalGateway
   def build_request
     paypal_api.build_pay(
       actionType:         "PAY",
-      cancelUrl:          "http://localhost:3000/samples/adaptive_payments/pay",
+      cancelUrl:          return_url,
       currencyCode:       "USD",
       feesPayer:          "SENDER",
       senderEmail:        user.paypal_email,
@@ -23,7 +23,8 @@ class PaypalGateway
       ipnNotificationUrl: notify_url,
       trackingId:         tracking_code,
       receiverList:       { receiver: receivers },
-      reverseAllParallelPaymentsOnError: true)
+      reverseAllParallelPaymentsOnError: true
+    )
   end
 
   def payment_url
