@@ -4,7 +4,7 @@ class OrdersController < ApplicationController
   before_action :redirect_unauthorized_user, except: [:index, :create]
 
   def index
-    @orders = Order.where(user: current_user)
+    @orders = Order.where(user: current_user).order('created_at DESC')
   end
 
   def show

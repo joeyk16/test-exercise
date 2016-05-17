@@ -21,7 +21,7 @@ FactoryGirl.define do
   end
 
   factory :category do
-    name { Faker::Lorem.word }
+    name
   end
 
   factory :outfit_product do
@@ -59,17 +59,46 @@ FactoryGirl.define do
     shipping_method
   end
 
+  factory :order do
+    user
+    quantity 1
+    aasm_state "payment"
+    tracking_code Faker::Lorem.word
+    shipping_code Faker::Lorem.word
+
+    after(:build) do |order|
+      size = create(:size)
+      outfit = create(:outfit)
+      address = create(:address, user: order.user)
+      product = create(:product)
+      shipping_method = create(:shipping_method, user: product.user)
+
+      order.outfit_user_id = outfit.user.id
+      order.size = size.title
+      order.size_id = size.id
+      order.product_id = product.id
+      order.shipping_price_in_cents = shipping_method.price_in_cents
+      order.shipping_method = shipping_method.name
+      order.shipping_address = address.address_to_s
+      order.product_name = product.title
+      order.product_price_in_cents = product.price_in_cents
+      order.product_user_id = product.user.id
+      order.save
+    end
+  end
+
   factory :size do
     title Faker::Lorem.word
     category
   end
 
   factory :product_size do
+    size
     quantity Faker::Number.number(2)
   end
 
   factory :shipping_method do
-    name
+    name Faker::Lorem.word
     country Faker::Address.country
     price_in_cents Faker::Number.number(2)
     user
@@ -95,8 +124,8 @@ FactoryGirl.define do
   end
 
   factory :outfit do
+    user
     caption Faker::Lorem.word
-    user_id Faker::Number.number(2)
     outfit_image File.open("#{Rails.root}/spec/fixtures/image.jpg")
     tag_list ["shoes", "short", "shirt"]
   end
