@@ -58,7 +58,7 @@ class PaypalGateway
 
   def merge_same_receivers(receivers)
     receivers.group_by { |receiver| receiver[:email] }.map do |email, amount|
-      { email: email, amount: amount.inject(0) do |start_amount, receiver| start_amount + receiver[:amount] } }
+      { email: email, amount: amount.inject(0) { |start_ammount,receiver| start_ammount + receiver[:amount] } }
     end
   end
 
