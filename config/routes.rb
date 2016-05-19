@@ -18,7 +18,7 @@ Rails.application.routes.draw do
     get 'following' => 'relationships#following'
     resources :addresses, only: [:new, :create, :edit, :update, :destroy]
     resources :paypals, except: [:index]
-    resources :orders, except: [:new] do
+    resources :orders, except: [:new, :destroy] do
       get 'ship' => 'orders#ship!', as: :ship
       get 'cancel' => 'orders#cancel!', as: :cancel
       get 'complete' => 'orders#complete!', as: :complete
