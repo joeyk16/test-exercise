@@ -62,7 +62,7 @@ FactoryGirl.define do
   factory :order do
     user
     quantity 1
-    aasm_state "payment"
+    aasm_state "pending_payment"
     tracking_code Faker::Lorem.word
     shipping_code Faker::Lorem.word
 
@@ -138,6 +138,10 @@ FactoryGirl.define do
     password_confirmation { |user| user.password }
     description Faker::Lorem.sentence
     # activated_at "<%= Time.zone.now %>"
+    after(:create) do |user|
+      create(:paypal, user: user, default: true)
+      create(:address, user: user, default_devlivery_address: true)
+    end
   end
 
   factory :admin do
