@@ -11,7 +11,7 @@ class Order < ActiveRecord::Base
             :aasm_state, presence: true
 
   aasm do
-    state :payment, :initial => true
+    state :pending_payment, :initial => true
     state :cancel
     state :processing
     state :shipped
@@ -22,7 +22,7 @@ class Order < ActiveRecord::Base
         drop_product_quantity!
       end
 
-      transitions :from => :payment, :to => :processing
+      transitions :from => :pending_payment, :to => :processing
     end
 
     event :shipped do
@@ -34,7 +34,7 @@ class Order < ActiveRecord::Base
     end
 
     event :cancel do
-      transitions :from => [:payment, :processing, :shipped], :to => :cancel
+      transitions :from => [:pending_payment, :processing, :shipped], :to => :cancel
     end
   end
 
@@ -96,9 +96,14 @@ class Order < ActiveRecord::Base
     end
 
     def add_tracking_code_to_orders(user)
-      orders = Order.where(user_id: user.id).payment
-      tracking_code = SecureRandom.hex(5)
-      orders.each { |order| order.update_attributes(tracking_code: tracking_code) }
+      tracking_code = loop do
+        token = SecureRandom.urlsafe_base64(7)
+        break token unless Order.exists?(tracking_code: token)
+      end
+
+      Order.where(user_id: user.id).pending_payment.each do |order|
+        order.update_attributes(tracking_code: tracking_code)
+      end
     end
   end
 end

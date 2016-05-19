@@ -32,12 +32,6 @@ class OrdersController < ApplicationController
     end
   end
 
-  def destroy
-    @order.destroy
-    flash[:success] = "Order deleted"
-    redirect_to user_my_account_path(current_user)
-  end
-
   def add_shipping_code
     if @order.update(order_params)
       flash[:success] = "Shipping code added"
@@ -93,13 +87,13 @@ class OrdersController < ApplicationController
     {
       user: current_user,
       return_url: root_url,
-      orders: orders_awaiting_payment,
+      orders: orders_pending_payment,
       notify_url: paypal_notifications_url
     }
   end
 
-  def orders_awaiting_payment
-    Order.where(user: current_user).payment
+  def orders_pending_payment
+    Order.where(user: current_user).pending_payment
   end
 
   def set_orders
