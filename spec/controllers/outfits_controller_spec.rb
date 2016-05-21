@@ -2,10 +2,9 @@ require 'rails_helper'
 
 RSpec.describe OutfitsController, type: :controller do
   let!(:user) { create(:user, admin: false) }
-  let!(:user2) { create(:user, admin: false) }
-  let!(:user_no_pay_pal) { create(:user, admin: false) }
+  let!(:other_user) { create(:user, admin: false) }
   let!(:paypal) { create(:paypal, user: user) }
-  let!(:paypal2) { create(:paypal, user: user2) }
+  let!(:paypal2) { create(:paypal, user: other_user) }
   let!(:outfit) { create(:outfit) }
   let!(:outfit_with_user) { create(:outfit, user_id: user.id) }
 
@@ -56,10 +55,12 @@ RSpec.describe OutfitsController, type: :controller do
       expect(response).to redirect_to(new_user_session_path)
     end
 
-    it "user with no paypal acocunt redirected to user_paypals_new" do
-      sign_in(user_no_pay_pal)
+    it "user with no paypal account redirected to user" do
+      other_user.paypals.destroy_all
+      sign_in(other_user)
       get :new, { user_id: user }
-      expect(response).to redirect_to(new_user_paypal_path(user_no_pay_pal))
+
+      expect(response).to redirect_to(new_user_paypal_path(other_user))
     end
   end
 
@@ -75,10 +76,12 @@ RSpec.describe OutfitsController, type: :controller do
       expect(response).to redirect_to(new_user_session_path)
     end
 
-    it "user with no paypal acocunt redirected to user_paypals_new" do
-      sign_in(user_no_pay_pal)
+    it "user with no paypal acocunt redirected to user" do
+      other_user.paypals.destroy_all
+      sign_in(other_user)
       post :create, { user_id: user }
-      expect(response).to redirect_to(new_user_paypal_path(user_no_pay_pal))
+
+      expect(response).to redirect_to(new_user_paypal_path(other_user))
     end
   end
 
@@ -92,7 +95,7 @@ RSpec.describe OutfitsController, type: :controller do
     end
 
     it "user you can't edit another users outfit" do
-      sign_in(user2)
+      sign_in(other_user)
       get :edit, { id: outfit_with_user.id, user_id: user.id }
       expect(response).to redirect_to(root_path)
     end
@@ -112,7 +115,7 @@ RSpec.describe OutfitsController, type: :controller do
     end
 
     it "user you can't update another users outfit" do
-      sign_in(user2)
+      sign_in(other_user)
       patch :update, { id: outfit_with_user.id, user_id: user.id, outfit: outfit_params }
       expect(response).to redirect_to(root_path)
     end
@@ -122,10 +125,12 @@ RSpec.describe OutfitsController, type: :controller do
       expect(response).to redirect_to(new_user_session_path)
     end
 
-    it "user with no paypal acocunt redirected to user_paypals_new" do
-      sign_in(user_no_pay_pal)
+    it "user with no paypal acocunt redirected to user" do
+      other_user.paypals.destroy_all
+      sign_in(other_user)
       patch :update, { id: outfit_with_user.id, user_id: user.id, outfit: outfit_params }
-      expect(response).to redirect_to(new_user_paypal_path(user_no_pay_pal))
+
+      expect(response).to redirect_to(new_user_paypal_path(other_user))
     end
   end
 
@@ -138,7 +143,7 @@ RSpec.describe OutfitsController, type: :controller do
     end
 
     it "user you can't delete another users outfit" do
-      sign_in(user2)
+      sign_in(other_user)
       delete :destroy, { id: outfit_with_user.id, user_id: user.id }
       expect(response).to redirect_to(root_path)
     end
@@ -148,10 +153,12 @@ RSpec.describe OutfitsController, type: :controller do
       expect(response).to redirect_to(new_user_session_path)
     end
 
-    it "user with no paypal acocunt redirected to user_paypals_new" do
-      sign_in(user_no_pay_pal)
+    it "user with no paypal acocunt redirected to user" do
+      other_user.paypals.destroy_all
+      sign_in(other_user)
       delete :destroy, { id: outfit_with_user.id, user_id: user.id }
-      expect(response).to redirect_to(new_user_paypal_path(user_no_pay_pal))
+
+      expect(response).to redirect_to(new_user_paypal_path(other_user))
     end
   end
 end

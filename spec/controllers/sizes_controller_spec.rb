@@ -96,20 +96,20 @@ RSpec.describe SizesController, type: :controller do
   describe "GET #edit" do
     it "edit size logged in as admin" do
       sign_in(admin)
-      get :edit, { id: category.id }
+      get :edit, { id: size.id, }
       expect(response).to render_template(:edit)
       expect(response).to have_http_status(:success)
       expect(assigns(:size)).to eq(size)
     end
 
     it "redirects visitor" do
-      get :edit, { id: category.id }
+      get :edit, { id: size.id, }
       expect(response).to redirect_to(new_user_session_path)
     end
 
     it "user renders template and redirects" do
       sign_in(user)
-      get :edit, { id: category.id }
+      get :edit, { id: size.id, }
       expect(response).to redirect_to(root_path)
     end
   end

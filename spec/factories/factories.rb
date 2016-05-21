@@ -46,7 +46,7 @@ FactoryGirl.define do
 
     after(:create) do |product|
       size = create(:size)
-      create(:product_size, product: product, size_id: size.id, quantity: Faker::Number.number(2))
+      create(:product_size, product: product, size_id: size.id, quantity: Faker::Number.number(3))
     end
   end
 
@@ -67,15 +67,14 @@ FactoryGirl.define do
     shipping_code Faker::Lorem.word
 
     after(:build) do |order|
-      size = create(:size)
       outfit = create(:outfit)
       address = create(:address, user: order.user)
       product = create(:product)
       shipping_method = create(:shipping_method, user: product.user)
 
       order.outfit_user_id = outfit.user.id
-      order.size = size.title
-      order.size_id = size.id
+      order.size = product.product_sizes[0].size.title
+      order.size_id = product.product_sizes[0].size.id
       order.product_id = product.id
       order.shipping_price_in_cents = shipping_method.price_in_cents
       order.shipping_method = shipping_method.name

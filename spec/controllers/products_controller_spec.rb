@@ -2,12 +2,12 @@ require "rails_helper"
 
 RSpec.describe ProductsController, type: :controller do
   let!(:user) { create(:user, password: "Password456", admin: false) }
-  let!(:user2) { create(:user, admin: false) }
-  let!(:user_no_pay_pal) { create(:user, admin: false) }
+  let!(:other_user) { create(:user, admin: false) }
+  let!(:other_user) { create(:user, admin: false) }
   let!(:paypal) { create(:paypal, user: user) }
-  let!(:paypal2) { create(:paypal, user: user2) }
+  let!(:paypal2) { create(:paypal, user: other_user) }
   let!(:product) { create(:product, user_id: user.id) }
-  let!(:product_02) { create(:product, user_id: user2.id) }
+  let!(:product_02) { create(:product, user_id: other_user.id) }
   let!(:admin) { create(:user, password: "Password123", admin: true) }
 
   let!(:products) do
@@ -48,10 +48,12 @@ RSpec.describe ProductsController, type: :controller do
       expect(response).to redirect_to(new_user_session_path)
     end
 
-    it "user with no paypal acocunt redirected to user_paypals_new" do
-      sign_in(user_no_pay_pal)
+    it "user with no paypal acocunt redirected to user" do
+      other_user.paypals.destroy_all
+      sign_in(other_user)
       get :new
-      expect(response).to redirect_to(new_user_paypal_path(user_no_pay_pal))
+
+      expect(response).to redirect_to(new_user_paypal_path(other_user))
     end
   end
 
@@ -67,10 +69,12 @@ RSpec.describe ProductsController, type: :controller do
       expect(response).to redirect_to(new_user_session_path)
     end
 
-    it "user with no paypal acocunt redirected to user_paypals_new" do
-      sign_in(user_no_pay_pal)
+    it "user with no paypal acocunt redirected to user" do
+      other_user.paypals.destroy_all
+      sign_in(other_user)
       post :create, { product: product_params }
-      expect(response).to redirect_to(new_user_paypal_path(user_no_pay_pal))
+
+      expect(response).to redirect_to(new_user_paypal_path(other_user))
     end
   end
 
@@ -84,7 +88,7 @@ RSpec.describe ProductsController, type: :controller do
     end
 
     it "user you can't edit another users product" do
-      sign_in(user2)
+      sign_in(other_user)
       get :edit, { id: product.id }
       expect(response).to redirect_to(root_path)
     end
@@ -94,10 +98,12 @@ RSpec.describe ProductsController, type: :controller do
       expect(response).to redirect_to(new_user_session_path)
     end
 
-    it "user with no paypal acocunt redirected to user_paypals_new" do
-      sign_in(user_no_pay_pal)
+    it "user with no paypal acocunt redirected to user" do
+      other_user.paypals.destroy_all
+      sign_in(other_user)
       get :edit, { id: product.id }
-      expect(response).to redirect_to(new_user_paypal_path(user_no_pay_pal))
+
+      expect(response).to redirect_to(new_user_paypal_path(other_user))
     end
   end
 
@@ -115,15 +121,17 @@ RSpec.describe ProductsController, type: :controller do
     end
 
     it "user can't update another user's product" do
-      sign_in(user2)
+      sign_in(other_user)
       patch :update, { id: product.id, product: product_params }
       expect(response).to redirect_to(root_path)
     end
 
-    it "user with no paypal acocunt redirected to user_paypals_new" do
-      sign_in(user_no_pay_pal)
+    it "user with no paypal acocunt redirected to user" do
+      other_user.paypals.destroy_all
+      sign_in(other_user)
       patch :update, { id: product.id, product: product_params }
-      expect(response).to redirect_to(new_user_paypal_path(user_no_pay_pal))
+
+      expect(response).to redirect_to(new_user_paypal_path(other_user))
     end
   end
 
@@ -137,7 +145,7 @@ RSpec.describe ProductsController, type: :controller do
     end
 
     it "user you can't delete another users product" do
-      sign_in(user2)
+      sign_in(other_user)
       delete :destroy, { id: product.id }
       expect(response).to redirect_to(root_path)
     end
@@ -148,7 +156,7 @@ RSpec.describe ProductsController, type: :controller do
     end
 
     it "as unauthorised user" do
-      delete :destroy, { id: product.id }, { user_id: user2.id }
+      delete :destroy, { id: product.id }, { user_id: other_user.id }
       expect(response).to redirect_to(new_user_session_path)
     end
   end

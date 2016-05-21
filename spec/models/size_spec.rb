@@ -4,9 +4,9 @@ RSpec.describe Size, type: :model do
 	let!(:category) { create(:category) }
 
 	describe "validations" do
-		it { is_expected.to validate_uniqueness_of(:title) }
 		it { is_expected.to validate_length_of(:title).is_at_most(15) }
 		it { is_expected.to validate_presence_of(:title) }
+		it { is_expected.to validate_presence_of(:category) }
 	end
 
 	describe "associations" do

@@ -1,7 +1,7 @@
 class OutfitsController < ApplicationController
   before_action :authenticate_user!, except: [:show, :outfits]
   before_action :set_outfit, only: [:show, :edit, :update, :destroy]
-  before_action :user_has_paypal_account?, except: [:show, :index, :outfits]
+  before_action :redirect_user_with_no_paypal_account, except: [:show, :index, :outfits]
   before_action :redirect_unauthorized_user, only: [:edit, :update, :destroy]
 
   def index

@@ -51,15 +51,21 @@ RSpec.describe OrdersController, type: :controller do
     let!(:product_01) { create(:product) }
     let!(:product_02) { create(:product) }
     let!(:outfit) { create(:outfit, user: user) }
-    let!(:cart_item_01) { create(:cart_item, quantity: 1, product: product_01, size_id: product_01.sizes[0].id, user: user) }
-    let!(:cart_item_02) { create(:cart_item, quantity: 1, product: product_02, size_id: product_02.sizes[0].id, user: user) }
+    let!(:cart_item_01) do
+      create(:cart_item, quantity: 1, product: product_01,
+                         size_id: product_01.sizes[0].id, user: user)
+    end
+    let!(:cart_item_02) do
+      create(:cart_item, quantity: 1, product: product_02,
+                         size_id: product_02.sizes[0].id, user: user)
+    end
     let(:order) { user.orders.where(product_id: product_01.id).first }
 
     it "2 orders created" do
       user.orders.destroy_all
       sign_in(user)
-      get :create, { user_id: user}, {}
-      # expect(response).to have_http_status(:success)
+      post :create, { user_id: user}, {}
+
       expect(user.orders.count).to eq(2)
       expect(order.aasm_state).to eq("pending_payment")
       expect(order.user).to eq(user)
@@ -70,12 +76,11 @@ RSpec.describe OrdersController, type: :controller do
       expect(order.tracking_code).to_not be_nil
       expect(order.product_user_id).to eq(product_01.user.id)
       expect(order.shipping_code).to be_nil
-      # expect(assigns(:order).shipping_code).to eq("123abc")
     end
 
-    it "vistor redirects to login path" do
-      get :create, { user_id: user}, {}
-      expect(response).to redirect_to(new_user_session_path)
+    context "vistor redirects to login path" do
+      before { get :create, { user_id: user}, {} }
+      it { expect(response).to redirect_to(new_user_session_path) }
     end
   end
 

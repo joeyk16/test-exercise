@@ -200,7 +200,9 @@ RSpec.describe OutfitProductsController, type: :controller do
       end
 
       it "product has already been added to outfit" do
-        expect(response).to redirect_to(user_outfit_path(id: outfit.id, user_id: user.id))
+        expect(response).to redirect_to(user_outfit_path(
+          id: outfit_product_params["outfit_id"], user_id: outfit_product_params["user_id"]
+        ))
         expect(flash[:danger]).to eq "Outfit has too many products. Limit is 6 per outfit"
       end
     end

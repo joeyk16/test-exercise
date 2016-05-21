@@ -12,12 +12,14 @@ RSpec.describe PaypalsController, type: :controller do
     it "user renders new template" do
       sign_in(user)
       get :new, { user_id: user }
+
       expect(response).to render_template(:new)
       expect(response).to have_http_status(:success)
     end
 
     it "vistor redirects to login path" do
       get :new, { user_id: user }, { }
+
       expect(response).to redirect_to(new_user_session_path)
     end
   end
@@ -26,12 +28,14 @@ RSpec.describe PaypalsController, type: :controller do
     it "user creates paypal" do
       sign_in(user)
       post :create, { paypal: paypal_params, user_id: user }
+
       expect(response).to redirect_to(user_my_account_path(user))
       expect(assigns(:paypal)).to be_persisted
     end
 
     it "vistor redirects to login path" do
       post :create, { user_id: user }, { }
+
       expect(response).to redirect_to(new_user_session_path)
     end
   end
@@ -40,6 +44,7 @@ RSpec.describe PaypalsController, type: :controller do
     it "user edits paypal" do
       sign_in(user)
       get :edit, { id: paypal.id, user_id: user.id }
+
       expect(response).to render_template(:edit)
       expect(response).to have_http_status(:success)
       expect(assigns(:paypal)).to eq(paypal)
@@ -48,11 +53,13 @@ RSpec.describe PaypalsController, type: :controller do
     it "user can't edit different users paypal account" do
       sign_in(user)
       get :edit, { id: paypal_01.id, user_id: user.id }
+
       expect(response).to redirect_to(root_path)
     end
 
     it "vistor redirects to login path" do
       get :edit, { id: paypal.id, user_id: user.id }, {}
+
       expect(response).to redirect_to(new_user_session_path)
     end
   end
@@ -60,19 +67,23 @@ RSpec.describe PaypalsController, type: :controller do
   describe "PATCH #update" do
     it "user updates outfit" do
       sign_in(user)
+      request.env["HTTP_REFERER"] = "where_i_came_from"
       patch :update, { id: paypal.id, user_id: user.id, paypal: paypal_params }
-      expect(response).to redirect_to(user_my_account_path(user))
+
+      expect(response).to redirect_to "where_i_came_from"
       expect(assigns(:paypal)).to eq(paypal)
     end
 
     it "user can't edit different users paypal account" do
       sign_in(user)
       patch :update, { id: paypal_01.id, user_id: user.id, paypal: paypal_params }
+
       expect(response).to redirect_to(root_path)
     end
 
     it "vistor redirects to login path" do
       patch :update, { id: paypal.id, user_id: user.id, paypal: paypal_params }, {}
+
       expect(response).to redirect_to(new_user_session_path)
     end
   end
@@ -81,6 +92,7 @@ RSpec.describe PaypalsController, type: :controller do
     it "user deletes outfit" do
       sign_in(user)
       delete :destroy, { id: paypal.id, user_id: user.id }
+
       expect(assigns(:paypal)).to_not be_persisted
       expect(response).to redirect_to(user_my_account_path(user))
     end
@@ -88,11 +100,13 @@ RSpec.describe PaypalsController, type: :controller do
     it "user can't edit different users paypal account" do
       sign_in(user)
       delete :destroy, { id: paypal_01.id, user_id: user.id }
+
       expect(response).to redirect_to(root_path)
     end
 
     it "vistor redirects to login path" do
       delete :destroy, { id: paypal.id, user_id: user.id }, { }
+
       expect(response).to redirect_to(new_user_session_path)
     end
   end

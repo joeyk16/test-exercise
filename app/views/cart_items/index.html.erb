@@ -20,7 +20,7 @@
           <td><%= order.quantity %></td>
           <td>$<%= Product.find(order.product_id).price %></td>
           <td><%= ShippingMethod.find(order.shipping_method_id).name %><%= ShippingMethod.find(order.shipping_method_id).price %></td>
-          <td>$<%= order.item_price(order.quantity) %></td>
+          <td>$<%= order.total_price(order.quantity) %></td>
           <td><%=link_to "Remove product", user_cart_item_path(current_user, @cart_items), method: :delete %></td>
         </tr>
       <% end %>
@@ -28,7 +28,7 @@
   </table>
 
   <% total_price = 0 %>
-  <% @cart_items.each { |order| total_price += order.item_price(order.quantity) } %>
+  <% @cart_items.each { |order| total_price += order.total_price(order.quantity) } %>
   <h2>Total Price: $<%= total_price %></h2>
 
   <% cart_item_user = @cart_items[0].user %>

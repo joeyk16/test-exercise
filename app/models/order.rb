@@ -4,8 +4,6 @@ class Order < ActiveRecord::Base
   belongs_to :user
   belongs_to :product
 
-  has_many :paypal_notifications
-
   validates :user_id, :outfit_user_id, :product_id, :product_user_id, :product_name, :product_price_in_cents,
             :size, :quantity, :shipping_price_in_cents, :shipping_method, :shipping_address,
             :aasm_state, presence: true

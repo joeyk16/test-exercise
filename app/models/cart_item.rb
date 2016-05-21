@@ -6,12 +6,8 @@ class CartItem < ActiveRecord::Base
   belongs_to :user
 
   validates :product, :outfit, :size, :shipping_method, :user, :quantity, presence: true
-  before_validation :error_if_user_owns_product
-  before_validation :error_if_not_enough_quantity
-
-  def item_price(quanity)
-    ((product.price_in_cents * quanity) + shipping_method.price_in_cents) / 100.00
-  end
+  before_validation :error_if_user_owns_product, on: :create
+  before_validation :error_if_not_enough_quantity, on: :create
 
   def total_price(quanity)
     ((product.price_in_cents * quanity) + shipping_method.price_in_cents) / 100.00
