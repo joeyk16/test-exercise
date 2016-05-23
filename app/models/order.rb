@@ -42,7 +42,7 @@ class Order < ActiveRecord::Base
 
   def drop_product_quantity!
     product_size = product.product_sizes.find_by(size_id: size_id)
-    product_size.quantity -= quantity
+    product_size.update_attributes(quantity: product_size.quantity - quantity)
     #TODO: Notfiy seller if quantity is =< 0
   end
 

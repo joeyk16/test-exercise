@@ -6,7 +6,7 @@ RSpec.describe OrdersController, type: :controller do
     create_list(:order, 5, user: user)
   end
 
-  let(:order) { orders[0]}
+  let(:order) { orders[0] }
 
   let(:order_params) { order.attributes }
 

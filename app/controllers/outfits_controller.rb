@@ -5,7 +5,7 @@ class OutfitsController < ApplicationController
   before_action :redirect_unauthorized_user, only: [:edit, :update, :destroy]
 
   def index
-    @outfits = current_user.outfits.all
+    @outfits = current_user.outfits.all.order('created_at ASC')
   end
 
   def outfits
@@ -50,13 +50,14 @@ class OutfitsController < ApplicationController
   end
 
   private
-    def set_outfit
-      @outfit = Outfit.find(params[:id])
-    end
 
-    def outfit_params
-      params.require(:outfit).permit(:caption, :outfit_image, :user_id, :tag_list)
-    end
+  def set_outfit
+    @outfit = Outfit.find(params[:id])
+  end
+
+  def outfit_params
+    params.require(:outfit).permit(:caption, :outfit_image, :user_id, :tag_list)
+  end
 
   def redirect_unauthorized_user
     redirect_to root_path unless @outfit.user == current_user
