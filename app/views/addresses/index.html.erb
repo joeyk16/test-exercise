@@ -1,7 +1,0 @@
-  <h3>Address</h3>
-  <% if current_user.addresses %>
-    <%= link_to "Create Address", new_user_address_path %>
-    <%= render 'addresses/address_list', user: current_user %>
-  <% else %>
-    <%= link_to "Create New Address", new_user_address_path %>
-  <% end %>

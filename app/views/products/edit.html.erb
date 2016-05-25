@@ -1,5 +1,0 @@
-<center><h1>Edit <%=@product.title%></h1></center>
-
-<% @root_categories.each do |category| %>
-  <%= render 'form', root_category: category, product: @product %>
-<% end %>
