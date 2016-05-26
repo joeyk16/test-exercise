@@ -36,9 +36,8 @@ class Order < ActiveRecord::Base
 
   def self.process!(user)
     create_user_orders!(user)
-    add_tracking_code_to_orders_awaiting_payment(user)
-    # user.carts.destroy_all
-  end
+    bad_name_2(user)
+    user.cart_items.destroy_all end
 
   def self.create_user_orders!(user)
     CartItem.where(user: user).each do |item|
@@ -57,7 +56,7 @@ class Order < ActiveRecord::Base
     end
   end
 
-  def self.add_tracking_code_to_orders_awaiting_payment(user)
+  def self.bad_name_2(user)
     orders = Order.where(user_id: user.id).pending_payment
     tracking_code = self.create_tracking_code(orders)
     orders.each { |order| order.update_attributes(tracking_code: tracking_code) }

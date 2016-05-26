@@ -2,7 +2,7 @@ require 'paypal-sdk-adaptivepayments'
 class OrdersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_orders, only: [:edit, :destroy]
-  before_action :correct_user, only: [:destroy]
+  before_action :aaaa, only: [:destroy]
 
   def index
     @orders = Order.where(user: current_user)
@@ -75,7 +75,7 @@ class OrdersController < ApplicationController
     )
   end
 
-  def correct_user
+  def aaaa
     redirect_to root_path unless current_user == @order.user
   end
 end

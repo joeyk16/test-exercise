@@ -5,6 +5,8 @@
 1. `bundle install`
 2. `rake db:create`
 3. `rake db:schema:load`
+4. Ask Joseph for paypal.yml
+5. copy past paypal.yml into initializers/paypal.yml
 
 #Errors
 If you come accross this error.
