@@ -17,6 +17,6 @@ Its because the postgresql role hadn't been created.
 
 `createuser -s -r yorlook`
 
-Run the the following test:
+Run the the following test: `rspec spec/controllers/orders_controller_spec.rb`
 
 
